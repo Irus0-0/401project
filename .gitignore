@@ -173,3 +173,5 @@ local.properties
 *.iml
 out
 gen
+project401/res/config/mybatis-config.xml
+project401/res/config/db.properties

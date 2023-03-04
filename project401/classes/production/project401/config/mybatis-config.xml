@@ -14,9 +14,9 @@
 
     <!-- Alias 쓸거면 수정해야됨-->
     <typeAliases>
-        <typeAlias type="customer.vo.CustomerVO" alias="customerVO"/>
-        <typeAlias type="company.vo.CompanyVO" alias="companyVO"/>
-		<typeAlias type="master.vo.MasterVO" alias="masterVO"/>
+        <typeAlias type="kr.or.ddit.teampro.customer.vo.CustomerVO" alias="customerVO"/>
+        <typeAlias type="kr.or.ddit.teampro.company.vo.CompanyVO" alias="companyVO"/>
+<!--		<typeAlias type="master.vo.MasterVO" alias="masterVO"/>-->
     </typeAliases>
 
     <!-- 다른 설정을 사용하고 싶을 때는 <environments default="dev"> 만 "real"로 바꿔주면 됨 -->
@@ -35,9 +35,9 @@
     </environments>
 
     <mappers>
-        <mapper resource="mapper/customer.xml"/>
-        <mapper resource="mapper/company.xml"/>
-        <mapper resource="mapper/master.xml"/>
+        <mapper resource="mappers/customer.xml"/>
+        <mapper resource="mappers/company.xml"/>
+<!--        <mapper resource="mappers/master.xml"/>-->
     </mappers>
 
 </configuration>

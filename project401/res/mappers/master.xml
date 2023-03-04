@@ -37,6 +37,12 @@
            and master_pw = #{masterPw}
     </select>
 
+    <select id="isExist" resultMap="masterVO">
+        select *
+          from master
+         where master_id = #{masterId}
+    </select>
+
 
 
 </mapper>

@@ -26,7 +26,7 @@ public class Master {
         System.out.println("  === 작 업 선 택 ===");
         System.out.println("  1. 관리자등록");
         System.out.println("  2. 로그인");
-        System.out.println("  3. 내 정보");
+        System.out.println("  3. 관리자 정보");
         System.out.println("  4. 로그아웃");
         System.out.println("  5. 계정삭제");
         System.out.println("  6. 작업 끝.");
@@ -69,6 +69,7 @@ public class Master {
 
     private void deleteId() {
         MasterVO mv = masterService.getVo();
+        System.out.println(mv.getMasterId());
 
         System.out.println("삭제하시겠습니까?");
         System.out.println("1.삭제 2.아니오");
@@ -96,7 +97,7 @@ public class Master {
     }
 
     private void displaymasterInfo() {
-        MasterVO mv = MasterService.getInstance().getVo();
+        MasterVO mv = masterService.getVo();
 
         System.out.println("관리자아이디>> " + mv.getMasterId());
         System.out.println("관리자이름>> " + mv.getName());
@@ -104,7 +105,7 @@ public class Master {
     }
 
     private void logout() {
-        MasterVO mv = MasterService.getInstance().getVo();
+        MasterVO mv = masterService.getVo();
         System.out.println("로그아웃하시겠습니까");
         System.out.println("1.로그아웃 2.아니오");
         int choice = scan.nextInt();
@@ -125,78 +126,85 @@ public class Master {
     }
 
     public void login() {
-        
-        
-        String memId = "";
-        String memPw = "";
+
+
+        String masterId = "";
+        String masterPw = "";
 
         System.out.println();
         System.out.println("로그인을 시작합니다");
         System.out.print("회원ID >> ");
-        memId = scan.next();
+        masterId = scan.next();
 
         scan.nextLine();
 
         System.out.print("회원 비밀번호 >> ");
-        memPw = scan.nextLine();
-        
+        masterPw = scan.nextLine();
+
         MasterVO mv = new MasterVO();
-        mv.setMasterId(memId.trim());
-        mv.setMasterPw(memPw.trim());
+        mv.setMasterId(masterId.trim());
+        mv.setMasterPw(masterPw.trim());
 
-        MasterVO Master = masterService.login(mv);
+        MasterVO master = masterService.login(mv);
 
-        if (Master != null) {
-            MasterService.getInstance().setVo(Master);
-            System.out.println(memId + " 회원 로그인 성공!");
+        System.out.println(masterService.login(mv));
+        System.out.println(master.getMasterId());
+
+        if (master != null) {
+            MasterService.getInstance().setVo(master);
+            System.out.println(masterId + " 회원 로그인 성공!");
         } else {
-            System.out.println(memId + " id 혹은 pw가 틀렸습니다");
+            System.out.println(masterId + " id 혹은 pw가 틀렸습니다");
         }
     }
 
 
     public void insertmaster() {
-        String masterId = "";
+        int gradeCd = masterService.getVo().getGrade();
+        if (gradeCd > 2) {
+            String masterId = "";
 
-        System.out.println();
-        System.out.println("새롭게 등록할 회원 정보를 입력하세요.");
-        System.out.print("회원ID >> ");
-        masterId = scan.next();
+            System.out.println();
+            System.out.println("새롭게 등록할 회원 정보를 입력하세요.");
+            System.out.print("회원ID >> ");
+            masterId = scan.next();
 
-        MasterVO mv = new MasterVO();
-        mv.setMasterId(masterId.trim());
+            MasterVO mv = new MasterVO();
+            mv.setMasterId(masterId.trim());
 
-        scan.nextLine();
-        //회원아이디 중복검사
-        if (MasterService.getInstance().isExist(mv) == true) {
-            System.out.println(masterId + " 회원 ID 중복입니다.");
-            return;
-        }
+            scan.nextLine();
+            //회원아이디 중복검사
+            if (MasterService.getInstance().isExist(mv) == true) {
+                System.out.println(masterId + " 회원 ID 중복입니다.");
+                return;
+            }
 
-        System.out.print("회원 비밀번호>> ");
-        String masterPw = scan.nextLine();
-        System.out.print("관리자이름>> ");
-        String name = scan.next();
-        System.out.print("관리자등급>> ");
-        String grade = scan.next();
-
-
-        scan.nextLine();  // 버퍼 비우기
+            System.out.print("회원 비밀번호>> ");
+            String masterPw = scan.nextLine();
+            System.out.print("관리자이름>> ");
+            String name = scan.next();
+            System.out.print("관리자등급>> ");
+            int grade = Integer.parseInt(scan.next().trim());
 
 
-        MasterVO mv1 = new MasterVO();
+            scan.nextLine();  // 버퍼 비우기
 
-        mv.setMasterId(masterId.trim());
-        mv.setMasterPw(masterPw.trim());
-        mv.setName(name.trim());
 
-        int cnt = MasterService.getInstance().insertMaster(mv1);
+            MasterVO mv1 = new MasterVO();
 
-        if (cnt > 0) {
-            System.out.println(masterId + " 회원 추가 작업 성공!");
+            mv1.setMasterId(masterId.trim());
+            mv1.setMasterPw(masterPw.trim());
+            mv1.setName(name.trim());
+            mv1.setGrade(grade);
 
-        } else {
-            System.out.println(masterId + " 회원 추가 작업 실패!");
+            int cnt = MasterService.getInstance().insertMaster(mv1);
+
+            if (cnt > 0) {
+                System.out.println(masterId + " 회원 추가 작업 성공!");
+
+            } else {
+                System.out.println(masterId + " 회원 추가 작업 실패!");
+            }
         }
     }
 

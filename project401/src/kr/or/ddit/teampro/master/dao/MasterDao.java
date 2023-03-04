@@ -27,7 +27,7 @@ public class MasterDao implements IMasterDao {
         SqlSession sqlSession = MybatisUtil.getInstance();
         int result = 0;
 
-        result = sqlSession.insert("master.insertMaster", mv);
+        result = sqlSession.insert("master.insert", mv);
         sqlSession.commit();
         sqlSession.close();
 
@@ -44,7 +44,7 @@ public class MasterDao implements IMasterDao {
         SqlSession sqlSession = MybatisUtil.getInstance();
         int result = 0;
 
-        result = sqlSession.delete("master.deleteMaster", mv);
+        result = sqlSession.delete("master.delete", mv);
         sqlSession.commit();
         sqlSession.close();
 

@@ -12,4 +12,7 @@ public interface IMasterService {
     public List<MasterVO> displayAll();
     public MasterVO getVo ();
     public MasterVO setVo (MasterVO mv);
+    public MasterVO logout ();
+    public MasterVO login (MasterVO mv);
+    public boolean isExist (MasterVO mv);
 }

@@ -30,6 +30,13 @@
           from master
     </select>
 
+    <select id="login" resultMap="masterVO">
+        select *
+          from master
+         where master_id = #{masterId}
+           and master_pw = #{masterPw}
+    </select>
+
 
 
 </mapper>

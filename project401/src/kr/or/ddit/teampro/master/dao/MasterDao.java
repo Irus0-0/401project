@@ -78,4 +78,17 @@ public class MasterDao implements IMasterDao {
         sqlSession.close();
         return false;
     }
+
+    @Override
+    public MasterVO login(MasterVO mv) {
+        SqlSession sqlSession = MybatisUtil.getInstance();
+        MasterVO result = null;
+
+        result = sqlSession.selectOne("master.login", mv);
+        sqlSession.commit();
+        sqlSession.close();
+        return result;
+    }
+
+
 }

@@ -11,5 +11,5 @@ public interface IMasterDao {
     public MasterVO display(MasterVO mv);
     public List<MasterVO> displayAll();
     public boolean isExist(MasterVO mv);
-
+    public MasterVO login(MasterVO mv);
 }

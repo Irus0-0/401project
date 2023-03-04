@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ojdbc6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mybatis-3.4.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/log4j-core-2.17.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/log4j-api-2.17.0"/>
+	<classpathentry kind="lib" path="C:/Users/ikaro/바탕 화면/401project/project401/lib/log4j-api-2.17.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ikaro/바탕 화면/401project/project401/lib/log4j-core-2.17.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ikaro/바탕 화면/401project/project401/lib/mybatis-3.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ikaro/바탕 화면/401project/project401/lib/ojdbc6.jar"/>
+	<classpathentry kind="output" path="out/production/project401"/>
+</classpath>

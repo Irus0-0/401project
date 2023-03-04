@@ -1,9 +1,9 @@
 package kr.or.ddit.teampro.customer.dao;
 
-import customer.util.MybatisUtil;
-import customer.vo.CustomerVO;
-import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.teampro.customer.util.MybatisUtil;
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
+import org.apache.ibatis.session.SqlSession;
 
 public class CustomerDao implements ICustomerDao {
     private SqlSession sqlSession;

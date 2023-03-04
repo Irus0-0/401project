@@ -1,7 +1,8 @@
 package kr.or.ddit.teampro.customer.service;
 
-import customer.dao.CustomerDao;
-import customer.vo.CustomerVO;
+
+import kr.or.ddit.teampro.customer.dao.CustomerDao;
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
 
 public class CustomerService implements ICustomerService{
 

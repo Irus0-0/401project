@@ -1,8 +1,9 @@
 package kr.or.ddit.teampro.customer;
 
-import customer.service.CustomerService;
-import customer.service.ICustomerService;
-import customer.vo.CustomerVO;
+
+import kr.or.ddit.teampro.customer.service.CustomerService;
+import kr.or.ddit.teampro.customer.service.ICustomerService;
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
 
 import java.util.Scanner;
 

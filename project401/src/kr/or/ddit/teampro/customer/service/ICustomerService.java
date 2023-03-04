@@ -1,6 +1,7 @@
 package kr.or.ddit.teampro.customer.service;
 
-import customer.vo.CustomerVO;
+
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
 
 public interface ICustomerService {
     public int insertUser(CustomerVO uv);

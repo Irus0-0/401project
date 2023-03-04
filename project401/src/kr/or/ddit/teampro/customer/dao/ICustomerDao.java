@@ -1,6 +1,7 @@
 package kr.or.ddit.teampro.customer.dao;
 
-import customer.vo.CustomerVO;
+
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
 
 public interface ICustomerDao {
     public int insertCustomer(CustomerVO uv);

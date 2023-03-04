@@ -8,8 +8,8 @@ public interface IMasterService {
     public int insertMaster(MasterVO mv);
     public int updateMaster(MasterVO mv);
     public int deleteMaster(MasterVO mv);
-    public MasterVO selectMaster(MasterVO mv);
-    public List<MasterVO> selectMasterList(MasterVO mv);
+    public MasterVO display(MasterVO mv);
+    public List<MasterVO> displayAll();
     public MasterVO getVo ();
     public MasterVO setVo (MasterVO mv);
 }

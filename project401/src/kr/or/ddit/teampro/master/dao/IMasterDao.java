@@ -9,7 +9,7 @@ public interface IMasterDao {
     public int updateMaster(MasterVO mv);
     public int deleteMaster(MasterVO mv);
     public MasterVO display(MasterVO mv);
-    public List<MasterVO> displayAll(MasterVO mv);
+    public List<MasterVO> displayAll();
     public boolean isExist(MasterVO mv);
 
 }

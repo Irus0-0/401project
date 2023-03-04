@@ -25,6 +25,11 @@
          where master_id = #{masterId}
     </delete>
 
+    <select id="displayAll" resultMap="masterVO">
+        select *
+          from master
+    </select>
+
 
 
 </mapper>

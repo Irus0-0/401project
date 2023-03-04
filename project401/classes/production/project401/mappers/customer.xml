@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customer">
+
+    <resultMap type="kr.or.ddit.teampro.customer.vo.CustomerVO" id="customerVO">
+        <result property="customerId" column="customer_id"/>
+        <result property="customerPw" column="customer_pw"/>
+        <result property="name" column="name"/>
+        <result property="phoneNum" column="phone_num"/>
+        <result property="gender" column="gender"/>
+        <result property="birthdate" column="birthdate"/>
+        <result property="addr" column="addr"/>
+        <result property="grade" column="grade"/>
+        <result property="sanctionsCount" column="sanctions_count"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into customer (customer_id, customer_pw, name, phone_num,
+                              gender, birthdate, addr, grade, sanctions_count)
+        values (#{customerId}, #{customerPw}, #{name}, #{phoneNum},
+                #{gender}, to_date(#{birthdate},'yyyy-MM-dd'), #{addr}, 0, 0)
+    </insert>
+
+    <select id="login" resultMap="customerVO">
+        select *
+        from customer
+        where customer_id = #{customerId}
+          and customer_pw = #{customerPw}
+    </select>
+
+    <delete id="delete">
+        delete from customer
+        where customer_id = #{customerId}
+    </delete>
+
+    <select id="isExist" resultMap="customerVO">
+        select *
+        from customer
+        where customer_id = #{customerId}
+    </select>
+
+</mapper>

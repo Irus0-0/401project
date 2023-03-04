@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="master">
+    <resultMap type="kr.or.ddit.teampro.master.vo.MasterVO" id="masterVO">
+        <result property="masterId" column="master_id"/>
+        <result property="masterPw" column="master_pw"/>
+        <result property="name" column="name"/>
+        <result property="grade" column="grade"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into master (master_id,master_pw,name,grade)
+          values (#{masterId},#{masterPw},#{name},#{grade})
+    </insert>
+
+    <select id="display" resultMap="masterVO">
+        select *
+          from master
+         where master_id = #{masterId}
+    </select>
+
+    <delete id="delete">
+        delete from master
+         where master_id = #{masterId}
+    </delete>
+
+
+
+</mapper>
+

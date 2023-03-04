@@ -173,3 +173,6 @@ local.properties
 *.iml
 out
 gen
+!/res/config/mybatis-config.xml
+!/res/config/db.properties
+!/res/log4j2.xml

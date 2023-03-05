@@ -42,10 +42,18 @@
     </delete>
 
 <!--    사용자의 모든 예약정보 확인하기-->
-    <select id="selectMyALLReservation" resultMap="reservationMap" parameterType="String">
+    <select id="selectMyAllReservation" resultMap="reservationMap" parameterType="String">
         SELECT *
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
+    </select>
+
+    <!--    사용자의 종료되지 않은 예약들 확인하기-->
+    <select id="selectMyAllUseReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE CUSTOMER_ID = '김씨'
+        AND sysdate BETWEEN START_DATE AND END_DATE;
     </select>
 
     <!--    기업의 모든 예약정보 확인하기-->

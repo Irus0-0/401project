@@ -46,6 +46,12 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public List<ReservationVo> searchUserUseReservation(String customerId) {
+        List<ReservationVo> resList = resDao.selectUserAllUseReservation(customerId);
+        return resList;
+    }
+
+    @Override
     public List<ReservationVo> searchCoAllReservation(String companyId) {
         List<ReservationVo> resList = resDao.selectCoAllReservation(companyId);
         return resList;

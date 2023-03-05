@@ -15,6 +15,7 @@
 
     <typeAliases>
 <!--        <typeAlias type="kr.or.ddit.member.vo.MemberVO" alias="memVO"/>-->
+        <typeAlias type="kr.or.ddit.teampro.reservation.vo.ReservationVo" alias="reserVO"/>
     </typeAliases>
 
     <environments default="dev">
@@ -34,7 +35,8 @@
     </environments>
 
     <mappers>
-        <mapper resource="mappers/member.xml"/>
+<!--        <mapper resource="mappers/member.xml"/>-->
+        <mapper resource="mappers/reservation.xml"/>
     </mappers>
 
 </configuration>

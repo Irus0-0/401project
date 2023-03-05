@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="check">
+    <resultMap id="check" type="check.in.out.vo.CheckInOutVO">
+        <result property="checkIn" column="checkin"/>
+        <result property="checkOut" column="checkout"/>
+        <result property="reservationNum" column="reservation_num"/>
+    </resultMap>
+
+    <insert id="in">
+        insert into checkin_out(reservation_num,checkin)
+          values(#{reservationNum},sysdate)
+    </insert>
+    <update id="out">
+
+        update checkin_out
+           set checkout = sysdate
+         where reservation_num = #{reservationNum}
+    </update>
+</mapper>

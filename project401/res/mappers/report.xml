@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="report">
+
+    <resultMap id="reportMap" type="reportVo">
+        <result column="report_num" property="reportNum"/>
+        <result column="reservation_num" property="resNum"/>
+        <result column="reason" property="reason"/>
+    </resultMap>
+
+
+    <resultMap id="reportResultMap" type="reportResultVo">
+        <result column="report_num" property="reportNum"/>
+        <result column="master_id" property="masterId"/>
+        <result column="result" property="result"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+    </resultMap>
+
+
+    <!--     유저가 신고 하기 -->
+    <insert id="reportByUser" parameterType="reportVo">
+        insert into report_co (report_num, reservation_num, reason)
+        values (#{reportNum}, #{resNum}, #{reason})
+    </insert>
+    <!--    기업이 신고 하기-->
+    <insert id="reportByCo" parameterType="reportVo">
+        insert into report_user (report_num, reservation_num, reason)
+        values (#{reportNum}, #{resNum}, #{reason})
+    </insert>
+
+
+    <!-- 유저가 신고한 정보 수정하기-->
+    <update id="updateReportByUser" parameterType="reportVo">
+        update report_co
+        set reservation_num = #{resNum},
+            reason          = #{reason}
+        where report_num = #{reportNum}
+    </update>
+
+    <!-- 기업이 신고한 정보 수정하기-->
+    <update id="updateReportByCo" parameterType="reportVo">
+        update report_user
+        set reservation_num = #{resNum},
+            reason          = #{reason}
+        where report_num = #{reportNum}
+    </update>
+
+    <!--  유저가 신고한 정보 삭제하기-->
+    <delete id="deleteReportByUser" parameterType="int">
+        delete
+        from report_co
+        where report_num = #{reportNum}
+    </delete>
+
+    <!--  기업이 신고한 정보 삭제하기-->
+    <delete id="deleteReportByCo" parameterType="int">
+        delete
+        from report_user
+        where report_num = #{reportNum}
+    </delete>
+
+    <!--   선택한 유저가 신고한 모든 정보 확인하기-->
+    <!--    Where 절 수정 필요할지도 모름-->
+    <select id="selectAllReportByUser" resultMap="reportMap">
+        SELECT A.REPORT_NUM, A.RESERVATION_NUM, A.REASON
+        FROM REPORT_CO A,
+             (SELECT #{reservationNum} FROM RESERVATION WHERE #{customerId} = customer_id) B
+        WHERE A.RESERVATION_NUM = #{reservationNum}
+    </select>
+
+    <!--    선택한 기업이 신고한 모든 정보 확인하기-->
+    <select id="selectAllReportByCo" resultMap="reportMap">
+        SELECT A.REPORT_NUM, A.RESERVATION_NUM, A.REASON
+        FROM REPORT_USER A,
+             (SELECT #{reservationNum} FROM RESERVATION WHERE #{companyId} = company_id) B
+        WHERE A.RESERVATION_NUM = #{reservationNum}
+    </select>
+
+    <!--    ==================================================================================================      -->
+    <!--    모든 유저가 신고한 결과 조회-->
+    <select id="selectAllReportResultByUser" resultMap="reportResultMap">
+        SELECT *
+        FROM report_co_process
+    </select>
+
+    <!-- 모든 기업이 신고한 결과 조회-->
+    <select id="selectAllReportResultByCo" resultMap="reportResultMap">
+        SELECT *
+        FROM report_user_process
+    </select>
+
+    <!--    처리하지 않은 유저가 신고한 결과 조회-->
+    <select id="selectAllReportResultByUser" resultMap="reportResultMap">
+        SELECT B.REPORT_NUM, B.reservation_num, B.reason
+        FROM report_co_process A,
+             (SELECT * FROM report_co) B
+        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM);
+    </select>
+
+    <!--    처리하지 않은 기업이 신고한 결과 조회-->
+    <select id="selectAllReportResultByUser" resultMap="reportResultMap">
+        SELECT B.REPORT_NUM, B.reservation_num, B.reason
+        FROM report_user_process A,
+             (SELECT * FROM report_user) B
+        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM);
+    </select>
+
+    <insert id="reportResultByCo" parameterType="reportVo">
+        insert into report_user (report_num, reservation_num, reason)
+        values (#{reportNum}, #{resNum}, #{reason})
+    </insert>
+
+
+</mapper>

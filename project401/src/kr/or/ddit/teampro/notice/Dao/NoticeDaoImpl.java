@@ -1,4 +1,4 @@
-package kr.or.ddit.teampro.notice.Dao;
+package kr.or.ddit.teampro.notice.dao;
 
 import java.util.List;
 
@@ -29,8 +29,8 @@ public class NoticeDaoImpl extends MyBatisDao implements NoticeDao {
 	}
 
 	@Override
-	public int deleteNotice(String masterId) {
-		int cnt = delete("notice.insertNotice", masterId);
+	public int deleteNotice(int noticeNum) {
+		int cnt = delete("notice.insertNotice", noticeNum);
 		return cnt;
 	}
 
@@ -48,13 +48,13 @@ public class NoticeDaoImpl extends MyBatisDao implements NoticeDao {
 
 	@Override
 	public List<NoticeVO> selectAllNotice() {
-		List<NoticeVO> notList = selectList("member.selsectAllNotice");
+		List<NoticeVO> notList = selectList("notice.selsectAllNotice");
 		return notList;
 	}
 
 	@Override
 	public List<NoticeVO> searchNotice(NoticeVO nv) {
-		List<NoticeVO> notList = selectList("member.selsectAllNotice");
+		List<NoticeVO> notList = selectList("notice.selectAllNotice");
 		return notList;
 	}
 

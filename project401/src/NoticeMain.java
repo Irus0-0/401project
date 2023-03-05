@@ -109,21 +109,21 @@ public class NoticeMain {
 		} while (!isExist);
 
 		System.out.print("공지 제목 >> ");
-		String nonTitle = scan.next();
+		String notTitle = scan.next();
 
 		System.out.print("공지 내용 >> ");
-		String nonContent = scan.next();
+		String notContent = scan.next();
 
 		scan.nextLine(); // 버퍼 비우기
 
 		System.out.print("공지 등급 >> ");
-		String nonGrade = scan.nextLine();
+		String notGrade = scan.nextLine();
 
 		NoticeVO nv = new NoticeVO();
 		nv.setMasterId(masterId);
-		nv.setNotTitle(nonTitle);
-		nv.setNotContent(nonContent);
-		nv.setNotGrade(nonGrade);
+		nv.setNotTitle(notTitle);
+		nv.setNotContent(notContent);
+		nv.setNotGrade(notGrade);
 
 		int cnt = notService.registNotice(nv);
 
@@ -144,7 +144,7 @@ public class NoticeMain {
 		do {
 			System.out.println();
 			System.out.println("수정할 공지정보를 입력하세요.");
-			System.out.println("관리자 제목 >> ");
+			System.out.println("관리자ID >> ");
 			masterId = scan.nextLine();
 
 			isExist = notService.checkNotice(masterId);
@@ -166,6 +166,20 @@ public class NoticeMain {
 
 		System.out.print("공지 등급>> ");
 		String notGrade = scan.nextLine();
+		
+		NoticeVO nv = new NoticeVO();
+		nv.setMasterId(masterId);
+		nv.setNotTitle(notTitle);
+		nv.setNotContent(notContent);
+		nv.setNotGrade(notGrade);
+
+		int cnt = notService.registNotice(nv);
+
+		if (cnt > 0) {
+			System.out.println("공지 수정을 성공적으로 완료하였습니다.");
+		} else {
+			System.out.println("공지 수정에 실패하였습니다.");
+		}
 
 	}
 
@@ -174,18 +188,17 @@ public class NoticeMain {
 	 */
 	private void deleteNotice() {
 		System.out.println();
-		System.out.println("관리자ID를 입력하세요.");
-		System.out.println("관리자 ID >> ");
-		String masterId = scan.nextLine();
-		System.out.println("공지 제목을 입력하세요. ");
-		String notContent = scan.nextLine();
+		searchNotice();
+		System.out.println("삭제할 공지 번호를 선택하세요.");
+		System.out.print("공지번호 >> ");
+		int noticeNum = scan.nextInt();
 
-		int cnt = notService.removeNotice(masterId);
+		int cnt = notService.removeNotice(noticeNum);
 
 		if (cnt > 0) {
-			System.out.println(masterId + "가 작성한 공지 삭제");
+			System.out.println(noticeNum + "번 공지 삭제");
 		} else {
-			System.out.println(masterId + "가 작성한 공지 삭제 작업 실패");
+			System.out.println(noticeNum + "번 공지 삭제 실패");
 		}
 
 	}
@@ -231,7 +244,7 @@ public class NoticeMain {
 
 			}
 		}
-		System.out.println("검색 작업 끝.");
+		System.out.println("공지 검색 작업이 종료되었습니다.");
 
 	}
 

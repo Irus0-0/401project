@@ -1,4 +1,4 @@
-																	package kr.or.ddit.teampro.notice.Dao;
+package kr.or.ddit.teampro.notice.dao;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface NoticeDao {
 	
 	public int insertNotice(NoticeVO nv);
 	public int updateNotice(NoticeVO nv);
-	public int deleteNotice(String masterId);
+	public int deleteNotice(int noticeNum);
 	public boolean checkNotice(String masterId);
 	public List<NoticeVO> selectAllNotice();
 	public List<NoticeVO> searchNotice(NoticeVO nv);

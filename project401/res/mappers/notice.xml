@@ -19,20 +19,20 @@
 	
 	<update id="updateNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
 		
-		update notice set notice_num = #{noticeNum},title = #{notTitle},content = #{notContent},
-		create_date = #{notDate}, grade = #{notGrade} where master_id = #{masterId}
+		update notice set notice_num = #{noticeNum}, title = #{notTitle}, content = #{notContent},
+		create_date = #{notDate}, notice_grade = #{notGrade} where master_id = #{masterId}
 	
 	</update>
 	
 	<delete id="deleteNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
 	
-		delete from notice whrer master_id = #{masterId}
+		delete from notice where notice_num = #{noticeNum}
 
 	</delete>
 	
 	<!--공지 모두 출력-->
 	
-	<select id="selectAllNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
+	<select id="selectAllNotice" resultMap="notMap">
 		
 		select notice_num, master_id,title,content,create_date,notice_grade from notice
 	
@@ -51,24 +51,24 @@
 	<select id="getNotice" resultType="kr.or.ddit.teampro.notice.vo.NoticeVO">
 		
 		select notice_num as noticeNum, title as notTitle, content as notContent, create_date as notDate,
-		grade as notGrade where master_id = #{masterId}
+		notice_grade as notGrade where master_id = #{masterId}
 		
 	</select>
 	
 	<!--resultmap 으로 속성을 매핑시켜라-->
 	
-	<resultMap id = "notMap" type="notVo">
+	<resultMap id = "notMap" type="noticeVO">
 		
 		<result column="notice_num" property = "noticeNum"/>
 		<result column="master_id" property = "masterId"/>
 		<result column="title" property = "notTitle"/>
 		<result column="content" property = "notContent"/>
 		<result column="create_date" property = "notDate"/>
-		<result column="grade" property = "notGrade"/>
+		<result column="notice_grade" property = "notGrade"/>
 		
 	</resultMap>
 	
-	<!--관리자 아이디로 공지를 검색해서 가져오는 구문 -->
+	
 	 
 	 <select id="searchNotice" resultMap ="notMap">
 		 
@@ -77,13 +77,13 @@
 		 <if test="noticeNum != null and noticeNum != ''">
 			 and notice_num = #{noticeNum} </if>
 		 <if test="notTitle != null and notTitle != ''">
-			 and notice_title like '%' || #{notTitle}||'%'  </if>
+			 and title like '%' || #{notTitle}||'%'  </if>
 		 <if test="notContent != null and notContent != ''">
 			 and content like '%' || #{notContent}||'%' </if>
 		 <if test="notDate != null and notDate != ''">
 			 and create_date = #{notDate} </if>
 		 <if test="notGrade != null and notGrade != ''">
-			 and grade = #{notGrade} </if>
+			 and notice_grade = #{notGrade} </if>
 		 
 	 </select>
 	

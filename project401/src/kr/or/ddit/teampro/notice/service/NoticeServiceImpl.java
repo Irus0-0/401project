@@ -2,8 +2,8 @@ package kr.or.ddit.teampro.notice.service;
 
 import java.util.List;
 
-import kr.or.ddit.teampro.notice.Dao.NoticeDao;
-import kr.or.ddit.teampro.notice.Dao.NoticeDaoImpl;
+import kr.or.ddit.teampro.notice.dao.NoticeDao;
+import kr.or.ddit.teampro.notice.dao.NoticeDaoImpl;
 import kr.or.ddit.teampro.notice.vo.NoticeVO;
 
 public class NoticeServiceImpl implements INoticeService{
@@ -35,8 +35,8 @@ public class NoticeServiceImpl implements INoticeService{
 	}
 
 	@Override
-	public int removeNotice(String masterId) {
-		return notDao.deleteNotice(masterId);
+	public int removeNotice(int noticeNum) {
+		return notDao.deleteNotice(noticeNum);
 	}
 
 	@Override

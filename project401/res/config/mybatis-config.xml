@@ -9,15 +9,15 @@
 
     <settings>
         <setting name="jdbcTypeForNull" value="NULL"/>
-        
-        <!-- DB 컬럼명을 낙타표기법으로 속성명과 자동 매핑 설정하기 -->
-<!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
 
     </settings>
 
     <typeAliases>
-<!--        <typeAlias type="kr.or.ddit.member.vo.MemberVO" alias="memVO"/>-->
    	<typeAlias type="kr.or.ddit.teampro.notice.vo.NoticeVO" alias = "noticeVO" />
+   	<typeAlias type="kr.or.ddit.teampro.event.vo.EventVO" alias = "eventVO"/>
+   
+   	
+   	
     </typeAliases>
 
     <environments default="dev">
@@ -39,6 +39,9 @@
     <mappers>
 <!--        <mapper resource="mappers/member.xml"/>-->
 			<mapper resource="mappers/notice.xml"/>
+			<mapper resource="mappers/event.xml"/>
+			
+			
     </mappers>
 
 </configuration>

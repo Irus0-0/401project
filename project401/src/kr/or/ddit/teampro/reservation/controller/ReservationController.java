@@ -14,6 +14,7 @@ public class ReservationController {
     private ReservationService resService;
     private Scanner sc;
     static ReservationVo resVo = new ReservationVo();
+    List<ReservationVo> reservationVoList;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public ReservationController() throws ParseException {
@@ -101,7 +102,7 @@ public class ReservationController {
 
     /**
      * 모든 예약 정보를 출력
-     * */
+     */
     private void checkAllMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
         List<ReservationVo> reservationVoList =
                 resService.searchUserReservation(resVo.getCustomerId());
@@ -126,10 +127,9 @@ public class ReservationController {
 
     /**
      * 진행중 또는 아직 시행되지 않은 모든 예약정보 출력
-     * */
+     */
     private void checkAllUseMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
-        List<ReservationVo> reservationVoList =
-                resService.searchUserUseReservation(resVo.getCustomerId());
+        reservationVoList = resService.searchUserUseReservation(resVo.getCustomerId());
         if (reservationVoList.size() == 0) {
             System.out.println("예약이 없습니다.");
         } else {
@@ -180,6 +180,12 @@ public class ReservationController {
         System.out.println("수정할 예약을 선택해주세요");
         System.out.print("입력> ");
         int choseResNum = Integer.parseInt(sc.nextLine());
+        resVo = reservationVoList.get(choseResNum);
+        System.out.println("방번호 변경"); // 그 숙박시설의 변경이 가능한 방을 보여준 뒤 선택
+        System.out.println("예약날짜 변경"); // 예약날짜 또한 마찬가지
+        System.out.println("인원 수 변경");
+
+
 
         // List 인덱스 넣고 나온 값으로 변경 시도
 //        resService.modifyReservation();
@@ -189,7 +195,7 @@ public class ReservationController {
 
     /**
      * 예약 취소 출력
-     * */
+     */
     private void deleteMyReservation() {
         int choiceNum;
         System.out.println("예약을 취소 하시겠습니까?");

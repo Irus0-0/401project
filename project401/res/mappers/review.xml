@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+    <resultMap type="review.vo.ReviewVO" id="reviewVO">
+        <result property="reservationNum" column="reservation_num"/>
+        <result property="content" column="content"/>
+        <result property="starPoint" column="star_point"/>
+        <result property="reviewNum" column="review_num"/>
+    </resultMap>
+
+
+
+    <insert id="add">
+        INSERT INTO review (reservation_num, content, star_point, review_num)
+        VALUES (#{reservationNum}, #{content}, #{starPoint}, review_seq.nextval)
+    </insert>
+
+    <delete id="delete">
+        delete from review
+          where review_num = #{reviewNum}
+    </delete>
+
+    <update id="update">
+        update review
+           set content = #{content}, star_point = #{starPoint}
+         where review_num = #{reviewNum}
+    </update>
+
+
+    <select id="maxNum" resultMap="reviewVO">
+        select max(review_num) from review
+    </select>
+
+    <select id="display" resultMap="reviewVO">
+        select *
+          from review
+
+    </select>
+
+    <select id="displayAll" resultMap="reviewVO">
+        select *
+          from review
+        order by review_num desc
+    </select>
+
+</mapper>

@@ -1,31 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Configuration>
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %5p [%C] %m%n"/>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+        <RollingFile name="MultiChatFileAppender" fileName="logs/multi-chat.log"
+                     filePattern="logs/multi-chat-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
     </Appenders>
-
     <Loggers>
-<!--
-
-        <Logger name="log4jExam.sql.Query" level="error" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
-        <Logger name="log4jExam.sql.Parameter" level="trace" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
-        <Logger name="kr.or.ddit.basic.T01MemberInfoTest" level="debug" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
--->
-
-        <Root level="trace">
-            <AppenderRef ref="console"/>
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MultiChatFileAppender"/>
         </Root>
-
+        <!-- 에러 이벤트만 로그 파일에 출력 -->
+        <!--
+        <Logger name="homework.MultiChatServer" level="error" additivity="false">
+            <AppenderRef ref="MultiChatFileAppender"/>
+        </Logger>
+        <Logger name="homework.MultiChatClient" level="error" additivity="false">
+            <AppenderRef ref="MultiChatFileAppender"/>
+        </Logger>
+        -->
     </Loggers>
 </Configuration>

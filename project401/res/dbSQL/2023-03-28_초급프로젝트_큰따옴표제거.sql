@@ -247,7 +247,7 @@ COMMENT ON COLUMN event.end_date IS '이벤트가 종료되는 날짜';
 				
 DROP TABLE evant_proposal;				
 				
-CREATE TABLE evant_proposal (				
+CREATE TABLE event_proposal (				
 	event_num	NUMBER		NOT NULL,
 	master_id	VARCHAR2(50)		NOT NULL,
 	proposal_isok	CHAR(1)	DEFAULT 'F'	NULL

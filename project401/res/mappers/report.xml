@@ -26,6 +26,7 @@
         insert into report_co (report_num, reservation_num, reason)
         values (#{reportNum}, #{resNum}, #{reason})
     </insert>
+
     <!--    기업이 신고 하기-->
     <insert id="reportByCo" parameterType="reportVo">
         insert into report_user (report_num, reservation_num, reason)
@@ -36,31 +37,35 @@
     <!-- 유저가 신고한 정보 수정하기-->
     <update id="updateReportByUser" parameterType="reportVo">
         update report_co
-        set reservation_num = #{resNum},
-            reason          = #{reason}
+        set reason = #{reason}
         where report_num = #{reportNum}
+        and report_num not IN (select REPORT_NUM from report_co_PROCESS);
     </update>
 
     <!-- 기업이 신고한 정보 수정하기-->
     <update id="updateReportByCo" parameterType="reportVo">
         update report_user
-        set reservation_num = #{resNum},
-            reason          = #{reason}
+        set reason = #{reason}
         where report_num = #{reportNum}
+        and report_num not IN (select REPORT_NUM from REPORT_USER_PROCESS);
     </update>
 
-    <!--  유저가 신고한 정보 삭제하기-->
+    <!--  유저가 신고한 정보 삭제하기 + 이미 처리된 기록이 있으면 삭제 불가-->
     <delete id="deleteReportByUser" parameterType="int">
         delete
         from report_co
         where report_num = #{reportNum}
+--           AND report_num
+--         NOT IN (select A.report_num from REPORT_CO_PROCESS A)
     </delete>
 
-    <!--  기업이 신고한 정보 삭제하기-->
+    <!--  기업이 신고한 정보 삭제하기 + 이미 처리된 기록이 있으면 삭제 불가-->
     <delete id="deleteReportByCo" parameterType="int">
         delete
         from report_user
         where report_num = #{reportNum}
+--           AND report_num
+--         NOT IN (select A.report_num from REPORT_USER_PROCESS A)
     </delete>
 
     <!--   선택한 유저가 신고한 모든 정보 확인하기-->
@@ -109,10 +114,37 @@
         WHERE NOT (A.REPORT_NUM = B.REPORT_NUM);
     </select>
 
-    <insert id="reportResultByCo" parameterType="reportVo">
-        insert into report_user (report_num, reservation_num, reason)
-        values (#{reportNum}, #{resNum}, #{reason})
+    <!--    사용자가 신고한 내용에 신고 처리 결과 등록-->
+    <insert id="reportResultByCo" parameterType="reportResultVo">
+        insert into report_co_process (report_num, master_id, result, start_date, end_date)
+        values (#{reportNum}, #{masterId}, #{result}, #{startDate}, #{endDate})
     </insert>
+
+    <!--    기업이 신고한 내용에 신고 처리 결과 등록-->
+    <insert id="reportResultByUser" parameterType="reportResultVo">
+        insert into report_user_process (report_num, master_id, result, start_date, end_date)
+        values (#{reportNum}, #{masterId}, #{result}, #{startDate}, #{endDate})
+    </insert>
+
+<!-- 사용자가 신고한 내용의 신고처리 업데이트-->
+    <update id="updateReportResultByCo" parameterType="reportResultVo">
+        update report_co_process
+        set master_id  = #{masterId},
+            result     = #{result},
+            start_date = #{startDate},
+            end_date   = #{endDate}
+        where report_num = #{reportNum}
+    </update>
+
+    <!-- 사용자가 신고한 내용의 신고처리 업데이트-->
+    <update id="updateReportResultByUser" parameterType="reportResultVo">
+        update report_user_process
+        set master_id  = #{masterId},
+            result     = #{result},
+            start_date = #{startDate},
+            end_date   = #{endDate}
+        where report_num = #{reportNum}
+    </update>
 
 
 </mapper>

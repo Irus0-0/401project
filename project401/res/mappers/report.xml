@@ -21,6 +21,20 @@
     </resultMap>
 
 
+<!--    신고 했는지 검증-->
+    <select id="reportCheckByUser" parameterType="reportVo" resultType="int">
+        SELECT count(*)
+        FROM report_co
+        WHERE REPORT_NUM = #{reportNum} AND reservation_num = #{resNum}
+    </select>
+
+    <select id="reportCheckByCo" parameterType="reportVo" resultType="int">
+        SELECT count(*)
+        FROM report_user
+        WHERE REPORT_NUM = #{reportNum} AND reservation_num = #{resNum}
+    </select>
+
+
     <!--     유저가 신고 하기 -->
     <insert id="reportByUser" parameterType="reportVo">
         insert into report_co (report_num, reservation_num, reason)
@@ -68,22 +82,47 @@
 --         NOT IN (select A.report_num from REPORT_USER_PROCESS A)
     </delete>
 
+<!--    모든 유저가 신고한 정보 확인-->
+    <select id="selectAllReportByUser" resultMap="reportMap">
+        SELECT REPORT_NUM, RESERVATION_NUM, REASON
+        FROM REPORT_CO
+    </select>
+
+<!--    모든 기업이 신고한 정보 확인-->
+    <select id="selectAllReportByUsCO" resultMap="reportMap">
+        SELECT REPORT_NUM, RESERVATION_NUM, REASON
+        FROM REPORT_USER
+    </select>
+
     <!--   선택한 유저가 신고한 모든 정보 확인하기-->
     <!--    Where 절 수정 필요할지도 모름-->
-    <select id="selectAllReportByUser" resultMap="reportMap">
+    <select id="selectAllReportByChoseUser" resultMap="reportMap" parameterType="String">
         SELECT A.REPORT_NUM, A.RESERVATION_NUM, A.REASON
         FROM REPORT_CO A,
-             (SELECT #{reservationNum} FROM RESERVATION WHERE #{customerId} = customer_id) B
-        WHERE A.RESERVATION_NUM = #{reservationNum}
+             (SELECT RESERVATION_NUM AS resNum FROM RESERVATION WHERE #{customerId} = customer_id) B
+        WHERE A.RESERVATION_NUM IN B.resNum
     </select>
 
     <!--    선택한 기업이 신고한 모든 정보 확인하기-->
-    <select id="selectAllReportByCo" resultMap="reportMap">
+    <select id="selectAllReportByChoseCo" resultMap="reportMap" parameterType="String">
         SELECT A.REPORT_NUM, A.RESERVATION_NUM, A.REASON
         FROM REPORT_USER A,
-             (SELECT #{reservationNum} FROM RESERVATION WHERE #{companyId} = company_id) B
-        WHERE A.RESERVATION_NUM = #{reservationNum}
+             (SELECT RESERVATION_NUM AS resNum FROM RESERVATION WHERE #{companyId} = company_id) B
+        WHERE A.RESERVATION_NUM IN B.resNum
     </select>
+
+<!--    &lt;!&ndash;    모든 유저의 신고 조회&ndash;&gt;-->
+<!--    <select id="selectAllReportByUser" resultMap="reportResultMap">-->
+<!--        SELECT *-->
+<!--        FROM report_co-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;    모든 기업의 신고 조회&ndash;&gt;-->
+<!--    <select id="selectAllReportByCo" resultMap="reportResultMap">-->
+<!--        SELECT *-->
+<!--        FROM report_user-->
+<!--    </select>-->
+
 
     <!--    ==================================================================================================      -->
     <!--    모든 유저가 신고한 결과 조회-->
@@ -99,7 +138,7 @@
     </select>
 
     <!--    처리하지 않은 유저가 신고한 결과 조회-->
-    <select id="selectAllReportResultByUser" resultMap="reportResultMap">
+    <select id="selectAllReportResultByUserF" resultMap="reportResultMap">
         SELECT B.REPORT_NUM, B.reservation_num, B.reason
         FROM report_co_process A,
              (SELECT * FROM report_co) B
@@ -107,7 +146,7 @@
     </select>
 
     <!--    처리하지 않은 기업이 신고한 결과 조회-->
-    <select id="selectAllReportResultByUser" resultMap="reportResultMap">
+    <select id="selectAllReportResultByCoF" resultMap="reportResultMap">
         SELECT B.REPORT_NUM, B.reservation_num, B.reason
         FROM report_user_process A,
              (SELECT * FROM report_user) B

@@ -35,4 +35,12 @@ public class ReportVo {
         this.reason = reason;
     }
 
+    @Override
+    public String toString() {
+        return "ReportVo{" +
+                "reportNum=" + reportNum +
+                ", resNum='" + resNum + '\'' +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }

@@ -1,17 +1,19 @@
 package kr.or.ddit.teampro.report.dao;
 
 import kr.or.ddit.teampro.report.vo.ReportVo;
-import kr.or.ddit.teampro.reservation.vo.ReservationVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReportDao {
     // 파라미터  whoReport T = 유저가 신고 / F = 기업이 신고
     // 신고하는 기능 
     int insertReport(ReportVo reportVo, boolean whoReport);
 
+    int checkReport(ReportVo reportVo, boolean whoReport);
+
     // 신고한 자료 수정하기
-    int modifyReport(ReportVo reportVo, boolean whoReport);
+    int updateReport(ReportVo reportVo, boolean whoReport);
 
     // 신고 취소하기
     int deleteReport(int reportNum, boolean whoReport);
@@ -19,8 +21,8 @@ public interface ReportDao {
     // 모든 신고 조회하기(관리자가 로그로 사용)
     List<ReportVo> selectAllReport(boolean whoReport);
 
-    // 선택한 유저나 기업이 신고한 모든 정보 확인하기 파라미터 수정 필요
-    List<ReportVo> selectAllReport(boolean whoReport, ReservationVo reservationVo);
+    // 선택한 유저나 기업이 신고한 모든 정보 확인하기
+    List<ReportVo> selectAllReport(boolean whoReport, Map search);
 
     //------------------------------------------------------
 
@@ -34,7 +36,7 @@ public interface ReportDao {
     int insertReportResult(boolean whoReport, ReportVo reportVo);
 
     // 관리자가 신고 처리 결과 수정
-    int modifyReportResult(boolean whoReport, ReportVo reportVo);
+    int updateReportResult(boolean whoReport, ReportVo reportVo);
 
 
 }

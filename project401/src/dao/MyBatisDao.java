@@ -20,7 +20,7 @@ public class MyBatisDao {
 			obj = sqlSession.selectOne(statement);
 			
 		}catch(PersistenceException ex) {
-			throw new RuntimeException("마이바티스에서 데이터 조회 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 데이터 조회 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -39,7 +39,7 @@ public class MyBatisDao {
 			obj = sqlSession.selectOne(statement, parameter);
 			
 		}catch(PersistenceException ex) {
-			throw new RuntimeException("마이바티스에서 데이터 조회 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 데이터 조회 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -58,7 +58,7 @@ public class MyBatisDao {
 			list = sqlSession.selectList(statement);
 			
 		}catch(PersistenceException ex) {
-			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -76,7 +76,7 @@ public class MyBatisDao {
 			list = sqlSession.selectList(statement, parameter);
 			
 		}catch(PersistenceException ex) {
-			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -99,7 +99,7 @@ public class MyBatisDao {
 			
 		}catch(PersistenceException ex) {
 			sqlSession.rollback();
-			throw new RuntimeException("마이바티스에서 데이터 등록 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 데이터 등록 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -119,7 +119,7 @@ public class MyBatisDao {
 			
 		}catch(PersistenceException ex) {
 			sqlSession.rollback();
-			throw new RuntimeException("마이바티스에서 데이터 수정 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 데이터 수정 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}
@@ -139,7 +139,7 @@ public class MyBatisDao {
 			
 		}catch(PersistenceException ex) {
 			sqlSession.rollback();
-			throw new RuntimeException("마이바티스에서 데이터 삭제 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 데이터 삭제 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}

@@ -53,7 +53,7 @@
         update report_co
         set reason = #{reason}
         where report_num = #{reportNum}
-        and report_num not IN (select REPORT_NUM from report_co_PROCESS);
+        and report_num not IN (select REPORT_NUM from report_co_PROCESS)
     </update>
 
     <!-- 기업이 신고한 정보 수정하기-->
@@ -61,7 +61,7 @@
         update report_user
         set reason = #{reason}
         where report_num = #{reportNum}
-        and report_num not IN (select REPORT_NUM from REPORT_USER_PROCESS);
+        and report_num not IN (select REPORT_NUM from REPORT_USER_PROCESS)
     </update>
 
     <!--  유저가 신고한 정보 삭제하기 + 이미 처리된 기록이 있으면 삭제 불가-->
@@ -69,8 +69,8 @@
         delete
         from report_co
         where report_num = #{reportNum}
---           AND report_num
---         NOT IN (select A.report_num from REPORT_CO_PROCESS A)
+          AND report_num
+        NOT IN (select A.report_num from REPORT_CO_PROCESS A)
     </delete>
 
     <!--  기업이 신고한 정보 삭제하기 + 이미 처리된 기록이 있으면 삭제 불가-->
@@ -78,8 +78,8 @@
         delete
         from report_user
         where report_num = #{reportNum}
---           AND report_num
---         NOT IN (select A.report_num from REPORT_USER_PROCESS A)
+          AND report_num
+        NOT IN (select A.report_num from REPORT_USER_PROCESS A)
     </delete>
 
 <!--    모든 유저가 신고한 정보 확인-->
@@ -110,18 +110,6 @@
              (SELECT RESERVATION_NUM AS resNum FROM RESERVATION WHERE #{companyId} = company_id) B
         WHERE A.RESERVATION_NUM IN B.resNum
     </select>
-
-<!--    &lt;!&ndash;    모든 유저의 신고 조회&ndash;&gt;-->
-<!--    <select id="selectAllReportByUser" resultMap="reportResultMap">-->
-<!--        SELECT *-->
-<!--        FROM report_co-->
-<!--    </select>-->
-
-<!--    &lt;!&ndash;    모든 기업의 신고 조회&ndash;&gt;-->
-<!--    <select id="selectAllReportByCo" resultMap="reportResultMap">-->
-<!--        SELECT *-->
-<!--        FROM report_user-->
-<!--    </select>-->
 
 
     <!--    ==================================================================================================      -->

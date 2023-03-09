@@ -20,6 +20,7 @@ public class CustomerDao implements ICustomerDao {
         return instance;
     }
 
+    //고객 등록
     @Override
     public int insertCustomer(CustomerVO uv) {
         SqlSession sqlSession = MyBatisUtil.getInstance();
@@ -29,6 +30,7 @@ public class CustomerDao implements ICustomerDao {
             result = sqlSession.insert("customer.insert", uv);
             sqlSession.commit();
         } catch (Exception e) {
+            //에러 터지면 롤백
             sqlSession.rollback();
             e.printStackTrace();
         } finally {
@@ -36,13 +38,14 @@ public class CustomerDao implements ICustomerDao {
         }
         return result;
     }
-
+    //고객 삭제
     @Override
     public int deleteCustomer(CustomerVO uv) {
         SqlSession session = MyBatisUtil.getInstance();
 
         int result = session.delete("customer.delete", uv);
 
+        //안되면 롤백
         if (!(result > 0)) session.rollback();
 
         session.commit();
@@ -51,16 +54,19 @@ public class CustomerDao implements ICustomerDao {
     }
 
 
+    //미구현
     @Override
     public int updateCustomer(CustomerVO uv) {
        return 0;
     }
 
+    //미구현
     @Override
     public CustomerVO displayCustomer(CustomerVO uv) {
         return null;
     }
 
+    //계정확인여부
     @Override
     public boolean isExist(CustomerVO cv) {
         SqlSession sqlSession = MyBatisUtil.getInstance();
@@ -73,6 +79,7 @@ public class CustomerDao implements ICustomerDao {
         return result;
     }
 
+    //로그인
     @Override
     public CustomerVO login(CustomerVO cv) {
         SqlSession sqlSession = MyBatisUtil.getInstance();

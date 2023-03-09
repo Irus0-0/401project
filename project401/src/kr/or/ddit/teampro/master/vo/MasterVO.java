@@ -1,10 +1,10 @@
 package kr.or.ddit.teampro.master.vo;
 
 public class MasterVO {
-    private String masterId;
-    private String masterPw;
-    private String name;
-    private int grade;
+    private String masterId; //아이디
+    private String masterPw; //비밀번호
+    private String name; //관리자 이름
+    private int grade; // 관리자 등급
 
     public String getMasterId() {
         return masterId;

@@ -49,6 +49,7 @@ public class Master {
     public void start() {   // 컨트롤러
         int choice;
         try {
+            //반복
             while (true) {
                 displayMenu(); //메뉴 출력
                 choice = Integer.parseInt(scan.nextLine());; // 메뉴번호 입력받기
@@ -78,6 +79,7 @@ public class Master {
                 }
             }
         } catch (Exception e) {
+            //잘못 입력
             System.out.println("잘못 입력했습니다\n다시 입력하세요");
             start();
         }
@@ -86,10 +88,12 @@ public class Master {
     //관리자 계정 삭제
     public void deleteId() {
         MasterVO mv = masterService.getVo();
+        //로그인 x
         if (mv == null) {
             System.out.println("계정삭제가 불가능합니다\n로그인하세요");
             return;
         }
+        //로그인 o
         System.out.print(mv.getMasterId()+" ");
 
         System.out.println("삭제하시겠습니까?");
@@ -110,6 +114,7 @@ public class Master {
                 start();
                 break;
             default:
+                //잘못된 값 처리
                 System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
                 deleteId();
         }
@@ -188,12 +193,15 @@ public class Master {
     public void insertMaster() {
         MasterVO mvc = new MasterVO();
         mvc = masterService.getVo();
+        //관리자 로그인 x 때 접근
         if(mvc == null) {
             System.out.println("관리자 추가가 불가능합니다\n로그인하세요");
             return;
         }
 
+        //관리자 등급 불러오기
         int gradeCd = mvc.getGrade();
+        //관리자 등급으로 권한
         if (!(gradeCd>2)){
             System.out.println("관리자 등급이 낮습니다\n뒤로 돌아갑니다");
             return;
@@ -204,12 +212,11 @@ public class Master {
             System.out.println();
             System.out.println("새롭게 등록할 회원 정보를 입력하세요.");
             System.out.print("회원ID >> ");
-            masterId = scan.next();
+            masterId = scan.nextLine();
 
             MasterVO mv = new MasterVO();
             mv.setMasterId(masterId.trim());
 
-            scan.nextLine();
             //회원아이디 중복검사
             if (masterService.isExist(mv) == true) {
                 System.out.println(masterId + " 회원 ID 중복입니다.");
@@ -223,10 +230,7 @@ public class Master {
             System.out.print("관리자등급>> ");
             int grade = Integer.parseInt(scan.nextLine().trim());
 
-
-            scan.nextLine();  // 버퍼 비우기
-
-
+            //vo 객체에 담아서 insert문으로 보내기
             MasterVO mv1 = new MasterVO();
 
             mv1.setMasterId(masterId.trim());

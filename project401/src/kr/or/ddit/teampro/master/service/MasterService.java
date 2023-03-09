@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MasterService implements IMasterService{
 
-    private MasterVO mv;
+    private MasterVO mv; //vo 객체 저장용
 
     //singleton
     private static MasterService instance = null;

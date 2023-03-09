@@ -15,6 +15,7 @@ public class MasterDao implements IMasterDao {
     private MasterDao() {
     }
 
+    //싱글톤
     public static MasterDao getInstance() {
         if (instance == null) {
             instance = new MasterDao();

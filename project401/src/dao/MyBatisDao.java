@@ -139,7 +139,7 @@ public class MyBatisDao {
 			
 		}catch(PersistenceException ex) {
 			sqlSession.rollback();
-//			throw new RuntimeException("마이바티스에서 데이터 삭제 중 예외발생!!!", ex);
+			throw new RuntimeException("마이바티스에서 데이터 삭제 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}

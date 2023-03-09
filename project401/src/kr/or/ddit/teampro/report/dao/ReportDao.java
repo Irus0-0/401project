@@ -1,5 +1,6 @@
 package kr.or.ddit.teampro.report.dao;
 
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 
 import java.util.List;
@@ -27,16 +28,22 @@ public interface ReportDao {
     //------------------------------------------------------
 
     // 유저나 기업이 신고하거나 했었던 모든 자료를 조회
-    List<ReportVo> selectAllReportResults(boolean whoReport);
+    List<ReportResultVo> selectAllReportResults(boolean whoReport);
 
     // 아직 처리 되지 않은 결과들을 조회
     List<ReportVo> selectAllReportResultsF(boolean whoReport);
 
     // 관리자가 신고 처리 결과 등록
-    int insertReportResult(boolean whoReport, ReportVo reportVo);
+    int insertReportResult(boolean whoReport, ReportResultVo reportResultVo);
 
     // 관리자가 신고 처리 결과 수정
-    int updateReportResult(boolean whoReport, ReportVo reportVo);
+    int updateReportResult(boolean whoReport, ReportResultVo reportResultVo);
+
+    // 선택한 신고가 처리 되었는지 확인
+    int checkReportResult(boolean whoReport, ReportVo reportVo);
+
+    // 지정한 신고 결과 출력
+    ReportResultVo selectReportResult(boolean whoReport, ReportVo reportVo);
 
 
 }

@@ -49,4 +49,15 @@ public class ReportResultVo {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "ReportResultVo{" +
+                "reportNum=" + reportNum +
+                ", masterId='" + masterId + '\'' +
+                ", result='" + result + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

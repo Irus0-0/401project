@@ -2,8 +2,10 @@ package kr.or.ddit.teampro.report.controller;
 
 import kr.or.ddit.teampro.report.service.ReportService;
 import kr.or.ddit.teampro.report.service.ReportServiceImpl;
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +21,7 @@ public class ReportControllerMaster {
 
 
     public void displayReport4Master() {
-        int choiceNum;
+        int choiceNum = 0;
         boolean whoIs = true;
         while (true) {
 
@@ -27,7 +29,10 @@ public class ReportControllerMaster {
                     " 2.처리되지 않은 결과 조회하기 / " +
                     "3.선택한 유저의 신고 정보 확인하기 / 4.뒤로가기");
             System.out.print("입력> ");
-            choiceNum = Integer.parseInt(sc.nextLine());
+            try {
+                choiceNum = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+            }
             switch (choiceNum) {
                 case 1:
                     // 모든 신고 정보 확인
@@ -35,6 +40,7 @@ public class ReportControllerMaster {
                     break;
                 case 2:
                     // 처리하지 않은 신고 확인하기
+                    displayNeedProcess();
                     break;
                 case 3:
                     // 선택한 유저의 신고정보 확인하기
@@ -49,6 +55,83 @@ public class ReportControllerMaster {
         }
     }
 
+    // 처리가 필요한 신고 출력
+    private void displayNeedProcess() {
+
+        System.out.println("1. 유저 신고 확인하기 / 2. 기업신고 확인하기 / 3. 뒤로가기");
+        int choseNum = Integer.parseInt(sc.nextLine());
+        switch (choseNum) {
+            case 1:
+                System.out.println("처리가 필요한 유저들의 신고내역을 출력합니다");
+                List<ReportVo> reportVoListUser = reportService.ReportResultsFInquire(true);
+                for (int i = 0; i < reportVoListUser.size(); i++) {
+                    System.out.println(i + 1 + "번 " + reportVoListUser.get(i).toString());
+                }
+                // 처리하는 기능 넣어야함
+                processReport(reportVoListUser, true);
+                break;
+
+            case 2:
+                System.out.println("처리가 필요한 기업들의 신고내역을 출력합니다");
+                List<ReportVo> reportVoListCo = reportService.ReportResultsFInquire(false);
+                for (int i = 0; i < reportVoListCo.size(); i++) {
+                    System.out.println(i + 1 + "번 " + reportVoListCo.get(i).toString());
+                }
+                // 처리 기능 필요
+                processReport(reportVoListCo, false);
+                break;
+
+
+        }
+
+    }
+
+    public void processReport(List<ReportVo> reportVoList, boolean whoIs) {
+        System.out.println("==================================================");
+        System.out.println("1.신고 처리하기 / 2. 뒤로가기");
+        System.out.print("입력> ");
+        int choiceNum;
+        choiceNum = Integer.parseInt(sc.nextLine());
+        switch (choiceNum) {
+            case 1:
+                System.out.println("처리할 신고를 선택해 주세요");
+                System.out.print("입력> ");
+                choiceNum = Integer.parseInt(sc.nextLine());
+                boolean isOk = reportVoList.size() + 1 > choiceNum && choiceNum > 0;
+                // 사이즈 만큼 입력 가능하고 그 외 숫자를 입력하면 다시 입력받게 해야함
+                if (isOk) {
+                    ReportVo reportVo = reportVoList.get(choiceNum - 1);
+                    ReportResultVo reportResultVo = new ReportResultVo();
+                    reportResultVo.setReportNum(reportVo.getReportNum());
+                    reportResultVo.setMasterId("test");
+                    System.out.println("처리내용을 입력해주세요");
+                    System.out.print("입력> ");
+//                    sc.nextLine();
+                    reportResultVo.setResult("이거 죄가 확실하구만");
+                    Date date = new Date();// 수정 필요
+                    System.out.println("제재를 가할 기간을 입력해주세요(예: 2023-03-09)");
+                    System.out.print("입력> ");
+                    reportResultVo.setStartDate(date);
+                    reportResultVo.setEndDate(date);
+                    if (reportService.registerReportResult(whoIs, reportResultVo) > 0) {
+                        System.out.println("처리되었습니다");
+                    } else {
+                        System.out.println("다시 시도해 주세요");
+                    }
+                } else {
+                    System.out.println("잘못된 번호입니다 다시 입력해 주세요");
+                }
+                break;
+            case 2:
+                // 돌아가기
+                return;
+            default:
+                System.out.println("잘못된 번호입니다 다시 입력해주세요");
+                break;
+        }
+        // 관리자가 미처리된 신고내역 확이
+    }
+
     // 모든 신고 조회하기(결과도 같이 보이게 해야겠음)
     public void displayAllReportResult(boolean whoIs) {
         // 모든 신고 정보 가져오기
@@ -56,12 +139,10 @@ public class ReportControllerMaster {
         for (ReportVo reportVo : reportVoList) {
             System.out.println(reportVo.toString());
         }
-
-        // 모든 신고 결과 조회하기
-        reportService.ReportResultsFInquire(whoIs);
     }
 
     public static void main(String[] args) {
         new ReportControllerMaster().displayReport4Master();
     }
 }
+

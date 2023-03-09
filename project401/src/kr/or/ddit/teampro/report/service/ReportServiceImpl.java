@@ -2,12 +2,13 @@ package kr.or.ddit.teampro.report.service;
 
 import kr.or.ddit.teampro.report.dao.ReportDao;
 import kr.or.ddit.teampro.report.dao.ReportDaoImpl;
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 
 import java.util.List;
 import java.util.Map;
 
-public class ReportServiceImpl implements ReportService{
+public class ReportServiceImpl implements ReportService {
 
     private ReportDao reportDao;
 
@@ -18,7 +19,7 @@ public class ReportServiceImpl implements ReportService{
     }
 
     public static ReportService getInstance() {
-        if(reportService == null) {
+        if (reportService == null) {
             reportService = new ReportServiceImpl();
         }
 
@@ -60,24 +61,37 @@ public class ReportServiceImpl implements ReportService{
     }
 
     @Override
-    public List<ReportVo> ReportResultsInquire(boolean whoReport) {
-        List<ReportVo> reportVoList = reportDao.selectAllReportResults(whoReport);
-        return reportVoList;
+    public List<ReportResultVo> ReportResultsInquire(boolean whoReport) {
+        List<ReportResultVo> reportResultVoList = reportDao.selectAllReportResults(whoReport);
+        return reportResultVoList;
     }
 
     @Override
     public List<ReportVo> ReportResultsFInquire(boolean whoReport) {
-        List<ReportVo> reportVoList = reportDao.selectAllReportResultsF(whoReport);
-        return reportVoList;
+        List<ReportVo> reportResultVoList = reportDao.selectAllReportResultsF(whoReport);
+        return reportResultVoList;
     }
 
     @Override
-    public int registerReportResult(boolean whoReport, ReportVo reportVo) {
-        return reportDao.insertReportResult(whoReport, reportVo);
+    public int registerReportResult(boolean whoReport,  ReportResultVo reportResultVo) {
+        return reportDao.insertReportResult(whoReport, reportResultVo);
     }
 
     @Override
-    public int modifyReportResult(boolean whoReport, ReportVo reportVo) {
-        return reportDao.updateReportResult(whoReport, reportVo);
+    public int modifyReportResult(boolean whoReport, ReportResultVo reportResultVo) {
+        return reportDao.updateReportResult(whoReport, reportResultVo);
     }
+
+    @Override
+    public int checkingReportResult(boolean whoReport, ReportVo reportVo) {
+        return reportDao.checkReportResult(whoReport, reportVo);
+    }
+
+    @Override
+    public ReportResultVo InquireReportResult(boolean whoReport, ReportVo reportVo) {
+        ReportResultVo reportResultVoList = reportDao.selectReportResult(whoReport, reportVo);
+        return reportResultVoList;
+    }
+
+
 }

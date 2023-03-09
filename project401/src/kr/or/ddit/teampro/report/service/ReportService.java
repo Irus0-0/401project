@@ -1,5 +1,6 @@
 package kr.or.ddit.teampro.report.service;
 
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 
 import java.util.List;
@@ -26,15 +27,20 @@ public interface ReportService {
     List<ReportVo> ReportInquire(boolean whoReport, Map search);
 
     // 유저나 기업이 신고하거나 했었던 모든 자료를 조회
-    List<ReportVo> ReportResultsInquire(boolean whoReport);
+    List<ReportResultVo> ReportResultsInquire(boolean whoReport);
 
     // 아직 처리 되지 않은 결과들을 조회
     List<ReportVo> ReportResultsFInquire(boolean whoReport);
 
     // 관리자가 신고 처리 결과 등록
-    int registerReportResult(boolean whoReport, ReportVo reportVo);
+    int registerReportResult(boolean whoReport,  ReportResultVo reportResultVo);
 
     // 관리자가 신고 처리 결과 수정
-    int modifyReportResult(boolean whoReport, ReportVo reportVo);
+    int modifyReportResult(boolean whoReport,  ReportResultVo reportResultVo);
 
+    // 선택한 신고가 처리 되었는지 확인
+    int checkingReportResult(boolean whoReport, ReportVo reportVo);
+
+    // 지정한 신고 결과 출력
+    ReportResultVo InquireReportResult(boolean whoReport, ReportVo reportVo);
 }

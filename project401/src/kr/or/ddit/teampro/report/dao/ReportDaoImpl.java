@@ -1,6 +1,7 @@
 package kr.or.ddit.teampro.report.dao;
 
 import dao.MyBatisDao;
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 import kr.or.ddit.teampro.reservation.vo.ReservationVo;
 
@@ -143,16 +144,16 @@ public class ReportDaoImpl extends MyBatisDao implements ReportDao {
      * @return List에 사용자 또는 기업의 모든 신고 결과를 반환
      */
     @Override
-    public List<ReportVo> selectAllReportResults(boolean whoReport) {
-        List<ReportVo> ReportVoList;
+    public List<ReportResultVo> selectAllReportResults(boolean whoReport) {
+        List<ReportResultVo> reportResultList;
         if (whoReport) {
             // 유저가 신고
-            ReportVoList = selectList("report.selectAllReportResultByUser");
+            reportResultList = selectList("report.selectAllReportResultByUser");
         } else {
             // 기업이 신고
-            ReportVoList = selectList("report.selectAllReportResultByCo");
+            reportResultList = selectList("report.selectAllReportResultByCo");
         }
-        return ReportVoList;
+        return reportResultList;
     }
 
     /**
@@ -162,52 +163,90 @@ public class ReportDaoImpl extends MyBatisDao implements ReportDao {
      */
     @Override
     public List<ReportVo> selectAllReportResultsF(boolean whoReport) {
-        List<ReportVo> ReportVoList;
+        List<ReportVo> reportList;
         if (whoReport) {
             // 유저가 신고
-            ReportVoList = selectList("report.selectAllReportResultByUserF");
+            reportList = selectList("report.selectAllReportResultByUserF");
         } else {
             // 기업이 신고
-            ReportVoList = selectList("report.selectAllReportResultByCoF");
+            reportList = selectList("report.selectAllReportResultByCoF");
         }
-        return ReportVoList;
+        return reportList;
     }
 
     /**
      * 신고 결과 등록하기
-     * @param reportVo  신고 결과를 담은 객체
+     * @param reportResultVo  신고 결과를 담은 객체
      * @param whoReport T = 유저가 신고 / F = 기업이 신고
      * @return 0이면 실패 1이면 성공
      */
     @Override
-    public int insertReportResult(boolean whoReport, ReportVo reportVo) {
+    public int insertReportResult(boolean whoReport, ReportResultVo reportResultVo) {
         int cnt;
         if (whoReport) {
             // 유저가 신고
-            cnt = insert("report.updateReportResultByCo", reportVo);
+            cnt = insert("report.updateReportResultByCo", reportResultVo);
         } else {
             // 기업이 신고
-            cnt = insert("report.updateReportResultByUser", reportVo);
+            cnt = insert("report.updateReportResultByUser", reportResultVo);
         }
         return cnt;
     }
 
     /**
      * 신고 결과를 수정
-     * @param reportVo  수정된 결과를 담은 객체
+     * @param reportResultVo  수정된 결과를 담은 객체
      * @param whoReport T = 유저가 신고 / F = 기업이 신고
      * @return 0이면 실패 1이면 성공
      */
     @Override
-    public int updateReportResult(boolean whoReport, ReportVo reportVo) {
+    public int updateReportResult(boolean whoReport, ReportResultVo reportResultVo) {
         int cnt;
         if (whoReport) {
             // 유저가 신고
-            cnt = insert("report.updateReportResultByCo", reportVo);
+            cnt = insert("report.updateReportResultByCo", reportResultVo);
         } else {
             // 기업이 신고
-            cnt = insert("report.updateReportResultByUser", reportVo);
+            cnt = insert("report.updateReportResultByUser", reportResultVo);
         }
         return cnt;
+    }
+
+    /**
+     * 신고가 처리 되었는지 체크하는 기능
+     * @param reportVo  신고 번호를 받기 위한 객체
+     * @param whoReport T = 유저가 신고 / F = 기업이 신고
+     * @return 0이면 처리 중 1이면 처리완료
+     */
+    @Override
+    public int checkReportResult(boolean whoReport, ReportVo reportVo) {
+        int cnt;
+        if (whoReport) {
+            // 유저가 신고
+            cnt = selectOne("report.selectCountReportResultByUser", reportVo);
+        } else {
+            // 기업이 신고
+            cnt = selectOne("report.selectCountReportResultByCo", reportVo);
+        }
+        return cnt;
+    }
+
+    /**
+     * 지정한 신고 결과 출력
+     * @param whoReport T = 유저가 신고 / F = 기업이 신고
+     * @param reportVo 신고 번호를 받기 위한 객체
+     * @return 지정한 유저 또는 기업의 선택한 신고 결과 출력
+     */
+    @Override
+    public ReportResultVo selectReportResult(boolean whoReport, ReportVo reportVo) {
+        ReportResultVo reportResultList;
+        if (whoReport) {
+            // 유저가 신고
+            reportResultList = selectOne("report.selectReportResultByUser",reportVo);
+        } else {
+            // 기업이 신고
+            reportResultList = selectOne("report.selectReportResultByCo",reportVo);
+        }
+        return reportResultList;
     }
 }

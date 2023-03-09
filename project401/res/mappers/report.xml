@@ -125,20 +125,48 @@
         FROM report_user_process
     </select>
 
-    <!--    처리하지 않은 유저가 신고한 결과 조회-->
-    <select id="selectAllReportResultByUserF" resultMap="reportResultMap">
+    <!-- 선택한 신고가 처리 되었는지 확인(유저가 신고)-->
+    <select id="selectCountReportResultByUser" parameterType="reportResultVo" resultType="int">
+        SELECT count(*)
+        FROM report_co_process
+        WHERE REPORT_NUM = #{reportNum}
+    </select>
+
+    <!-- 선택한 신고가 처리 되었는지 확인(기업이 신고)-->
+    <select id="selectCountReportResultByCo" parameterType="reportResultVo" resultType="int">
+        SELECT count(*)
+        FROM report_user_process
+        WHERE REPORT_NUM = #{reportNum}
+    </select>
+
+    <!-- 지정한 사용자가 신고한 결과 출력-->
+    <select id="selectReportResultByUser" resultMap="reportResultMap">
+        SELECT *
+        FROM report_co_process
+        WHERE REPORT_NUM =#{reportNum}
+    </select>
+
+    <!-- 지정한 기업이 신고한 결과 출력-->
+    <select id="selectReportResultByCo" resultMap="reportResultMap">
+        SELECT *
+        FROM report_user_process
+        WHERE REPORT_NUM =#{reportNum}
+    </select>
+
+    <!--    처리되지 않은 신고한 결과 조회(유저가 신고)-->
+    <select id="selectAllReportResultByUserF" resultMap="reportMap">
         SELECT B.REPORT_NUM, B.reservation_num, B.reason
         FROM report_co_process A,
              (SELECT * FROM report_co) B
-        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM);
+        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
     </select>
 
-    <!--    처리하지 않은 기업이 신고한 결과 조회-->
-    <select id="selectAllReportResultByCoF" resultMap="reportResultMap">
+    <!--    처리되지 않은 신고한 결과 조회(기업이 신고)-->
+    <select id="selectAllReportResultByCoF" resultMap="reportMap">
         SELECT B.REPORT_NUM, B.reservation_num, B.reason
         FROM report_user_process A,
              (SELECT * FROM report_user) B
-        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM);
+        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
     </select>
 
     <!--    사용자가 신고한 내용에 신고 처리 결과 등록-->

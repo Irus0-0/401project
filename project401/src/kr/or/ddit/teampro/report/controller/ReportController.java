@@ -2,6 +2,7 @@ package kr.or.ddit.teampro.report.controller;
 
 import kr.or.ddit.teampro.report.service.ReportService;
 import kr.or.ddit.teampro.report.service.ReportServiceImpl;
+import kr.or.ddit.teampro.report.vo.ReportResultVo;
 import kr.or.ddit.teampro.report.vo.ReportVo;
 
 import java.util.HashMap;
@@ -107,9 +108,17 @@ public class ReportController {
                     ReportVo reportVo = reportVoList.get(choiceNum - 1);
                     System.out.println(reportVo);
                     // 결과가 있으면 출력 없으면 신고가 처리 중 입니다 라는 메시지 출력
-
-                    // 수정하기 , 삭제하기 기능이 표출
-                    displayModify(reportVo, whoIs);
+                    System.out.println("test: "+reportService.checkingReportResult(whoIs, reportVo));
+                    if (reportService.checkingReportResult(whoIs, reportVo) > 0) {
+                        // 신고 결과 출력
+                        System.out.println("========================신고 결과====================");
+                        ReportResultVo reportResultVo = reportService.InquireReportResult(whoIs, reportVo);
+                        System.out.println(reportResultVo.toString());
+                    } else {
+                        System.out.println("접수하신 신고는 처리 중 입니다");
+                        // 수정하기 , 삭제하기 기능이 표출
+                        displayModify(reportVo, whoIs);
+                    }
                 } else {
                     System.out.println("잘못된 번호입니다 다시 입력해 주세요");
                 }
@@ -136,7 +145,7 @@ public class ReportController {
                     System.out.print("사유> ");
                     String reason = sc.nextLine();
                     reportVo.setReason(reason);
-                    System.out.println("test: "+reportVo);
+                    System.out.println("test: " + reportVo);
                     if (reportService.modifyReport(reportVo, whoIs) > 0) {
                         System.out.println("수정이 완료되었습니다");
                     } else {

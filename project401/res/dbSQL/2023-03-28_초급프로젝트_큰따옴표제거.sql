@@ -40,7 +40,7 @@ CREATE TABLE reservation (
 	company_id	VARCHAR2(50)		NOT NULL,
 	start_date	DATE		NULL,
 	end_date	DATE		NULL,
-	peple_num	NUMBER		NULL
+	people_num	NUMBER		NULL
 );				
 				
 COMMENT ON COLUMN reservation.customer_id IS '유저 ID';				
@@ -56,7 +56,7 @@ COMMENT ON COLUMN reservation.start_date IS '예약 당일 날짜';
 				
 COMMENT ON COLUMN reservation.end_date IS '예약 종료 날짜';				
 				
-COMMENT ON COLUMN reservation.peple_num IS '예약 인원 수';				
+COMMENT ON COLUMN reservation.people_num IS '예약 인원 수';				
 				
 DROP TABLE accommodations;				
 				
@@ -107,7 +107,7 @@ DROP TABLE review;
 				
 CREATE TABLE review (				
 	reservation_num	VARCHAR2(50)		NOT NULL,
-	content	NUMBER		NULL,
+	content	VARCHAR2(50)		NULL,
 	star_point	NUMBER		NULL
 );				
 				
@@ -247,7 +247,7 @@ COMMENT ON COLUMN event.end_date IS '이벤트가 종료되는 날짜';
 				
 DROP TABLE evant_proposal;				
 				
-CREATE TABLE evant_proposal (				
+CREATE TABLE event_proposal (				
 	event_num	NUMBER		NOT NULL,
 	master_id	VARCHAR2(50)		NOT NULL,
 	proposal_isok	CHAR(1)	DEFAULT 'F'	NULL
@@ -263,12 +263,12 @@ T => 허가 됨';
 DROP TABLE report_co;				
 				
 CREATE TABLE report_co (				
-	report_co_num	NUMBER		NOT NULL,
+	report_num	NUMBER		NOT NULL,
 	reservation_num	VARCHAR2(50)		NOT NULL,
 	reason	CLOB		NULL
 );				
 				
-COMMENT ON COLUMN report_co.report_co_num IS '날짜 + 해당 날의 순번				
+COMMENT ON COLUMN report_co.report_num IS '날짜 + 해당 날의 순번				
 또는 시퀀스';				
 				
 COMMENT ON COLUMN report_co.reason IS '해당 기업을 신고한 사유 작성';				
@@ -276,12 +276,12 @@ COMMENT ON COLUMN report_co.reason IS '해당 기업을 신고한 사유 작성'
 DROP TABLE report_user;				
 				
 CREATE TABLE report_user (				
-	report_user_num	NUMBER		NOT NULL,
+	report_num	NUMBER		NOT NULL,
 	reservation_num	VARCHAR2(50)		NOT NULL,
 	reason	CLOB		NULL
 );				
 				
-COMMENT ON COLUMN report_user.report_user_num IS '날짜 + 해당 날의 순번				
+COMMENT ON COLUMN report_user.report_num IS '날짜 + 해당 날의 순번				
 또는 시퀀스(기업신고 시퀀스랑 같이 사용)';				
 				
 COMMENT ON COLUMN report_user.reason IS '신고 사유';				
@@ -289,14 +289,14 @@ COMMENT ON COLUMN report_user.reason IS '신고 사유';
 DROP TABLE report_co_process;				
 				
 CREATE TABLE report_co_process (				
-	report_co_num	NUMBER		NOT NULL,
+	report_num	NUMBER		NOT NULL,
 	master_id	VARCHAR2(50)		NOT NULL,
 	result	VARCHAR2(50)		NULL,
 	start_date	DATE		NULL,
 	end_date	DATE		NULL
 );				
 				
-COMMENT ON COLUMN report_co_process.report_co_num IS '날짜 + 해당 날의 순번				
+COMMENT ON COLUMN report_co_process.report_num IS '날짜 + 해당 날의 순번				
 또는 시퀀스';				
 				
 COMMENT ON COLUMN report_co_process.master_id IS '관리자 ID';				
@@ -304,14 +304,14 @@ COMMENT ON COLUMN report_co_process.master_id IS '관리자 ID';
 DROP TABLE report_user_process;				
 				
 CREATE TABLE report_user_process (				
-	report_user_num	NUMBER		NOT NULL,
+	report_num	NUMBER		NOT NULL,
 	master_id	VARCHAR2(50)		NOT NULL,
 	result	VARCHAR2(50)		NULL,
 	start_date	DATE		NULL,
 	end_date	DATE		NULL
 );				
 				
-COMMENT ON COLUMN report_user_process.report_user_num IS '날짜 + 해당 날의 순번				
+COMMENT ON COLUMN report_user_process.report_num IS '날짜 + 해당 날의 순번				
 또는 시퀀스(기업신고 시퀀스랑 같이 사용)';				
 				
 COMMENT ON COLUMN report_user_process.master_id IS '관리자 ID';				
@@ -364,19 +364,19 @@ ALTER TABLE evant_proposal ADD CONSTRAINT PK_EVANT_PROPOSAL PRIMARY KEY (
 );				
 				
 ALTER TABLE report_co ADD CONSTRAINT PK_REPORT_CO PRIMARY KEY (				
-	report_co_num			
+	report_num			
 );				
 				
 ALTER TABLE report_user ADD CONSTRAINT PK_REPORT_USER PRIMARY KEY (				
-	report_user_num			
+	report_num			
 );				
 				
 ALTER TABLE report_co_process ADD CONSTRAINT PK_REPORT_CO_PROCESS PRIMARY KEY (				
-	report_co_num			
+	report_num			
 );				
 				
 ALTER TABLE report_user_process ADD CONSTRAINT PK_REPORT_USER_PROCESS PRIMARY KEY (				
-	report_user_num			
+	report_num			
 );				
 				
 ALTER TABLE accommodations ADD CONSTRAINT FK_company_TO_accom_1 FOREIGN KEY (				
@@ -415,16 +415,16 @@ REFERENCES event (
 );				
 				
 ALTER TABLE report_co_process ADD CONSTRAINT FK_repco_TO_repco_process_1 FOREIGN KEY (				
-	report_co_num			
+	report_num			
 )				
 REFERENCES report_co (				
-	report_co_num			
+	report_num			
 );				
 				
 ALTER TABLE report_user_process ADD CONSTRAINT FK_repusr_TO_repusr_process_1 FOREIGN KEY (				
-	report_user_num			
+	report_num			
 )				
 REFERENCES report_user (				
-	report_user_num			
+	report_num			
 );				
 				

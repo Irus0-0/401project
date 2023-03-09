@@ -53,15 +53,15 @@
     <select id="selectMyAllUseReservation" resultMap="reservationMap" parameterType="String">
         SELECT *
         FROM RESERVATION
-        WHERE CUSTOMER_ID = '김씨'
+        WHERE CUSTOMER_ID = #{customerId}
         AND sysdate <![CDATA[<]]> START_DATE
     </select>
 
     <!--    사용자의 진행중인 예약들 확인하기-->
-    <select id="selectMyAllUseReservation" resultMap="reservationMap" parameterType="String">
+    <select id="selectMyAllUseReservation2" resultMap="reservationMap" parameterType="String">
         SELECT *
         FROM RESERVATION
-        WHERE CUSTOMER_ID = '김씨'
+        WHERE CUSTOMER_ID = #{customerId}
           AND sysdate BETWEEN START_DATE AND END_DATE
     </select>
 

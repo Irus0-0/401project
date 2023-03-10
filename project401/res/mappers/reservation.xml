@@ -47,6 +47,7 @@
         SELECT *
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
+        ORDER BY RESERVATION_NUM DESC
     </select>
 
     <!--    사용자의 종료되지 않은 예약들 확인하기-->
@@ -55,6 +56,8 @@
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
         AND sysdate <![CDATA[<]]> START_DATE
+        ORDER BY RESERVATION_NUM DESC
+
     </select>
 
     <!--    사용자의 진행중인 예약들 확인하기-->
@@ -63,6 +66,8 @@
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
           AND sysdate BETWEEN START_DATE AND END_DATE
+        ORDER BY RESERVATION_NUM DESC
+
     </select>
 
     <!--    기업의 모든 예약정보 확인하기-->

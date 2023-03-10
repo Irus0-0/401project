@@ -35,9 +35,10 @@ public class ReservationController {
 
     public void displayRes() throws ParseException {
         int choiceNum;
-        System.out.println("==============방 예약 ================");
-        System.out.println("1. 예약하기 / 2.내 예약 확인하기 / 3. 뒤로가기");
         while (true) {
+            System.out.println("==============방 예약 ================");
+            System.out.println("1. 예약하기 / 2. 예약 확인하기 / 3. 이력 확인하기/ 4. 뒤로가기");
+            System.out.print("입력> ");
             choiceNum = Integer.parseInt(sc.nextLine());
             switch (choiceNum) {
                 case 1:  // 예약하기
@@ -46,7 +47,12 @@ public class ReservationController {
                 case 2:  // 내 예약 확인하기
                     checkAllUseMyReservation();
                     break;
-                case 3:  // 뒤로가기
+                case 3:
+                    // 예약이력 확인하기
+                    checkAllMyReservation();
+                    break;
+
+                case 4:  // 뒤로가기
                     return;
                 default:
                     System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
@@ -109,6 +115,7 @@ public class ReservationController {
         if (reservationVoList.size() == 0) {
             System.out.println("예약이 없습니다.");
         } else {
+            System.out.println("=============== 예약 이력 ===========");
             for (ReservationVo reservationVo : reservationVoList) {
                 System.out.println("예약번호: " + reservationVo.getReservationNum());
                 System.out.println("숙박시설명: " + reservationVo.getAccomName() +
@@ -118,11 +125,9 @@ public class ReservationController {
                 System.out.println("예약인원: " + reservationVo.getPepleNum() + "명");
                 System.out.println("------------------------------------------");
             }
-            while (true) {
-                UDReservation();
-            }
         }
     }
+
     // -----------------------------------------------------------------
 
     /**
@@ -142,10 +147,13 @@ public class ReservationController {
                 System.out.println("예약인원: " + reservationVo.getPepleNum() + "명");
                 System.out.println("------------------------------------------");
             }
-            while (true) {
-                UDReservation();
-            }
+            UDReservation();
         }
+    }
+
+
+    private void detailReservation(List<ReservationVo> reservationVoList){
+        
     }
 
 
@@ -154,22 +162,22 @@ public class ReservationController {
      */
     public void UDReservation() throws ParseException {
         int choiceNum;
+        while (true) {
         System.out.println("1.예약수정하기 / 2. 예약취소하기 / 3. 뒤로가기");
         System.out.print("입력> ");
-        while (true) {
-            choiceNum = Integer.parseInt(sc.nextLine());
-            switch (choiceNum) {
-                case 1:  // 예약수정하기
-                    modifyMyReservation();
-                    break;
-                case 2:  // 예약 취소하기
-                    deleteMyReservation();
-                    break;
-                case 3:  // 뒤로가기
-                    return;
-                default:
-                    System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
-            }
+        choiceNum = Integer.parseInt(sc.nextLine());
+        switch (choiceNum) {
+            case 1:  // 예약수정하기
+                modifyMyReservation();
+                break;
+            case 2:  // 예약 취소하기
+                deleteMyReservation();
+                break;
+            case 3:  // 뒤로가기
+                return;
+            default:
+                System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
+        }
         }
     }
 
@@ -184,7 +192,6 @@ public class ReservationController {
         System.out.println("방번호 변경"); // 그 숙박시설의 변경이 가능한 방을 보여준 뒤 선택
         System.out.println("예약날짜 변경"); // 예약날짜 또한 마찬가지
         System.out.println("인원 수 변경");
-
 
 
         // List 인덱스 넣고 나온 값으로 변경 시도

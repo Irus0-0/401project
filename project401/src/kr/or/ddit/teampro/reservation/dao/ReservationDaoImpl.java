@@ -72,6 +72,17 @@ public class ReservationDaoImpl extends MyBatisDao implements ReservationDao {
     }
 
     /**
+     * 진행중인 예약 정보를 가져옴
+     * @param customerId
+     * @return
+     */
+    @Override
+    public List<ReservationVo> selectContinuReservation(String customerId) {
+        List<ReservationVo> resList = selectList("reservation.selectMyAllUseReservation2", customerId);
+        return resList;
+    }
+
+    /**
      * 해당 기업의 모든 예약정보를 가져옴
      * @param companyId 기업 ID
      * @return 예약VO 객체를 LIST 에 담아서 전달

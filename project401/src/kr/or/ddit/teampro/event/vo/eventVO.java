@@ -1,8 +1,5 @@
 package kr.or.ddit.teampro.event.vo;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class eventVO {
 	
 	

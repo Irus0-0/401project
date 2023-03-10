@@ -14,7 +14,9 @@
     </settings>
 
     <typeAliases>
-<!--        <typeAlias type="kr.or.ddit.member.vo.MemberVO" alias="memVO"/>-->
+        <typeAlias type="kr.or.ddit.teampro.company.coVo.CompanyVO" alias="companyVO"/>
+        <typeAlias type="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO" alias="accomVO"/>
+        <typeAlias type="kr.or.ddit.teampro.room.rmVo.RoomVO" alias="roomVO"/>
     </typeAliases>
 
     <environments default="dev">
@@ -34,8 +36,9 @@
     </environments>
 
     <mappers>
-<!--        <mapper resource="mappers/member.xml"/>-->
-<!--        <mapper resource="mappers/board.xml"/>-->
+        <mapper resource="mappers/accommodations.xml"/>
+        <mapper resource="mappers/company.xml"/>
+        <mapper resource="mappers/room.xml"/>
     </mappers>
 
 </configuration>

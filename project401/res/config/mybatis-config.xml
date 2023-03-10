@@ -13,9 +13,9 @@
     </settings>
 
     <typeAliases>
-   	<typeAlias type="kr.or.ddit.teampro.notice.vo.NoticeVO" alias = "noticeVO" />
-   	<typeAlias type="kr.or.ddit.teampro.event.vo.EventVO" alias = "eventVO"/>
-   
+   	<typeAlias type="kr.or.ddit.teampro.notice.vo.noticeVO" alias = "noticeVO" />
+   	<typeAlias type="kr.or.ddit.teampro.event.vo.eventVO" alias = "eventVO"/>
+    <typeAlias type="kr.or.ddit.teampro.event_proposal.vo.EventProposalVO" alias = "eventProposalVO"/>  
    	
    	
     </typeAliases>
@@ -37,9 +37,9 @@
     </environments>
 
     <mappers>
-<!--        <mapper resource="mappers/member.xml"/>-->
 			<mapper resource="mappers/notice.xml"/>
 			<mapper resource="mappers/event.xml"/>
+			  <mapper resource ="mappers/event_Proposal.xml"/>  
 			
 			
     </mappers>

@@ -3,7 +3,7 @@ package kr.or.ddit.teampro.notice.dao;
 import java.util.List;
 
 import kr.or.ddit.teampro.comm.dao.MyBatisDao;
-import kr.or.ddit.teampro.notice.vo.NoticeVO;
+import kr.or.ddit.teampro.notice.vo.noticeVO;
 
 public class NoticeDaoImpl extends MyBatisDao implements NoticeDao {
 
@@ -17,20 +17,20 @@ public class NoticeDaoImpl extends MyBatisDao implements NoticeDao {
 	}
 
 	@Override
-	public int insertNotice(NoticeVO nv) {
+	public int insertNotice(noticeVO nv) {
 		int cnt = insert("notice.insertNotice", nv);
 		return cnt;
 	}
 
 	@Override
-	public int updateNotice(NoticeVO nv) {
-		int cnt = update("notice.insertNotice", nv);
+	public int updateNotice(noticeVO nv) {
+		int cnt = update("notice.updateNotice", nv);
 		return cnt;
 	}
 
 	@Override
 	public int deleteNotice(int noticeNum) {
-		int cnt = delete("notice.insertNotice", noticeNum);
+		int cnt = delete("notice.deleteNotice", noticeNum);
 		return cnt;
 	}
 
@@ -47,14 +47,14 @@ public class NoticeDaoImpl extends MyBatisDao implements NoticeDao {
 	}
 
 	@Override
-	public List<NoticeVO> selectAllNotice() {
-		List<NoticeVO> notList = selectList("notice.selsectAllNotice");
+	public List<noticeVO> selectAllNotice() {
+		List<noticeVO> notList = selectList("notice.selectAllNotice");
 		return notList;
 	}
 
 	@Override
-	public List<NoticeVO> searchNotice(NoticeVO nv) {
-		List<NoticeVO> notList = selectList("notice.selectAllNotice");
+	public List<noticeVO> searchNotice(noticeVO nv) {
+		List<noticeVO> notList = selectList("notice.searchNotice",nv);
 		return notList;
 	}
 

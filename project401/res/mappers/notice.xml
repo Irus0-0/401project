@@ -10,35 +10,42 @@
 		 resultMap : 결과 레코드 컬럼명과 vo객체의 property명이 다른 경우 적절한 매핑--><!-- 
 		 -->
 		 
-		 
-	<insert id="insertNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
+	<!-- 공지 등록 -->
+	
+	<insert id="insertNotice" parameterType="kr.or.ddit.teampro.notice.vo.noticeVO">
 		
 		insert into notice(notice_num,master_id,title,content,create_date,notice_grade)
-		values (#{noticeNum}, #{masterId},#{notTitle},#{notContent},#{notDate},#{notGrade})
+		values (notice_seq.nextVal, #{masterId},#{notTitle},#{notContent},sysdate,#{notGrade})
 	</insert>
 	
-	<update id="updateNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
+	
+	
+	<!--공지 수정  -->
+	
+	<update id="updateNotice" parameterType="kr.or.ddit.teampro.notice.vo.noticeVO">
 		
-		update notice set notice_num = #{noticeNum}, title = #{notTitle}, content = #{notContent},
-		create_date = #{notDate}, notice_grade = #{notGrade} where master_id = #{masterId}
+		update notice set title = #{notTitle}, content = #{notContent},
+		 notice_grade = #{notGrade} where notice_num = #{noticeNum}
 	
 	</update>
 	
-	<delete id="deleteNotice" parameterType="kr.or.ddit.teampro.notice.vo.NoticeVO">
+	<!-- 공지 삭제 -->
+	
+	<delete id="deleteNotice">
 	
 		delete from notice where notice_num = #{noticeNum}
 
 	</delete>
 	
-	<!--공지 모두 출력-->
+	<!-- 전체 공지 출력 -->
 	
 	<select id="selectAllNotice" resultMap="notMap">
 		
-		select notice_num, master_id,title,content,create_date,notice_grade from notice
+		select * from notice
 	
 	</select>
 	
-	<!--수정할 떄 공지 있나 없나 관리자 id로 체크하기 위해 만들었따. -->
+	<!-- 관리자ID 로 공지 유무 체크 -->
 	
 	<select id="checkNotice" resultType="int">
 	
@@ -48,14 +55,14 @@
 	
 	<!--관리자 아이디로 검색했을 때 있으면 공지 가져오기-->
 	
-	<select id="getNotice" resultType="kr.or.ddit.teampro.notice.vo.NoticeVO">
+	<select id="getNotice" resultType="kr.or.ddit.teampro.notice.vo.noticeVO">
 		
 		select notice_num as noticeNum, title as notTitle, content as notContent, create_date as notDate,
 		notice_grade as notGrade where master_id = #{masterId}
 		
 	</select>
 	
-	<!--resultmap 으로 속성을 매핑시켜라-->
+	
 	
 	<resultMap id = "notMap" type="noticeVO">
 		
@@ -69,13 +76,18 @@
 	</resultMap>
 	
 	
-	 
+	 <!-- 검색 -->
 	 <select id="searchNotice" resultMap ="notMap">
+	 
+	 select * 
+	   from notice 
+	    where master_id = #{masterId} 
+	   
 		 
-		 select * from notice where 1=1
-		 
+		
+
 		 <if test="noticeNum != null and noticeNum != ''">
-			 and notice_num = #{noticeNum} </if>
+			 and title like '%' || #{noticeNum}||'%'  </if>
 		 <if test="notTitle != null and notTitle != ''">
 			 and title like '%' || #{notTitle}||'%'  </if>
 		 <if test="notContent != null and notContent != ''">
@@ -83,8 +95,7 @@
 		 <if test="notDate != null and notDate != ''">
 			 and create_date = #{notDate} </if>
 		 <if test="notGrade != null and notGrade != ''">
-			 and notice_grade = #{notGrade} </if>
-		 
+			 and notice_grade = #{notGrade} </if>  
 	 </select>
 	
 	

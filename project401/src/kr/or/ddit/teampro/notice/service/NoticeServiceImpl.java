@@ -4,7 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.teampro.notice.dao.NoticeDao;
 import kr.or.ddit.teampro.notice.dao.NoticeDaoImpl;
-import kr.or.ddit.teampro.notice.vo.NoticeVO;
+import kr.or.ddit.teampro.notice.vo.noticeVO;
 
 public class NoticeServiceImpl implements INoticeService{
 	
@@ -22,35 +22,56 @@ public class NoticeServiceImpl implements INoticeService{
 		return notService;
 	}
 
+	/*
+	 * 등록
+	 */
 	@Override
-	public int registNotice(NoticeVO nv) {
+	public int registNotice(noticeVO nv) {
 		int cnt = notDao.insertNotice(nv);
 		
 		return cnt;
 	}
 
+	/*
+	 * 수정
+	 */
+	
 	@Override
-	public int modifyNotice(NoticeVO nv) {
+	public int modifyNotice(noticeVO nv) {
 		return notDao.updateNotice(nv);
 	}
 
+	/*
+	 * 제거
+	 */
+	
 	@Override
 	public int removeNotice(int noticeNum) {
 		return notDao.deleteNotice(noticeNum);
 	}
 
+	/*
+	 *체크
+	 */
+	
 	@Override
 	public boolean checkNotice(String masterId) {
 		return notDao.checkNotice(masterId);
 	}
 
+	/*
+	 * 전체출력
+	 */
 	@Override
-	public List<NoticeVO> selectAllNotice() {
+	public List<noticeVO> selectAllNotice() {
 		return notDao.selectAllNotice();
 	}
 
+	/*
+	 * 검색
+	 */
 	@Override
-	public List<NoticeVO> searchNotice(NoticeVO nv) {
+	public List<noticeVO> searchNotice(noticeVO nv) {
 		return notDao.searchNotice(nv);
 	}
 

@@ -1,7 +1,7 @@
 package kr.or.ddit.teampro.notice.vo;
 
 
-public class NoticeVO {
+public class noticeVO {
 	private int noticeNum;
 	private String masterId;
 	private String notTitle;

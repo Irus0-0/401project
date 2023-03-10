@@ -1,6 +1,11 @@
 package kr.or.ddit.teampro.event.vo;
 
-public class EventVO {
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class eventVO {
+	
+	
 	private int eventNum;
 	private String companyId;
 	private String eventTitle;
@@ -8,6 +13,7 @@ public class EventVO {
 	private String eveCreDate;
 	private String eveStartDate;
 	private String eveEndDate;
+	
 	
 	public int getEventNum() {
 		return eventNum;

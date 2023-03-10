@@ -5,7 +5,7 @@ import java.util.List;
 import kr.or.ddit.teampro.comm.dao.MyBatisDao;
 import kr.or.ddit.teampro.event.dao.EventDao;
 import kr.or.ddit.teampro.event.dao.EventDaoImpl;
-import kr.or.ddit.teampro.event.vo.EventVO;
+import kr.or.ddit.teampro.event.vo.eventVO;
 
 public class EventServiceImpl implements EventService {
 
@@ -24,14 +24,14 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public int registEvent(EventVO ev) {
+	public int registEvent(eventVO ev) {
 
 		int cnt = eDao.insertEvent(ev);
 		return cnt;
 	}
 
 	@Override
-	public int modifyEvent(EventVO ev) {
+	public int modifyEvent(eventVO ev) {
 		return eDao.updateEvent(ev);
 		
 	}
@@ -48,12 +48,12 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<EventVO> selectAllEvent() {
+	public List<eventVO> selectAllEvent() {
 		return eDao.selectALLEvent();
 	}
 
 	@Override
-	public List<EventVO> searchEvent(EventVO ev) {
+	public List<eventVO> searchEvent(eventVO ev) {
 		return eDao.searchEvent(ev);
 	}
 

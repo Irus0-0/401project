@@ -13,7 +13,7 @@
         <result column="company_id" property="companyId"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
-        <result column="peple_num" property="pepleNum"/>
+        <result column="people_num" property="peopleNum"/>
     </resultMap>
 
 <!--    예약 정보 넣기 -->

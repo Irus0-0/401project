@@ -17,11 +17,13 @@ public class Master {
         }
         return instance;
     }
+
     //스캐너 소환
     private Scanner scan = new Scanner(System.in);
 
     //service 소환
     private IMasterService masterService;
+
     public Master() {
         masterService = MasterService.getInstance();
     }
@@ -52,7 +54,8 @@ public class Master {
             //반복
             while (true) {
                 displayMenu(); //메뉴 출력
-                choice = Integer.parseInt(scan.nextLine());; // 메뉴번호 입력받기
+                choice = Integer.parseInt(scan.nextLine());
+                ; // 메뉴번호 입력받기
 
                 switch (choice) {
                     case 1:  // 회원가입
@@ -94,7 +97,7 @@ public class Master {
             return;
         }
         //로그인 o
-        System.out.print(mv.getMasterId()+" ");
+        System.out.print(mv.getMasterId() + " ");
 
         System.out.println("삭제하시겠습니까?");
         System.out.println("1.삭제 2.아니오");
@@ -162,6 +165,10 @@ public class Master {
 
     //관리자 로그인
     public void login() {
+        if (masterService.getVo()!=null) {
+            System.out.println("로그인이 불가능합니다\n로그인하세요");
+            return;
+        }
         String masterId = "";
         String masterPw = "";
 
@@ -194,7 +201,7 @@ public class Master {
         MasterVO mvc = new MasterVO();
         mvc = masterService.getVo();
         //관리자 로그인 x 때 접근
-        if(mvc == null) {
+        if (mvc == null) {
             System.out.println("관리자 추가가 불가능합니다\n로그인하세요");
             return;
         }
@@ -202,7 +209,7 @@ public class Master {
         //관리자 등급 불러오기
         int gradeCd = mvc.getGrade();
         //관리자 등급으로 권한
-        if (!(gradeCd>2)){
+        if (!(gradeCd > 2)) {
             System.out.println("관리자 등급이 낮습니다\n뒤로 돌아갑니다");
             return;
         }

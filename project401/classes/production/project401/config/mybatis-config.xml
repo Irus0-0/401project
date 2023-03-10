@@ -14,13 +14,7 @@
 
     <!-- Alias 쓸거면 수정해야됨-->
     <typeAliases>
-<!--        <typeAlias type="checkinout.vo.CheckInOutVO" alias="checkInOutVO"/>-->
-<!--        <typeAlias type="review.vo.ReviewVO" alias="reviewVO"/>-->
-<!--        <typeAlias type="kr.or.ddit.teampro.customer.vo.CustomerVO" alias="customerVO"/>-->
-<!--        <typeAlias type="company.vo.CompanyVO" alias="companyVO"/>-->
         <typeAlias type="kr.or.ddit.teampro.master.vo.MasterVO" alias="masterVO"/>
-<!--        <typeAlias type="event.event.vo.EventVO" alias="eventVO"/>-->
-<!--        <typeAlias type="event.proposal.vo.EventProposalVO" alias="eventProposalVO"/>-->
     </typeAliases>
 
     <!-- 다른 설정을 사용하고 싶을 때는 <environments default="dev"> 만 "real"로 바꿔주면 됨 -->
@@ -39,13 +33,9 @@
     </environments>
 
     <mappers>
-<!--        <mapper resource="mappers/customer.xml"/>-->
-<!--        <mapper resource="mappers/company.xml"/>-->
+
         <mapper resource="mappers/master.xml"/>
-<!--        <mapper resource="mappers/review.xml"/>-->
-<!--        <mapper resource="mappers/checkInOut.xml"/>-->
-<!--        <mapper resource="mappers/event.xml"/>-->
-<!--        <mapper resource="mappers/eventproposal.xml"/>-->
+
     </mappers>
 
 </configuration>

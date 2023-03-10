@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	
+	<!-- 이 영역에 sql 문에 맞는 태그 사용하여 sql 작성
+		 select, insert, update, delete 
+		 id : 해당 태그 호출할 때 namespae 와 연결 하여 사용
+		 parameterType : sql문에 사용될 데이터가 들어있는 객체타입 지정(보통 vo클래스)
+		 resultType : select문을 실행한 결과를 담을 객체타입 지정
+		 resultMap : 결과 레코드 컬럼명과 vo객체의 property명이 다른 경우 적절한 매핑--><!-- 
+		 -->
+		 
+	<!-- 공지 등록 -->
+	
+	<insert id="insertNotice" parameterType="kr.or.ddit.teampro.notice.vo.noticeVO">
+		
+		insert into notice(notice_num,master_id,title,content,create_date,notice_grade)
+		values (notice_seq.nextVal, #{masterId},#{notTitle},#{notContent},sysdate,#{notGrade})
+	</insert>
+	
+	
+	
+	<!--공지 수정  -->
+	
+	<update id="updateNotice" parameterType="kr.or.ddit.teampro.notice.vo.noticeVO">
+		
+		update notice set title = #{notTitle}, content = #{notContent},
+		 notice_grade = #{notGrade} where notice_num = #{noticeNum}
+	
+	</update>
+	
+	<!-- 공지 삭제 -->
+	
+	<delete id="deleteNotice">
+	
+		delete from notice where notice_num = #{noticeNum}
+
+	</delete>
+	
+	<!-- 전체 공지 출력 -->
+	
+	<select id="selectAllNotice" resultMap="notMap">
+		
+		select * from notice
+	
+	</select>
+	
+	<!-- 관리자ID 로 공지 유무 체크 -->
+	
+	<select id="checkNotice" resultType="int">
+	
+			select count(*) as cnt from notice where master_id = #{masterId}
+	
+	</select>
+	
+	<!--관리자 아이디로 검색했을 때 있으면 공지 가져오기-->
+	
+	<select id="getNotice" resultType="kr.or.ddit.teampro.notice.vo.noticeVO">
+		
+		select notice_num as noticeNum, title as notTitle, content as notContent, create_date as notDate,
+		notice_grade as notGrade where master_id = #{masterId}
+		
+	</select>
+	
+	
+	
+	<resultMap id = "notMap" type="noticeVO">
+		
+		<result column="notice_num" property = "noticeNum"/>
+		<result column="master_id" property = "masterId"/>
+		<result column="title" property = "notTitle"/>
+		<result column="content" property = "notContent"/>
+		<result column="create_date" property = "notDate"/>
+		<result column="notice_grade" property = "notGrade"/>
+		
+	</resultMap>
+	
+	
+	 <!-- 검색 -->
+	 <select id="searchNotice" resultMap ="notMap">
+	 
+	 select * 
+	   from notice 
+	    where master_id = #{masterId} 
+	   
+		 
+		
+
+		 <if test="noticeNum != null and noticeNum != ''">
+			 and title like '%' || #{noticeNum}||'%'  </if>
+		 <if test="notTitle != null and notTitle != ''">
+			 and title like '%' || #{notTitle}||'%'  </if>
+		 <if test="notContent != null and notContent != ''">
+			 and content like '%' || #{notContent}||'%' </if>
+		 <if test="notDate != null and notDate != ''">
+			 and create_date = #{notDate} </if>
+		 <if test="notGrade != null and notGrade != ''">
+			 and notice_grade = #{notGrade} </if>  
+	 </select>
+	
+	
+	
+</mapper>

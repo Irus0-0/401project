@@ -7,21 +7,6 @@
     </Appenders>
 
     <Loggers>
-<!--
-
-        <Logger name="log4jExam.sql.Query" level="error" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
-        <Logger name="log4jExam.sql.Parameter" level="trace" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
-        <Logger name="kr.or.ddit.basic.T01MemberInfoTest" level="debug" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
--->
 
         <Root level="trace">
             <AppenderRef ref="console"/>

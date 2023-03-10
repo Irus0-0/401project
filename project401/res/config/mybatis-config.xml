@@ -9,15 +9,17 @@
 
     <settings>
         <setting name="jdbcTypeForNull" value="NULL"/>
-
+        <!-- DB 컬럼명을 낙타표기법으로 속성명과 자동 매핑 설정하기 -->
+        <!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
     </settings>
 
     <typeAliases>
-   	<typeAlias type="kr.or.ddit.teampro.notice.vo.noticeVO" alias = "noticeVO" />
-   	<typeAlias type="kr.or.ddit.teampro.event.vo.eventVO" alias = "eventVO"/>
-    <typeAlias type="kr.or.ddit.teampro.event_proposal.vo.EventProposalVO" alias = "eventProposalVO"/>  
-   	
-   	
+        <typeAlias type="kr.or.ddit.teampro.reservation.vo.ReservationVo" alias="reserVO"/>
+        <typeAlias type="kr.or.ddit.teampro.report.vo.ReportVo" alias="reportVo"/>
+        <typeAlias type="kr.or.ddit.teampro.report.vo.ReportResultVo" alias="reportResultVo"/>
+        <typeAlias type="kr.or.ddit.teampro.notice.vo.noticeVO" alias = "noticeVO" />
+        <typeAlias type="kr.or.ddit.teampro.event.vo.eventVO" alias = "eventVO"/>
+        <typeAlias type="kr.or.ddit.teampro.event_proposal.vo.EventProposalVO" alias = "eventProposalVO"/>
     </typeAliases>
 
     <environments default="dev">
@@ -37,11 +39,11 @@
     </environments>
 
     <mappers>
-			<mapper resource="mappers/notice.xml"/>
-			<mapper resource="mappers/event.xml"/>
-			  <mapper resource ="mappers/event_Proposal.xml"/>  
-			
-			
+        <mapper resource="mappers/reservation.xml"/>
+        <mapper resource="mappers/report.xml"/>
+        <mapper resource="mappers/notice.xml"/>
+        <mapper resource="mappers/event.xml"/>
+        <mapper resource ="mappers/event_Proposal.xml"/>
     </mappers>
 
 </configuration>

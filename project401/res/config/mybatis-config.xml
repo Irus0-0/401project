@@ -44,6 +44,7 @@
         <mapper resource="mappers/notice.xml"/>
         <mapper resource="mappers/event.xml"/>
         <mapper resource ="mappers/event_Proposal.xml"/>
+
     </mappers>
 
 </configuration>

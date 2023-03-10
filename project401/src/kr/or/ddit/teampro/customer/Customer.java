@@ -166,6 +166,10 @@ public class Customer {
     }
 
     public void login() {
+        if(customerService.getVo()!=null) {
+            System.out.println("로그인 불가");
+        return;
+        }
         CustomerVO cv = new CustomerVO();
 
         System.out.println("로그인을 시작합니다");

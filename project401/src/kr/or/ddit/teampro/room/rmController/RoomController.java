@@ -255,7 +255,7 @@ public class RoomController {
 	/**
 	 * 전체 객실정보를 출력하는 메서드
 	 */
-	private void displayAllRoom() {
+	public void displayAllRoom() {
 		System.out.println();
 		System.out.println("-----------------------------------");
 

@@ -128,7 +128,7 @@ public class Customer {
             System.out.println("뒤로 돌아갑니다");
             start();
         }
-
+        System.out.println("============내 정보============");
         System.out.println("아이디>> " + customer.getCustomerId());
         System.out.println("이름>> " + customer.getName());
         System.out.println("생일>> " + customer.getBirthdate().substring(0, 10));
@@ -171,7 +171,7 @@ public class Customer {
         }
         CustomerVO cv = new CustomerVO();
 
-        System.out.println("로그인을 시작합니다");
+        System.out.println("=======로그인을 시작합니다=======");
         System.out.print("회원ID >> ");
         String customerId = scan.nextLine();
 
@@ -185,9 +185,8 @@ public class Customer {
 
         if (customer != null) {
             CustomerService.getInstance().setVo(customer);
-            System.out.println(customerId + " 회원 로그인 성공!");
         } else {
-            System.out.println(customerId + " id 혹은 pw가 틀렸습니다");
+            System.out.println(" id 혹은 pw가 틀렸습니다");
         }
     }
 

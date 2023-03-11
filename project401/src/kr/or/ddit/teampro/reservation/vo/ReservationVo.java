@@ -88,7 +88,7 @@ public class ReservationVo {
                 ", companyId='" + companyId + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", pepleNum=" + peopleNum +
+                ", peopleNum=" + peopleNum +
                 '}';
     }
 }

@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+package kr.or.ddit.teampro.event;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,7 +72,7 @@ public class EventMain {
 	
 	
 	//1. 이벤트 조회 - 순서대로 조회 불가능..
-	private void displayAllEvent() {
+	public void displayAllEvent() {
 		System.out.println();
 		System.out.println("------------------------------------");
 		System.out.println("이벤트번호\t기업ID\t제목\t내용\t이벤트작성일\t시작날짜\t종료날짜");
@@ -82,7 +82,6 @@ public class EventMain {
 
 		if (eveList.size() == 0) {
 			System.out.println("조회된 이벤트 목록이 없습니다.");
-			System.out.println("다시 입력해주세요.");
 		} else {
 			for (eventVO ev : eveList) {
 				System.out.println(
@@ -91,8 +90,6 @@ public class EventMain {
 				System.out.println("------------------------------------");
 			}
 		}
-		System.out.println("이벤트 조회 종료");
-
 	}
 
 	// 2. 이벤트 검색 - 날짜 검색 시 다 0000-00-00로 입력해야 조회 가능, 00(월)로 조회 시 조회 불가

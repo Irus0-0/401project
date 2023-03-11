@@ -1,5 +1,7 @@
 package kr.or.ddit.teampro.reservation.controller;
 
+import kr.or.ddit.teampro.customer.service.CustomerService;
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.reservation.service.ReservationService;
 import kr.or.ddit.teampro.reservation.service.ReservationServiceImpl;
 import kr.or.ddit.teampro.reservation.vo.ReservationVo;
@@ -16,19 +18,12 @@ public class ReservationController {
     List<ReservationVo> reservationVoList;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+    private CustomerVO customerVO;
+
     public ReservationController() throws ParseException {
         resService = ReservationServiceImpl.getInstance();
         sc = new Scanner(System.in);
-
-        // 테스트용
-        resVo.setReservationNum("1");
-        resVo.setCustomerId("김씨");
-        resVo.setRoomNumber(101);
-        resVo.setAccomName("참치호텔");
-        resVo.setCompanyId("동원기업");
-        resVo.setStartDate(sdf.parse("2023-03-03"));
-        resVo.setEndDate(sdf.parse("2023-03-04"));
-        resVo.setPeopleNum(4);
+        this.customerVO =  CustomerService.getInstance().getVo();
     }
 
 
@@ -64,9 +59,10 @@ public class ReservationController {
     /**
      * 예약 생성 과정을 출력
      */
-    private void makeReservation() {
+    public void makeReservation() {
         // 로그인한 유저의 정보와 선택한 기업과 방 정보를 받아와서 객체에 저장 후 나머지 날짜를 입력받아 실행
         ReservationVo res = new ReservationVo();
+        res.setCustomerId(customerVO.getCustomerId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("예약할 방 번호를 선택해주세요");
         System.out.print("입력> ");
@@ -108,9 +104,9 @@ public class ReservationController {
     /**
      * 모든 예약 정보를 출력
      */
-    private void checkAllMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
+    public void checkAllMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
         List<ReservationVo> reservationVoList =
-                resService.searchUserReservation(resVo.getCustomerId());
+                resService.searchUserReservation(customerVO.getCustomerId());
         if (reservationVoList.size() == 0) {
             System.out.println("예약이 없습니다.");
         } else {
@@ -132,8 +128,8 @@ public class ReservationController {
     /**
      * 진행중 또는 아직 시행되지 않은 모든 예약정보 출력
      */
-    private void checkAllUseMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
-        reservationVoList = resService.searchUserUseReservation(resVo.getCustomerId());
+    public void checkAllUseMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
+        reservationVoList = resService.searchUserUseReservation(customerVO.getCustomerId());
         if (reservationVoList.size() == 0) {
             System.out.println("예약이 없습니다.");
         } else {

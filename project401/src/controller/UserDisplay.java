@@ -1,21 +1,94 @@
 package controller;
 
+import kr.or.ddit.teampro.accommodations.accomController.AccommodationsController;
+import kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO;
+import kr.or.ddit.teampro.customer.Customer;
+import kr.or.ddit.teampro.customer.service.CustomerService;
+import kr.or.ddit.teampro.customer.service.ICustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
+import kr.or.ddit.teampro.event.EventMain;
+import kr.or.ddit.teampro.notice.NoticeMain;
+import kr.or.ddit.teampro.reservation.controller.ReservationController;
+import kr.or.ddit.teampro.room.rmController.RoomController;
+import kr.or.ddit.teampro.room.rmVo.RoomVO;
 
+import java.text.ParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserDisplay {
     private CustomerVO customerVO;
     private Scanner sc;
+    private ICustomerService customerService;
+    private Customer customer;
+    private ReservationController resController;
+    private AccommodationsController accomController;
+    private RoomController roomController;
+    private RoomVO roomVO;
+    private EventMain eventMain;
+    private NoticeMain noticeMain;
 
-    public UserDisplay(CustomerVO vo) {
-        this.customerVO = vo;
+    public UserDisplay() throws ParseException {
+        this.customerVO = CustomerService.getInstance().getVo();
         this.sc = new Scanner(System.in);
+        this.customerService = CustomerService.getInstance();
+        this.customer = new Customer();
+        this.resController = new ReservationController();
+        this.eventMain = new EventMain();
+        this.noticeMain = new NoticeMain();
+        this.accomController = new AccommodationsController();
+        this.roomController = new RoomController();
     }
 
-    public void userMain() {
+    public void userMain() throws ParseException {
         System.out.println(customerVO.getCustomerId() + "님 환영합니다.");
-        System.out.println("==============메뉴==============");
+        while (true) {
+
+            System.out.println("==============메뉴==============");
+            System.out.println("1. 숙소 예약하기");
+            System.out.println("2. 예약 정보 확인하기");
+            System.out.println("3. 공지사항 보기");
+            System.out.println("4. 이벤트 확인하기");
+            System.out.println("5. 내 정보");
+            System.out.println("6. 로그아웃");
+            System.out.println("================================");
+            System.out.print("입력> ");
+            int choseNum;
+            choseNum = Integer.parseInt(sc.nextLine());
+            switch (choseNum) {
+                case 1:
+                    // 예약 가능한 목록 출력
+                   accomController.displayAllAccommodations();
+                    // 숙소 예약
+                    resController.makeReservation();
+                    break;
+                case 2:
+                    // 예약 정보 확인 및 수정 삭제 등등의 기능
+                    resController.checkAllUseMyReservation();
+                    break;
+                case 3:
+                    // 공지 사항
+                    noticeMain.displayAllNotice();
+                    break;
+                case 4:
+                    // 이벤트 확인
+                    eventMain.displayAllEvent();
+                    break;
+                case 5:
+                    // 내 정보 출력 및 여태까지의 예약 이력 확인하기
+                    customer.displayCustomerInfo();
+//                    resController.
+                    break;
+                case 6:
+                    // 로그아웃
+                    customerService.logout(customerVO);
+                    return;
+                default:
+                    System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
+
+            }
+        }
+
 
     }
 }

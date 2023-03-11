@@ -38,13 +38,13 @@
     <!--     유저가 신고 하기 -->
     <insert id="reportByUser" parameterType="reportVo">
         insert into report_co (report_num, reservation_num, reason)
-        values (#{reportNum}, #{resNum}, #{reason})
+        values (REPORT_CO_seq.nextVal, #{resNum}, #{reason})
     </insert>
 
     <!--    기업이 신고 하기-->
     <insert id="reportByCo" parameterType="reportVo">
         insert into report_user (report_num, reservation_num, reason)
-        values (#{reportNum}, #{resNum}, #{reason})
+        values (REPORT_user_seq.nextval, #{resNum}, #{reason})
     </insert>
 
 

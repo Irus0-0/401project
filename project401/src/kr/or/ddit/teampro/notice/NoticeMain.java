@@ -1,3 +1,5 @@
+package kr.or.ddit.teampro.notice;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -73,7 +75,7 @@ public class NoticeMain {
 	 * 전체 공지를 출력하기 위한 메서드
 	 */
 
-	private void displayAllNotice() {
+	public void displayAllNotice() {
 
 		System.out.println();
 		System.out.println("------------------------------------");
@@ -91,8 +93,6 @@ public class NoticeMain {
 
 			}
 		}
-		System.out.println("출력작업 끝");
-
 	}
 
 	/**

@@ -18,8 +18,8 @@
 
 <!--    예약 정보 넣기 -->
     <insert id="insertReservation" parameterType="reserVO">
-        insert into RESERVATION (reservation_num, customer_id, room_number, accom_name, company_id, start_date, end_date, peple_num)
-        values (#{reservationNum}, #{customerId}, #{roomNumber}, #{accomName}, #{companyId}, #{startDate}, #{endDate}, #{pepleNum})
+        insert into RESERVATION (reservation_num, customer_id, room_number, accom_name, company_id, start_date, end_date, people_num)
+        values (reservation_seq.nextVal, #{customerId}, #{roomNumber}, #{accomName}, #{companyId}, #{startDate}, #{endDate}, #{peopleNum})
     </insert>
 
 <!-- 예약 정보 수정하기-->
@@ -31,7 +31,7 @@
             company_id = #{companyId},
             start_date = #{startDate},
             end_date = #{endDate},
-            peple_num = #{pepleNum}
+            people_num = #{peopleNum}
         where reservation_num = #{reservationNum}
     </update>
 
@@ -56,6 +56,16 @@
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
         AND sysdate <![CDATA[<]]> START_DATE
+        ORDER BY RESERVATION_NUM DESC
+
+    </select>
+
+    <!--    사용자의 종료되지 않은 예약들 확인하기-->
+    <select id="selectMyAllCloseReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE CUSTOMER_ID = #{customerId}
+          AND sysdate <![CDATA[>]]> end_DATE
         ORDER BY RESERVATION_NUM DESC
 
     </select>

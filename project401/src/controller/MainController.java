@@ -3,9 +3,11 @@ package controller;
 import kr.or.ddit.teampro.company.coController.CompanyController;
 import kr.or.ddit.teampro.customer.Customer;
 import kr.or.ddit.teampro.customer.service.CustomerService;
+import kr.or.ddit.teampro.customer.service.ICustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.master.Master;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class MainController {
@@ -15,7 +17,7 @@ public class MainController {
     private Customer customer;
     private CompanyController company;
     private Master master;
-    private CustomerService customerService;
+    private ICustomerService customerService;
 
 
     public MainController() {
@@ -23,9 +25,10 @@ public class MainController {
         this.customer = new Customer();
         this.company = new CompanyController();
         this.master = new Master();
+        this.customerService = CustomerService.getInstance();
     }
 
-    public void mainDisplay() {
+    public void mainDisplay() throws ParseException {
         while (true) {
 
             System.out.println("===========이짝워뗘===========");
@@ -37,6 +40,7 @@ public class MainController {
             int choseNum = 0;
             try {
                 choseNum = Integer.parseInt(sc.nextLine());
+                System.out.println("==============================");
             } catch (NumberFormatException e) {
                 System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
             }
@@ -53,7 +57,7 @@ public class MainController {
                         customer.login();
                         whoIs = true;
                         // 회원 화면 출력
-                        userDisplay(customerService.getVo());
+                        userDisplay();
                     } else if (choseNum == 2) {
                         // 기업회원 로그인
                         company.login();
@@ -86,7 +90,7 @@ public class MainController {
                     } else if (choseNum == 2) { // 기업 회원 가입
                         company.insertCompany();
                     } else if (choseNum == 3) { // 돌아가기
-                        return;
+                        break;
                     } else {  // 잘못된 숫자 입력
                         System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
                     }
@@ -94,7 +98,7 @@ public class MainController {
                 case 3:
                     // 종료
                     System.out.println("프로그램을 종료합니다.");
-                    break;
+                    return;
                 default:
                     System.out.println("잘못 입력하셨습니다 다시 입력해 주세요");
             }
@@ -103,8 +107,8 @@ public class MainController {
     }
 
     // 유저 로그인 후 화면
-    public void userDisplay(CustomerVO vo) {
-        new UserDisplay(vo);
+    public void userDisplay() throws ParseException {
+        new UserDisplay().userMain();
     }
 
     // 기업 로그인 후 화면
@@ -115,7 +119,7 @@ public class MainController {
     public void adminDisplay() {
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         new MainController().mainDisplay();
     }
 

@@ -58,7 +58,7 @@
 	<select id="getNotice" resultType="kr.or.ddit.teampro.notice.vo.noticeVO">
 		
 		select notice_num as noticeNum, title as notTitle, content as notContent, create_date as notDate,
-		notice_grade as notGrade where master_id = #{masterId}
+		notice_grade as notGrade from NOTICE where master_id = #{masterId}
 		
 	</select>
 	

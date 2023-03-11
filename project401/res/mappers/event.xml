@@ -6,7 +6,7 @@
 	<insert id="insertEvent" parameterType="kr.or.ddit.teampro.event.vo.eventVO">
 		
 		insert into event(event_num, company_id, title, content, create_date, start_date, end_date)
-		values (#{eventNum}, #{companyId},#{eventTitle},#{eventContent}, sysdate, #{eveStartDate},#{eveEndDate})
+		values (event_seq.nextVal, #{companyId},#{eventTitle},#{eventContent}, sysdate, #{eveStartDate},#{eveEndDate})
 	</insert>
 	
 	

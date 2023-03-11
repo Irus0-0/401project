@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="event">
+	
+		 <!-- 이벤트 등록 -->
+	<insert id="insertEvent" parameterType="kr.or.ddit.teampro.event.vo.eventVO">
+		
+		insert into event(event_num, company_id, title, content, create_date, start_date, end_date)
+		values (#{eventNum}, #{companyId},#{eventTitle},#{eventContent}, sysdate, #{eveStartDate},#{eveEndDate})
+	</insert>
+	
+	
+	<!-- 이벤트 수정  -->
+	<update id="updateEvent" parameterType="kr.or.ddit.teampro.event.vo.eventVO">
+		
+		update event set company_id = #{companyId}, title = #{eventTitle}, content = #{eventContent},
+		 start_date = #{eveStartDate}, end_date = #{eveEndDate} where event_num = #{eventNum}
+	
+	</update>
+	
+	<!-- 이벤트 번호로 삭제 -->
+	<delete id="deleteEvent">
+	
+		delete from event where event_num = #{eventNum}
+
+	</delete>
+	
+	
+	<!-- 모든 이벤트 조회 -->
+	<select id="selectAllEvent" resultMap="eventMap">
+		
+		select * from event
+	
+	</select>
+	
+	
+	<!--기업Id로 이벤트 유무 체크 조회  -->
+	<select id="checkEvent" resultType="int">
+	
+			select count(*) as cnt from event where company_id = #{companyId}
+	
+	</select>
+	
+
+	<!-- 기업id로 이벤트 내용 조회 -->
+	<select id="getEvent" resultType="kr.or.ddit.teampro.event.vo.eventVO">
+		
+		select event_num as eventNum, title as eventTitle, content as eventContent, create_date as eveCreDate, start_date as eveStartDate,
+		end_date as eveEndDate where company_id = #{companyId}
+		
+	</select>
+	
+	<!--resultmap 으로 속성을 매핑시켜라-->
+	
+	<resultMap id = "eventMap" type="eventVO">
+		
+		<result column="event_num" property = "eventNum"/>
+		<result column="company_id" property = "companyId"/>
+		<result column="title" property = "eventTitle"/>
+		<result column="content" property = "eventContent"/>
+		<result column="create_date" property = "eveCreDate"/>
+		<result column="start_date" property = "eveStartDate"/>
+		<result column="end_date" property = "eveEndDate"/>
+		
+	</resultMap>
+	
+
+	 <!-- 이벤트 검색 -->
+	 <select id="searchEvent" resultMap ="eventMap">
+		 
+		 select * from event where 1=1
+		 
+		  <!-- <if test="eventNum != 0 and eventNum != ''">
+			 and event_num = #{eventNum} </if>  -->
+		 <if test="companyId != null and companyId != ''">
+			 and company_id = #{companyId} </if>
+		 <if test="eventTitle != null and eventTitle != ''">
+			 and title like '%' || #{eventTitle}||'%'  </if>
+		 <if test="eventContent != null and eventContent != ''">
+			 and content like '%' || #{eventContent}||'%' </if>
+		<!--  <if test="eveCreDate != null and eveCreDate != ''">
+			 and create_date = #{eveCreDate} </if> -->
+		 <if test="eveStartDate != null and eveStartDate != ''">
+			 and start_date = #{eveStartDate} </if>
+		 <if test="eveEndDate != null and eveEndDate != ''">
+			 and end_date = #{eveEndDate} </if>
+		 
+	 </select>
+	
+	
+	
+</mapper>

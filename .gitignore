@@ -12,6 +12,7 @@
 .mtj.tmp/
 
 # Package Files #
+!project401/lib/
 *.jar
 *.war
 *.nar

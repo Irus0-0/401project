@@ -10,7 +10,7 @@
     <settings>
         <setting name="jdbcTypeForNull" value="NULL"/>
         <!-- DB 컬럼명을 낙타표기법으로 속성명과 자동 매핑 설정하기 -->
-<!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
+        <!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
     </settings>
 
     <typeAliases>

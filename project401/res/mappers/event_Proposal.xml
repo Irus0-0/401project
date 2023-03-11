@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="event_proposal">
+
+
+<!-- 1. 신청된 이벤트 조회  -->
+<select id="selectEventPro" resultMap = "proMap">
+	
+	select p.event_num , e.company_id , e.title , e.content , e.create_date , e.start_date , e.end_date 
+		from event_proposal p
+			inner join event e
+				on NOT(e.event_num = p.event_num)
+<!-- 				 and proposal_isok = 'F' -->
+<!-- 					where not( p.event_num =#{eventNum} and p.proposal_isok = #{proIsok}) -->
+</select>
+
+
+<!-- 2. 이벤트 승인여부 결정 -->
+
+<update id="updateEventPro" parameterType = "eventProposalVO">
+
+	update event_proposal set proposal_isok =#{proIsok} where event_num = #{eventNum}
+
+</update>
+
+
+
+<!--3. 이벤트 신청 결과 -->
+
+<select id="selectEventProResult" resultMap = "proMap">
+
+select p.event_num , e.company_id , e.title , e.content , e.create_date, p.proposal_isok
+		from event_proposal p
+			inner join event e
+				on e.event_num = p.event_num 
+
+</select>
+
+<!-- 4. 승인된 이벤트 조회 (proposal_isok = "t")-->
+
+<select id="selectEventProT" resultMap = "proMap">
+select p.event_num , e.company_id , e.title , e.content , e.create_date , e.start_date , e.end_date
+		from event_proposal p
+			join event e
+				on e.event_num = p.event_num
+					and proposal_isok = 'T';
+</select>
+
+
+
+<!-- 5. 이벤트 검색 -->
+<select id="searchEventPro" resultMap = "proMap">
+
+	select * from event_proposal where 1=1
+	
+	<if test="eventNum != 0 and eventNum != ''">
+	and event_num = #{eventNum} </if>
+	<if test="masterId != null and masterId != ''">
+	and master_id = #{masterId}</if>
+	<if test="proposal_isok != null and proposal_isok != ''">
+	and proposal_isok = #{proIsok}</if>
+	
+</select>
+
+	
+<!-- 이벤트 승인여부 체크 -->
+
+<select id="checkEventPro" resultType = "int">
+
+	select count(*) as cnt event_proposal where proposal_isok = #{proIsok}
+
+</select>
+
+
+<!-- 관리자 아이디 체크 -->
+<!-- <select id="checkEventProM" resultType = "int">
+	select count(*) as cnt event_proposal where master_id = #{masterId}
+</select> --> 
+
+
+<resultMap type="eventProposalVO" id="proMap">
+
+	<result column = "event_num" property = "eventNum"/>
+	<result column = "master_id" property = "masterId"/>
+	<result column = "proposal_isok" property = "proIsok"/>
+	
+	<result column = "company_id" property = "companyId"/>
+	<result column = "title" property = "proTitle"/>
+	<result column = "content" property = "proContent"/>
+	<result column = "create_date" property = "proCreateDay"/>
+	<result column = "start_date" property = "proStartDay"/>
+	<result column = "end_date" property = "proEndDate"/>
+	
+	
+</resultMap>
+
+
+
+
+
+
+</mapper>
+
+
+

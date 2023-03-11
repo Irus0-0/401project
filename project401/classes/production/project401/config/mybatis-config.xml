@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="db.properties"/>
+
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"></setting>
+        <!--	DB 컬럼명을 낙타표기법으로 속성명과 자동매핑 설정하기	-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!-- Alias 쓸거면 수정해야됨-->
+    <typeAliases>
+        <typeAlias type="kr.or.ddit.teampro.customer.vo.CustomerVO" alias="customerVO"/>
+    </typeAliases>
+
+    <!-- 다른 설정을 사용하고 싶을 때는 <environments default="dev"> 만 "real"로 바꿔주면 됨 -->
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${usr}"/>
+                <property name="password" value="${pwd}"/>
+                <property name="poolMaximumActiveConnections" value="2"/>
+                <property name="poolMaximumIdleConnections" value="2"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/customer.xml"/>
+    </mappers>
+
+</configuration>
+  

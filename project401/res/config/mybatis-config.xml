@@ -25,6 +25,7 @@
         <typeAlias type="kr.or.ddit.teampro.room.rmVo.RoomVO" alias="roomVO"/>
         <typeAlias type="kr.or.ddit.teampro.review.vo.ReviewVO" alias="reviewVO"/>
         <typeAlias type="kr.or.ddit.teampro.master.vo.MasterVO" alias="masterVO"/>
+        <typeAlias type="kr.or.ddit.teampro.customer.vo.CustomerVO" alias="customerVO"/>
     </typeAliases>
 
     <!-- 다른 설정을 사용하고 싶을 때는 <environments default="dev"> 만 "real"로 바꿔주면 됨 -->
@@ -53,6 +54,7 @@
         <mapper resource="mappers/room.xml"/>
         <mapper resource="mappers/review.xml"/>
         <mapper resource="mappers/master.xml"/>
+        <mapper resource="mappers/customer.xml"/>
     </mappers>
 
 </configuration>

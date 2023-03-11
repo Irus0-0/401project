@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reservation">
+
+    <resultMap id="reservationMap" type="reserVO">
+        <result column="reservation_num" property="reservationNum"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="room_number" property="roomNumber"/>
+        <result column="accom_name" property="accomName"/>
+        <result column="company_id" property="companyId"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="peple_num" property="pepleNum"/>
+    </resultMap>
+
+<!--    예약 정보 넣기 -->
+    <insert id="insertReservation" parameterType="reserVO">
+        insert into RESERVATION (reservation_num, customer_id, room_number, accom_name, company_id, start_date, end_date, peple_num)
+        values (#{reservationNum}, #{customerId}, #{roomNumber}, #{accomName}, #{companyId}, #{startDate}, #{endDate}, #{pepleNum})
+    </insert>
+<!-- 예약 정보 수정하기-->
+    <update id="updateReservation" parameterType="reserVO">
+        update RESERVATION
+        set customer_id  = #{customerId},
+            room_number = #{roomNumber},
+            accom_name = #{accomName},
+            company_id = #{companyId},
+            start_date = #{startDate},
+            end_date = #{endDate},
+            peple_num = #{pepleNum}
+        where reservation_num = #{reservationNum}
+    </update>
+
+<!--    예약 정보 삭제하기-->
+    <delete id="deleteReservation" parameterType="String">
+        delete
+        from RESERVATION
+        where reservation_num = #{reservationNum}
+    </delete>
+
+<!--    사용자의 모든 예약정보 확인하기-->
+    <select id="selectMyALLReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE CUSTOMER_ID = #{customerId}
+    </select>
+
+    <!--    기업의 모든 예약정보 확인하기-->
+    <select id="selectCoALLReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE company_id = #{companyId}
+    </select>
+
+    <!--    숙박시설의 모든 예약정보 확인하기-->
+    <select id="selectAccomALLReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE accom_name = #{accomName} AND company_id = #{companyId}
+    </select>
+
+
+
+</mapper>

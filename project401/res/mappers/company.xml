@@ -2,6 +2,7 @@
 <!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="company">
+
 	<insert id="insertCompany" parameterType="kr.or.ddit.teampro.company.coVo.CompanyVO">
 		insert into Company (company_id, company_pw, name, biz_no, owner_name, phone_num, addr, scale, sanctions_count)
 		values (#{companyId}, #{companyPw}, #{name}, #{bizNo}, #{ownerName}, #{phoneNum}, #{addr}, #{scale}, #{sanctionsCount})

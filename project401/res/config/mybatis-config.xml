@@ -23,6 +23,7 @@
         <typeAlias type="kr.or.ddit.teampro.company.coVo.CompanyVO" alias="companyVO"/>
         <typeAlias type="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO" alias="accomVO"/>
         <typeAlias type="kr.or.ddit.teampro.room.rmVo.RoomVO" alias="roomVO"/>
+        <typeAlias type="kr.or.ddit.teampro.review.vo.ReviewVO" alias="reviewVO"/>
     </typeAliases>
 
     <environments default="dev">
@@ -50,6 +51,7 @@
         <mapper resource="mappers/accommodations.xml"/>
         <mapper resource="mappers/company.xml"/>
         <mapper resource="mappers/room.xml"/>
+        <mapper resource="mappers/review.xml"/>
     </mappers>
 
 </configuration>

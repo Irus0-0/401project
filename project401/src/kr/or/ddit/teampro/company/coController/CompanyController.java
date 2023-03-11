@@ -40,7 +40,7 @@ public class CompanyController {
 		int choice;
 		do {
 			displayMenu();
-			choice = scan.nextInt();
+			choice = Integer.parseInt(scan.nextLine());
 			switch (choice) {
 			case 1: insertCompany(); break;
 			case 2: deleteCompany(); break;
@@ -56,8 +56,7 @@ public class CompanyController {
 	/**
 	 * 기업정보 등록 메서드
 	 */
-	private void insertCompany() {
-		scan.nextLine();// 버퍼 비우기
+	public void insertCompany() {
 		boolean isExist;
 		String companyId = "";
 		do {
@@ -130,8 +129,7 @@ public class CompanyController {
 	/**
 	 * 기업정보 삭제 메서드
 	 */
-	private void deleteCompany() {
-		scan.nextLine();
+	public void deleteCompany() {
 		System.out.println();
 		System.out.println("삭제할 기업 정보를 입력하세요");
 		System.out.print("기업ID>>");
@@ -154,11 +152,10 @@ public class CompanyController {
 	/**
 	 * 기업정보 수정 메서드-enter를 누르면 수정되지 않고 원래 값 그대로 유지됨
 	 */
-	private void updateCompany() {
+	public void updateCompany() {
 		boolean isExist = false;
 		String companyId = "";
 		do {
-			scan.nextLine();// 버퍼 비우기
 			System.out.println();
 			System.out.println("수정하고 싶은 기업의 ID를 입력하세요");
 			System.out.print("기업ID>>");
@@ -209,7 +206,7 @@ public class CompanyController {
 	/**
 	 * 전체 기업정보를 출력하는 메서드
 	 */
-	private void displayAllCompany() {
+	public void displayAllCompany() {
 		System.out.println();
 		System.out.println("-----------------------------------");
 
@@ -231,8 +228,7 @@ public class CompanyController {
 	/**
 	 * 기업정보 검색 메서드-검색 후 기업소유의 숙박시설을 볼 수 있는 기능 추가
 	 */
-	private void searchCompany() {
-		scan.nextLine();// 버퍼 비우기
+	public void searchCompany() {
 		System.out.println();
 		System.out.println("검색할 기업정보를 입력하세요");
 		System.out.println("값을 입력하지 않고 enter를 누르는 항목은 모든 값이 검색됩니다");
@@ -281,7 +277,7 @@ public class CompanyController {
 			System.out.println("1.기업의 상세정보 보기");
 			System.out.println("2.기업소유의 숙박시설 보기");
 			System.out.println("나가려면 1과 2를 제외한 키를 눌러주세요");
-			int input = scan.nextInt();
+			int input = Integer.parseInt(scan.nextLine());
 			
 			//1: 상세정보보기
 			if (input == 1) {
@@ -307,6 +303,64 @@ public class CompanyController {
 			}
 		}
 		System.out.println("검색 작업 끝");
+	}
+
+	public void login() {
+		CompanyVO cvi = new CompanyVO();
+
+		String companyId = "";
+		String companyPw = "";
+
+		System.out.println();
+		System.out.println("로그인을 시작합니다");
+		System.out.print("기업회원 ID>> ");
+		companyId = scan.nextLine();
+
+		if (!coService.checkCompany(companyId)) {
+			System.out.println("존재하지 않는 아이디입니다");
+			return;
+		}
+
+		System.out.print("회원 비밀번호 >> ");
+		companyPw = scan.nextLine();
+
+		CompanyVO company = coService.login(companyId.trim(), companyPw.trim());
+
+		if (company != null) {
+			CompanyService.getInstance().setVo(company);
+			System.out.println(companyId + " 회원 로그인 성공!");
+		} else {
+			System.out.println(companyId + " id 혹은 pw가 틀렸습니다");
+		}
+	}
+
+
+	private void logout() {
+		CompanyVO cv = CompanyService.getInstance().getVo();
+
+		if (cv == null) {
+			System.out.println("로그인하세요");
+			return;
+		}
+
+		System.out.println("로그아웃하시겠습니까");
+		System.out.println("1.로그아웃 2.아니오");
+		System.out.print("번호입력>> ");
+		int choice = Integer.parseInt(scan.nextLine());
+
+		switch (choice) {
+			case 1:
+				System.out.println("로그아웃 성공!");
+				coService.logout(cv);
+				break;
+			case 2:
+				System.out.println("아니오");
+				return;
+			default:
+				System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
+				logout();
+				break;
+		}
 	}
 
 	

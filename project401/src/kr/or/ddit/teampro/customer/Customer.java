@@ -39,7 +39,6 @@ public class Customer {
         System.out.println("  4. 로그아웃");
         System.out.println("  5. 계정삭제");
         System.out.println("  6. 작업 끝.");
-        System.out.println("  7. 내 정보 수정"); //할까 하다가 안함
         System.out.println("-----------------------");
         System.out.print("원하는 작업 선택 >> ");
     }
@@ -230,9 +229,9 @@ public class Customer {
 
         System.out.print("회원 이름>> ");
         String customerName = scan.nextLine();
-        System.out.print("회원 전화번호>> ");
+        System.out.print("회원 전화번호(010-1234-1234)>> ");
         String customerPh = scan.nextLine();
-        System.out.print("성별>> ");
+        System.out.print("성별(남자, 여자)>> ");
         String customerGender = scan.nextLine();
         System.out.print("생년월일(yyyy-MM-dd)>> ");
         String customerBirthDate = scan.nextLine();

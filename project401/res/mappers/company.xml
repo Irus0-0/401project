@@ -3,6 +3,30 @@
 
 <mapper namespace="company">
 
+
+
+
+<!--	종명s 기능-->
+	<select id="login" resultMap="companyMap">
+		select *
+		from company
+		where company_id = #{companyId}
+		  and company_pw = #{companyPw}
+	</select>
+
+
+	<!--	이슬s 기능-->
+
+	<resultMap type="companyVO" id="companyMap">
+		<result column="company_id" property="companyId"/>
+		<result column="company_pw" property="companyPw"/>
+		<result column="biz_no" property="bizNo"/>
+		<result column="owner_name" property="ownerName"/>
+		<result column="phone_num" property="phoneNum"/>
+		<result column="sanctions_count" property="sanctionsCount"/>
+	</resultMap>
+
+
 	<insert id="insertCompany" parameterType="kr.or.ddit.teampro.company.coVo.CompanyVO">
 		insert into Company (company_id, company_pw, name, biz_no, owner_name, phone_num, addr, scale, sanctions_count)
 		values (#{companyId}, #{companyPw}, #{name}, #{bizNo}, #{ownerName}, #{phoneNum}, #{addr}, #{scale}, #{sanctionsCount})
@@ -99,16 +123,6 @@
 			and scale like '%' || #{scale} || '%'
 		</if>
 	</select>
-	
-	
-		
-	<resultMap type="companyVO" id="companyMap">
-		<result column="company_id" property="companyId"/>
-		<result column="company_pw" property="companyPw"/>
-		<result column="biz_no" property="bizNo"/>
-		<result column="owner_name" property="ownerName"/>
-		<result column="phone_num" property="phoneNum"/>
-		<result column="sanctions_count" property="sanctionsCount"/>
-	</resultMap>
-	
+
+
 </mapper>

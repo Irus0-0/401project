@@ -3,6 +3,8 @@ package kr.or.ddit.teampro.company.coDao;
 import java.util.List;
 
 import kr.or.ddit.teampro.company.coVo.CompanyVO;
+import org.apache.ibatis.session.SqlSession;
+import util.MyBatisUtil;
 
 public class CompanyDaoImpl extends MyBatisDao implements ICompanyDao{
 	
@@ -64,7 +66,40 @@ public class CompanyDaoImpl extends MyBatisDao implements ICompanyDao{
 		List<CompanyVO> companyList =selectList("company.searchCompany", coVo);
 		return companyList;
 	}
-	
-	
+
+
+	public int makeCompany(CompanyVO uv) {
+		SqlSession sqlSession = MyBatisUtil.getInstance();
+		int result = 0;
+
+		try {
+			result = sqlSession.insert("company.insert", uv);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public CompanyVO login(String companyId, String customerPw) {
+		SqlSession sqlSession = MyBatisUtil.getInstance();
+		CompanyVO result = null;
+
+		try {
+			CompanyVO uv = new CompanyVO();
+			uv.setCompanyId(companyId);
+			uv.setCompanyPw(customerPw);
+
+			result = sqlSession.selectOne("company.login", uv);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+
+		return result;
+	}
 
 }

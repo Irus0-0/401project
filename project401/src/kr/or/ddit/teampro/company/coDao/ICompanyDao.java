@@ -46,4 +46,6 @@ public interface ICompanyDao {
 	 * @return 검색된 기업 회원정보를 담은 VO객체
 	 */
 	public List<CompanyVO> searchCompany(CompanyVO coVo);
+
+	public CompanyVO login(String CompanyId,String CompanyPw);
 }

@@ -48,9 +48,9 @@
 
     <update id="update" parameterType="customerVO">
         update customer
-           set customer_pw = #{customerPw}, phone_number = #{phoneNumber},
+           set customer_pw = #{customerPw}, PHONE_NUM = #{phoneNumber},
                addr = #{addr}
-         where customer_id = #{customerId}, customer_pw = #{customerPw}
+         where customer_id = #{customerId} AND customer_pw = #{customerPw}
     </update>
 
 

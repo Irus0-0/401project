@@ -192,7 +192,7 @@ public class Master {
             MasterService.getInstance().setVo(master);
             System.out.println(masterId + "로그인 성공!");
         } else {
-            System.out.println(masterId + "id 혹은 pw가 틀렸습니다");
+            System.out.println("id 혹은 pw가 틀렸습니다");
         }
     }
 

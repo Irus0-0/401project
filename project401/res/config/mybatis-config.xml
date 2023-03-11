@@ -20,6 +20,9 @@
         <typeAlias type="kr.or.ddit.teampro.notice.vo.noticeVO" alias = "noticeVO" />
         <typeAlias type="kr.or.ddit.teampro.event.vo.eventVO" alias = "eventVO"/>
         <typeAlias type="kr.or.ddit.teampro.event_proposal.vo.EventProposalVO" alias = "eventProposalVO"/>
+        <typeAlias type="kr.or.ddit.teampro.company.coVo.CompanyVO" alias="companyVO"/>
+        <typeAlias type="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO" alias="accomVO"/>
+        <typeAlias type="kr.or.ddit.teampro.room.rmVo.RoomVO" alias="roomVO"/>
     </typeAliases>
 
     <environments default="dev">
@@ -44,7 +47,9 @@
         <mapper resource="mappers/notice.xml"/>
         <mapper resource="mappers/event.xml"/>
         <mapper resource ="mappers/event_Proposal.xml"/>
-
+        <mapper resource="mappers/accommodations.xml"/>
+        <mapper resource="mappers/company.xml"/>
+        <mapper resource="mappers/room.xml"/>
     </mappers>
 
 </configuration>

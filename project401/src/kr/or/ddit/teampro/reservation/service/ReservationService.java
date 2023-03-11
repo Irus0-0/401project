@@ -40,6 +40,14 @@ public interface ReservationService {
      */
     List<ReservationVo> searchUserUseReservation(String customerId);
 
+
+    /**
+     * 사용자의 종료된 예약정보를 가져옴
+     * @param customerId
+     * @return
+     */
+    public List<ReservationVo> searchCloseReservation(String customerId);
+
     /**
      * 진행중인 예약 정보를 가져옴
      * @param customerId

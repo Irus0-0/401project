@@ -60,7 +60,7 @@
 
     </select>
 
-    <!--    사용자의 종료되지 않은 예약들 확인하기-->
+    <!--    사용자의 종료된 예약들 확인하기-->
     <select id="selectMyAllCloseReservation" resultMap="reservationMap" parameterType="String">
         SELECT *
         FROM RESERVATION

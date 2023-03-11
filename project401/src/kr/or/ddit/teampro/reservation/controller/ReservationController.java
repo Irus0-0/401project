@@ -147,6 +147,28 @@ public class ReservationController {
         }
     }
 
+    /**
+     * 종료된 모든 예약정보 출력
+     */
+    public void checkAllCloseMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
+        reservationVoList = resService.searchCloseReservation(customerVO.getCustomerId());
+        if (reservationVoList.size() == 0) {
+            System.out.println("종료된 예약이 없습니다.");
+        } else {
+            for (int i = 0; i < reservationVoList.size(); i++) {
+                System.out.println(i + 1 + "번---------------------------------------------------------");
+                System.out.println("예약번호: " + reservationVoList.get(i).getReservationNum());
+                System.out.println("숙박시설명: " + reservationVoList.get(i).getAccomName() +
+                        "\t/\t방번호: " + reservationVoList.get(i).getRoomNumber() + "호");
+                System.out.println("예약일: " + sdf.format(reservationVoList.get(i).getStartDate())
+                        + " ~ " + sdf.format(reservationVoList.get(i).getEndDate()));
+                System.out.println("예약인원: " + reservationVoList.get(i).getPeopleNum() + "명");
+//                System.out.println("-----------------------------------------------------------");
+            }
+            detailReservation(reservationVoList);
+        }
+    }
+
 
     private void detailReservation(List<ReservationVo> reservationVoList) throws ParseException {
         boolean isOk;

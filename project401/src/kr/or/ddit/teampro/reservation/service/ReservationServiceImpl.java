@@ -77,6 +77,12 @@ public class ReservationServiceImpl implements ReservationService{
         return resList;
     }
 
+    @Override
+    public List<ReservationVo> searchCloseReservation(String customerId) {
+        List<ReservationVo> resList = resDao.selectCloseReservation(customerId);
+        return resList;
+    }
+
     /**
      * 진행 중인 예약 정보를 가져옴
      * @param customerId

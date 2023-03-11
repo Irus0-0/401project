@@ -50,6 +50,12 @@ public interface ReservationDao {
     List<ReservationVo> selectContinuReservation(String customerId);
 
     /**
+     * 종료된 예약 정보를 가져옴
+     * @param customerId
+     * @return
+     */
+    List<ReservationVo> selectCloseReservation(String customerId);
+    /**
      * 해당 기업의 모든 예약정보 가져오기
      * @param companyId 기업 ID
      * @return 기업이 소유한 모든 숙박시설의 예약정보를 LIST로 반환

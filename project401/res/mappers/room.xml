@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="room">
+	<insert id="insertRoom" parameterType="kr.or.ddit.teampro.room.rmVo.RoomVO">
+		insert into room (room_number,accom_name,company_id,grade,price,appropriate_num,description)
+		values (#{roomNumber},#{accomName},#{companyId},#{grade},#{price},#{appropriateNum},#{description})
+	</insert>
+	
+<!-- 정보 수정 쿼리: enter값을 입력하면 원래값이 그대로 남아있게 동적쿼리로 구현 -->
+	<update id="updateRoom" parameterType="kr.or.ddit.teampro.room.rmVo.RoomVO">
+	 	update room 
+		set room_number=#{roomNumber}
+			,accom_name=#{accomName}
+			,company_id=#{companyId}
+			<if test="grade != null and grade != ''">
+			,grade=#{grade}
+			</if>
+			<if test="price != null and price != ''">
+			,price=#{price}
+			</if>
+			<if test="appropriateNum != null and appropriateNum != ''">
+			,appropriate_num=#{appropriateNum}
+			</if>
+			<if test="description != null and description != ''">
+			,description=#{description}
+			</if>
+		where room_number=#{roomNumber}
+	</update>
+	
+	
+	<delete id="deleteRoom" parameterType="HashMap">
+		delete from room where room_number = #{roomNumber} and accom_name = #{accomName} and company_id = #{companyId}
+	</delete>
+	
+	
+	<select id="selectAllRoom" resultMap="roomMap"> 
+		select *
+		from room
+	</select>
+	
+	
+	<select id="getRoom" resultMap="roomMap">
+		select *
+		from room
+		where room_number = #{roomNumber}
+	</select>
+	
+	
+	<select id="checkRoom" resultType="int"> 
+		select count(*) from room where room_number = #{roomNumber} and accom_name = #{accomName} and company_id = #{companyId}
+	</select>
+	
+	
+	<select id="searchRoom" resultMap="roomMap">
+		select *
+		from room
+		where 1=1
+		<if test="roomNumber != null and roomNumber != ''">
+			and room_number=#{roomNumber}
+		</if>
+		<if test="accomName != null and accomName != ''">
+			and accom_name=#{accomName}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and company_id=#{companyId}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and company_id=#{companyId}
+		</if>
+		<if test="grade != null and grade != ''">
+			and grade like '%' || #{grade} || '%'
+		</if>
+		<if test="price != null and price != ''">
+			and price like '%' || #{price} || '%'
+		</if>
+		<if test="appropriateNum != null and appropriateNum != ''">
+			and appropriate_num like '%' || #{appropriateNum} || '%'
+		</if>
+		<if test="description != null and description != ''">
+			and description like '%' || #{description} || '%'
+		</if>
+	</select>
+		
+		
+<!-- 방 등급 검색 쿼리- 사용자가 입력한 범위값 사이 검색  -->	
+	<select id="searchRoomGrade" resultMap="roomMap">
+		select *
+		from room
+		where grade &lt;=#{maxGrade} and grade &gt;= #{minGrade}
+	</select>
+	
+	
+<!-- 방 가격 검색 쿼리- 사용자가 입력한 범위값 사이 검색  -->	
+	<select id="searchRoomPrice" resultMap="roomMap">
+		select *
+		from room
+		where price &lt;=#{maxPrice} and grade &gt;= #{minPrice}
+	</select>
+	
+	
+<!-- 방 적정인원 검색 쿼리- 사용자가 입력한 범위값 사이 검색  -->	
+	<select id="searchRoomAppro" resultMap="roomMap">
+		select *
+		from room
+		where appropriate_num &lt;=#{maxAppro} and appropriate_num &gt;= #{minAppro}
+	</select>
+	
+	
+<!-- accommodations controller에서 숙박시설 검색 후 해당 숙박시설에 속한 객실정보 조회하기 위한 쿼리 -->	
+	<select id="searchRoomJoin" resultMap="roomMap">
+		select *
+		from room rm
+		inner join accommodations accom
+		on rm.company_id = accom.company_id and rm.accom_name=accom.accom_name
+		where rm.accom_name=#{accomName}
+	</select>
+	
+	
+	<resultMap type="roomVO" id="roomMap">
+		<result column="room_number" property="roomNumber"/>
+		<result column="accom_name" property="accomName"/>
+		<result column="company_id" property="companyId"/>
+		<result column="appropriate_num" property="appropriateNum"/>
+	</resultMap>
+	
+</mapper>

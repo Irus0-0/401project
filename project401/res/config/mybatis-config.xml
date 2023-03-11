@@ -7,13 +7,24 @@
     <properties resource="db.properties"/>
 
     <settings>
-        <setting name="jdbcTypeForNull" value="NULL"></setting>
-        <!--	DB 컬럼명을 낙타표기법으로 속성명과 자동매핑 설정하기	-->
-        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <!-- DB 컬럼명을 낙타표기법으로 속성명과 자동 매핑 설정하기 -->
+        <!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
     </settings>
 
     <!-- Alias 쓸거면 수정해야됨-->
     <typeAliases>
+        <typeAlias type="kr.or.ddit.teampro.reservation.vo.ReservationVo" alias="reserVO"/>
+        <typeAlias type="kr.or.ddit.teampro.report.vo.ReportVo" alias="reportVo"/>
+        <typeAlias type="kr.or.ddit.teampro.report.vo.ReportResultVo" alias="reportResultVo"/>
+        <typeAlias type="kr.or.ddit.teampro.notice.vo.noticeVO" alias = "noticeVO" />
+        <typeAlias type="kr.or.ddit.teampro.event.vo.eventVO" alias = "eventVO"/>
+        <typeAlias type="kr.or.ddit.teampro.event_proposal.vo.EventProposalVO" alias = "eventProposalVO"/>
+        <typeAlias type="kr.or.ddit.teampro.company.coVo.CompanyVO" alias="companyVO"/>
+        <typeAlias type="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO" alias="accomVO"/>
+        <typeAlias type="kr.or.ddit.teampro.room.rmVo.RoomVO" alias="roomVO"/>
+        <typeAlias type="kr.or.ddit.teampro.review.vo.ReviewVO" alias="reviewVO"/>
+        <typeAlias type="kr.or.ddit.teampro.master.vo.MasterVO" alias="masterVO"/>
         <typeAlias type="kr.or.ddit.teampro.customer.vo.CustomerVO" alias="customerVO"/>
     </typeAliases>
 
@@ -33,8 +44,17 @@
     </environments>
 
     <mappers>
+        <mapper resource="mappers/reservation.xml"/>
+        <mapper resource="mappers/report.xml"/>
+        <mapper resource="mappers/notice.xml"/>
+        <mapper resource="mappers/event.xml"/>
+        <mapper resource ="mappers/event_Proposal.xml"/>
+        <mapper resource="mappers/accommodations.xml"/>
+        <mapper resource="mappers/company.xml"/>
+        <mapper resource="mappers/room.xml"/>
+        <mapper resource="mappers/review.xml"/>
+        <mapper resource="mappers/master.xml"/>
         <mapper resource="mappers/customer.xml"/>
     </mappers>
 
 </configuration>
-  

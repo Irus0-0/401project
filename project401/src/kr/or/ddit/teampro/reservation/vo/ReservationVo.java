@@ -10,7 +10,7 @@ public class ReservationVo {
     private String companyId; // 기업ID
     private Date startDate; // 예약 날짜
     private Date endDate; // 예약 종료날짜
-    private int pepleNum; // 예약인원수
+    private int peopleNum; // 예약인원수
 
     // Getter Setter
 
@@ -70,11 +70,25 @@ public class ReservationVo {
         this.endDate = endDate;
     }
 
-    public int getPepleNum() {
-        return pepleNum;
+    public int getPeopleNum() {
+        return peopleNum;
     }
 
-    public void setPepleNum(int pepleNum) {
-        this.pepleNum = pepleNum;
+    public void setPeopleNum(int peopleNum) {
+        this.peopleNum = peopleNum;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationVo{" +
+                "reservationNum='" + reservationNum + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", roomNumber=" + roomNumber +
+                ", accomName='" + accomName + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", pepleNum=" + peopleNum +
+                '}';
     }
 }

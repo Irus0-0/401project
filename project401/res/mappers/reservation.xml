@@ -13,7 +13,7 @@
         <result column="company_id" property="companyId"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
-        <result column="peple_num" property="pepleNum"/>
+        <result column="people_num" property="peopleNum"/>
     </resultMap>
 
 <!--    예약 정보 넣기 -->
@@ -21,6 +21,7 @@
         insert into RESERVATION (reservation_num, customer_id, room_number, accom_name, company_id, start_date, end_date, peple_num)
         values (#{reservationNum}, #{customerId}, #{roomNumber}, #{accomName}, #{companyId}, #{startDate}, #{endDate}, #{pepleNum})
     </insert>
+
 <!-- 예약 정보 수정하기-->
     <update id="updateReservation" parameterType="reserVO">
         update RESERVATION
@@ -42,10 +43,31 @@
     </delete>
 
 <!--    사용자의 모든 예약정보 확인하기-->
-    <select id="selectMyALLReservation" resultMap="reservationMap" parameterType="String">
+    <select id="selectMyAllReservation" resultMap="reservationMap" parameterType="String">
         SELECT *
         FROM RESERVATION
         WHERE CUSTOMER_ID = #{customerId}
+        ORDER BY RESERVATION_NUM DESC
+    </select>
+
+    <!--    사용자의 종료되지 않은 예약들 확인하기-->
+    <select id="selectMyAllUseReservation" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE CUSTOMER_ID = #{customerId}
+        AND sysdate <![CDATA[<]]> START_DATE
+        ORDER BY RESERVATION_NUM DESC
+
+    </select>
+
+    <!--    사용자의 진행중인 예약들 확인하기-->
+    <select id="selectMyAllUseReservation2" resultMap="reservationMap" parameterType="String">
+        SELECT *
+        FROM RESERVATION
+        WHERE CUSTOMER_ID = #{customerId}
+          AND sysdate BETWEEN START_DATE AND END_DATE
+        ORDER BY RESERVATION_NUM DESC
+
     </select>
 
     <!--    기업의 모든 예약정보 확인하기-->

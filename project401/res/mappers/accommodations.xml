@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Accom">
+<!-- 숙박시설 정보 등록 쿼리 -->
+	<insert id="insertAccom" parameterType="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO">
+		insert into accommodations (accom_name, company_id, accom_addr, phone_num, type, set_up_date, star_point, use_count, description)
+		values (#{accomName}, #{companyId}, #{accomAddr}, #{phoneNum}, #{type}, #{setUpDate}, #{starPoint}, #{useCount}, #{description})
+	</insert>
+	
+<!-- 정보 수정 쿼리-enter값을 입력하면 원래값이 그대로 남아있게 동적쿼리로 구현  -->
+	<update id="updateAccom" parameterType="kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO">
+	 	update accommodations 
+		set accom_name = #{accomName}
+			,company_id = #{companyId}
+			<if test="accomAddr != null and accomAddr != ''">
+			,accom_addr = #{accomAddr}
+			</if>
+			<if test="phoneNum != null and phoneNum != ''">
+			,phone_num = #{phoneNum}
+			</if>
+			<if test="type != null and type != ''">
+			,type = #{type}
+			</if>
+			<if test="setUpDate != null and setUpDate != ''">
+			,set_up_date = #{setUpDate}
+			</if>
+			,star_point = #{starPoint}
+			,use_count = #{useCount}
+			<if test="description != null and description != ''">
+			,description = #{description}
+			</if>
+		where accom_name = #{accomName} and company_id = #{companyId}
+	</update>
+	
+	<!--숙박시설 삭제 쿼리-->
+	<delete id="deleteAccom" parameterType="HashMap">
+		delete from accommodations where accom_name=#{accomName} and company_id=#{companyId}
+	</delete>
+	
+	
+	<select id="selectAllAccom" resultMap="accomMap">
+		select *
+		from accommodations
+	</select>
+	
+	
+	<select id="getAccom" resultMap="accomMap">
+		select *
+		from accommodations
+		where accom_name = #{accomName} and company_id = #{companyId}
+	</select>
+	
+	
+	<select id="checkAccom" resultType="int"> 
+		select count(*) from accommodations where accom_name = #{accomName} and company_id = #{companyId}
+	</select>
+	
+	
+<!--숙박시설 검색 쿼리   -->	
+	<select id="searchAccom" resultMap="accomMap">
+		select *
+		from accommodations
+		where 1=1
+		<if test="accomName != null and accomName != ''">
+			and accom_name=#{accomName}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and company_id=#{companyId}
+		</if>
+		<if test="accomAddr != null and accomAddr != ''">
+			and accom_addr=#{accomAddr}
+		</if>
+		<if test="phoneNum != null and phoneNum != ''">
+			and phone_num=#{phoneNum}
+		</if>
+		<if test="type != null and type != ''">
+			and type=#{type}
+		</if>
+			and set_up_date &gt;= #{setUpDate}
+		<if test="starPoint != null and starPoint != ''">
+			and star_point &gt;= #{starPoint}
+		</if>
+		<if test="useCount != null and useCount != ''">
+			and use_count &gt;= #{useCount}
+		</if>
+		<if test="description != null and description != ''">
+			and description=#{description}
+		</if>
+	</select>
+	
+
+<!--기업정보 검색 후 기업소유의 숙박시설을 조회할때 쓰는 join쿼리  -->	
+	<select id="searchAccomJoin" resultMap="accomMap">
+		select *
+		from accommodations accom
+		inner join company co
+		on accom.company_id=co.company_id
+		where accom.company_id=#{companyId}
+	</select>
+	
+	
+		
+	<resultMap type="accomVO" id="accomMap">
+		<result column="accom_name" property="accomName"/>
+		<result column="company_id" property="companyId"/>
+		<result column="accom_addr" property="accomAddr"/>
+		<result column="phone_num" property="phoneNum"/>
+		<result column="set_up_date" property="setUpDate"/>
+		<result column="star_point" property="starPoint"/>
+		<result column="use_count" property="useCount"/>
+	</resultMap>
+	
+</mapper>

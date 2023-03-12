@@ -114,4 +114,9 @@ public class ReservationDaoImpl extends MyBatisDao implements ReservationDao {
         List<ReservationVo> resList = selectList("reservation.selectAccomALLReservation", accomKey);
         return resList;
     }
+
+    @Override
+    public String searchCoId(String accomName) {
+        return selectOne("reservation.searchCoId", accomName);
+    }
 }

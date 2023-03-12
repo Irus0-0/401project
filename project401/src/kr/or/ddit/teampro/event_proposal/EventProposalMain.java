@@ -38,7 +38,7 @@ public class EventProposalMain {
 
 		do {
 			displayMenu();
-			choice = scan.nextInt();
+			choice = Integer.parseInt(scan.nextLine());
 
 			switch (choice) {
 			case 1:
@@ -196,7 +196,7 @@ public class EventProposalMain {
 		System.out.print("이벤트 번호 >> ");
 		// 이벤트 번호를 0으로 입력해야 다음으로 넘어감.
 
-		int eventNum = scan.nextInt();
+		int eventNum = Integer.parseInt(scan.nextLine());
 
 		scan.nextLine();
 

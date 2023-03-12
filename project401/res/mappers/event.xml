@@ -3,7 +3,7 @@
 <mapper namespace="event">
 
     <!-- 이벤트 등록 -->
-    <insert id="insertEvent" parameterType="kr.or.ddit.teampro.event.vo.eventVO">
+    <insert id="insertEvent" parameterType="eventVO">
 
         insert into event(event_num, company_id, title, content, create_date, start_date, end_date)
         values (event_seq.nextVal, #{companyId}, #{eventTitle}, #{eventContent}, sysdate, #{eveStartDate},
@@ -12,7 +12,7 @@
 
 
     <!-- 이벤트 수정  -->
-    <update id="updateEvent" parameterType="kr.or.ddit.teampro.event.vo.eventVO">
+    <update id="updateEvent" parameterType="eventVO">
 
         update event
         set company_id = #{companyId},
@@ -25,7 +25,7 @@
     </update>
 
     <!-- 이벤트 번호로 삭제 -->
-    <delete id="deleteEvent">
+    <delete id="deleteEvent" >
 
         delete
         from event
@@ -38,10 +38,10 @@
     <select id="selectAllEvent" resultMap="eventMap">
 
         select TITLE,
-               TO_CHAR(START_DATE, 'YYYY-MM-DD') AS eveStartDate,
+               TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
                EVENT_NUM,
-               TO_CHAR(END_DATE, 'YYYY-MM-DD') AS eveEndDate,
-               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS eveCreDate,
+               TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+               TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
                CONTENT,
                COMPANY_ID
         from event
@@ -60,7 +60,7 @@
 
 
     <!-- 기업id로 이벤트 내용 조회 -->
-    <select id="getEvent" resultType="kr.or.ddit.teampro.event.vo.eventVO">
+    <select id="getEvent" resultType="eventVO">
 
         select event_num   as eventNum,
                title       as eventTitle,
@@ -68,6 +68,7 @@
                create_date as eveCreDate,
                start_date  as eveStartDate,
                end_date    as eveEndDate
+        FROM EVENT
         where company_id = #{companyId}
 
     </select>

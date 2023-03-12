@@ -95,5 +95,11 @@
     </select>
 
 
+    <select id="searchCoId" resultType="String" parameterType="String">
+        SELECT COMPANY_ID
+        FROM ACCOMMODATIONS
+        WHERE accom_name = #{accomName}
+    </select>
+
 
 </mapper>

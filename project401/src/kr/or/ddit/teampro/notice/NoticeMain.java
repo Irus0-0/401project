@@ -40,7 +40,7 @@ public class NoticeMain {
 
 		do {
 			displayMenu();
-			choice = scan.nextInt();
+			choice = Integer.parseInt(scan.nextLine());
 
 			switch (choice) {
 
@@ -184,7 +184,7 @@ public class NoticeMain {
 		
 
 		System.out.print("수정할 공지 번호 >> ");
-		int noticeNum = scan.nextInt();
+		int noticeNum = Integer.parseInt(scan.nextLine());
 		
 		scan.nextLine();
 
@@ -246,7 +246,7 @@ public class NoticeMain {
 
 		System.out.println("삭제할 공지 번호를 선택하세요.");
 		System.out.print("공지번호 >> ");
-		int noticeNum = scan.nextInt();
+		int noticeNum = Integer.parseInt(scan.nextLine());
 
 		int cnt = notService.removeNotice(noticeNum);
 

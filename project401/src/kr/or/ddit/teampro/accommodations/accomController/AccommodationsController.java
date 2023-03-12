@@ -16,6 +16,7 @@ import kr.or.ddit.teampro.reservation.controller.ReservationController;
 import kr.or.ddit.teampro.reservation.service.ReservationService;
 import kr.or.ddit.teampro.reservation.service.ReservationServiceImpl;
 import kr.or.ddit.teampro.reservation.vo.ReservationVo;
+import kr.or.ddit.teampro.room.rmController.RoomController;
 import kr.or.ddit.teampro.room.rmService.RoomService;
 import kr.or.ddit.teampro.room.rmVo.RoomVO;
 
@@ -25,6 +26,8 @@ public class AccommodationsController {
     private RoomService rmService;
     private ReservationService resService;
     private ReservationController resController;
+
+    private RoomController roomController;
 
     public static CompanyVO companyVO;
 
@@ -37,6 +40,7 @@ public class AccommodationsController {
         resService = ReservationServiceImpl.getInstance();
         companyVO = new CompanyVO();
         resController = new ReservationController();
+        roomController = new RoomController();
     }
 
     public void displayMenu() {
@@ -395,7 +399,6 @@ public class AccommodationsController {
     public void displayAllAccommodations() {
         System.out.println();
 
-
 //		DATE타입 포맷에 맞춰 출력하기 위한 코드
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date setUpDate = new Date();
@@ -468,8 +471,28 @@ public class AccommodationsController {
                     }
                     break;
                 case 2:
-                    searchAccom();
-                    break;
+                    while (true) {
+                        System.out.println("-----------------------------------------------------");
+                        System.out.println("1. 숙박시설 검색하기 / 2. 객실 검색하기 / 3. 뒤로가기");
+                        System.out.print("입력> ");
+                        int choseNum = Integer.parseInt(scan.nextLine());
+                        switch (choseNum) {
+                            case 1:
+                                // 숙박 시설로 검색
+                                searchAccom();
+                                break;
+                            case 2:
+                                // 객실로 검색
+                                roomController.searchRoom();
+                                break;
+                            case 3:
+                                // 뒤로가기
+                                return;
+                            default:
+                                System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
+                                break;
+                        }
+                    }
                 case 3:
                     return;
             }

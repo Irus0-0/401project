@@ -82,7 +82,6 @@ public class EventMain {
         System.out.println("------------------------------------");
 
         List<eventVO> eveList = eveService.selectAllEvent();
-
         if (eveList.size() == 0) {
             System.out.println("조회된 이벤트 목록이 없습니다.");
         } else {
@@ -97,7 +96,6 @@ public class EventMain {
 
     // 2. 이벤트 검색 - 날짜 검색 시 다 0000-00-00로 입력해야 조회 가능, 00(월)로 조회 시 조회 불가
     private void searchEvent() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         scan.nextLine();
 
@@ -141,7 +139,7 @@ public class EventMain {
                     System.out.println(ev2.getEventNum() + "\t" + ev2.getCompanyId() + ev2.getEventTitle() + "\t"
                             + ev2.getEventContent() + "\t" + ev2.getEveCreDate() + "\t" + ev2.getEveStartDate() + "\t"
                             + ev2.getEveEndDate());
-                }catch (Exception e) {
+                } catch (Exception e) {
 
                 }
                 System.out.println("------------------------------------");
@@ -192,31 +190,14 @@ public class EventMain {
 
     // 4. 이벤트 수정
     private void modifyEvent() {
-        boolean isExist = false;
         String companyId = "";
 
-        scan.nextLine();
+        System.out.println();
+        companyId = CompanyService.getInstance().getVo().getCompanyId();
 
-        do {
-            System.out.println();
-            System.out.println("기업ID를 입력하세요.");
-            System.out.print("기업ID >> ");
-            companyId = scan.nextLine();
-
-            isExist = eveService.checkEvent(companyId);
-
-            if (!isExist) {
-                System.out.println("Id가" + companyId + "인 기업ID를 찾을 수 없습니다.");
-                System.out.println("이벤트는 기업만 작성할 수 있습니다.");
-                System.out.println("다시 입력해주세요.");
-            }
-
-        } while (!isExist);
 
         System.out.print("수정할 이벤트 글의 번호 >> ");
-        int eventNum = Integer.parseInt(scan.next());
-
-        scan.nextLine();
+        int eventNum = Integer.parseInt(scan.nextLine());
 
         System.out.print("이벤트 제목을 수정하세요. >> ");
         String eventTitle = scan.nextLine();
@@ -247,32 +228,12 @@ public class EventMain {
     // 5. 이벤트 삭제
 
     private void deleteEvent() {
-
-        boolean isExist = false;
         String companyId = "";
-
-        scan.nextLine();
-
-        do {
-            System.out.println();
-            System.out.println("기업ID를 입력하세요.");
-            System.out.print("기업ID >> ");
-
-            companyId = scan.nextLine();
-
-            isExist = eveService.checkEvent(companyId);
-
-            if (!isExist) {
-                System.out.println("Id가 " + companyId + "인 기업ID를 찾을 수 없습니다.");
-                System.out.println("이벤트는 기업만 삭제할 수 있습니다.");
-                System.out.println("다시 입력해주세요.");
-            }
-
-        } while (!isExist);
+        companyId = CompanyService.getInstance().getVo().getCompanyId();
 
         System.out.println("삭제할 이벤트 번호를 입력하세요.");
         System.out.print("이벤트 번호 >> ");
-        int eventNum = scan.nextInt();
+        int eventNum = Integer.parseInt(scan.nextLine());
 
         int cnt = eveService.removeEvent(eventNum);
 

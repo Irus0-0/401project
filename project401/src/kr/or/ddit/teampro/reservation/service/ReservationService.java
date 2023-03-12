@@ -69,4 +69,6 @@ public interface ReservationService {
      */
     List<ReservationVo> searchAccomReservation(List<String> accomKey);
 
+    String searchCoId(String accomId);
+
 }

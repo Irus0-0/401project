@@ -117,4 +117,9 @@ public class ReservationServiceImpl implements ReservationService{
         List<ReservationVo> resList = resDao.selectAccomAllReservation(accomKey);
         return resList;
     }
+
+    @Override
+    public String searchCoId(String accomId) {
+        return resDao.searchCoId(accomId);
+    }
 }

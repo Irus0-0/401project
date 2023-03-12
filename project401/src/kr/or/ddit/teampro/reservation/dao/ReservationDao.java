@@ -69,5 +69,8 @@ public interface ReservationDao {
      */
     List<ReservationVo> selectAccomAllReservation(List<String> accomKey);
 
+    // 숙박시설명으로 기업 ID 찾기
+    String searchCoId(String accomName);
+
 
 }

@@ -65,10 +65,13 @@ public class ReservationController {
     public void makeReservation() {
         // 로그인한 유저의 정보와 선택한 기업과 방 정보를 받아와서 객체에 저장 후 나머지 날짜를 입력받아 실행
         ReservationVo res = new ReservationVo();
-        res.setCompanyId(AccommodationsController.companyVO.getCompanyId());
-        res.setAccomName(AccommodationsController.companyVO.getName());
 
-        System.out.println("test " + customerVO.getCustomerId());
+        System.out.println("예약할 숙박시설 이름을 입력해주세요");
+        System.out.print("입력> ");
+        res.setAccomName(sc.nextLine());
+
+        res.setCompanyId(resService.searchCoId(res.getAccomName()));
+
         res.setCustomerId(customerVO.getCustomerId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("예약할 방 번호를 선택해주세요");
@@ -268,6 +271,7 @@ public class ReservationController {
         //TODO 교체 가능한 숙소 정보 필요
         System.out.println("---------------------------------");
         System.out.println("교체하실 방 번호를 선택해주세요"); // 그 숙박시설의 변경이 가능한 방을 보여준 뒤 선택
+        System.out.print("입력> ");
         reservationVo.setRoomNumber(Integer.parseInt(sc.nextLine()));
         System.out.println("변경하실 예약날짜를 선택해주세요(ex:2023-03-04)"); // 예약날짜 또한 마찬가지
         System.out.print("입력> ");

@@ -32,7 +32,7 @@ public class CustomerDao implements ICustomerDao {
         } catch (Exception e) {
             //에러 터지면 롤백
             sqlSession.rollback();
-            e.printStackTrace();
+
         } finally {
             sqlSession.close();
         }

@@ -1,5 +1,6 @@
 package kr.or.ddit.teampro.report.controller;
 
+import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.report.service.ReportService;
 import kr.or.ddit.teampro.report.service.ReportServiceImpl;
 import kr.or.ddit.teampro.report.vo.ReportResultVo;
@@ -23,59 +24,58 @@ public class ReportController {
     public void displayReport() {
         int choiceNum;
         boolean whoIs = true;
-        while (true) {
-            System.out.println("신고하기");
-            System.out.println("1. 신고하기 / 2. 신고이력보기 / 3. 뒤로가기");
-            System.out.print("입력> ");
-            choiceNum = Integer.parseInt(sc.nextLine());
-            switch (choiceNum) {
-                case 1:
-                    // 신고하기
-                    doReportDisplay(whoIs);
-                    break;
-                case 2:
-                    // 신고이력 보기
-                    displayReportList(whoIs);
-                    break;
-                case 3:
-                    // 뒤로가기
-                    return;
-                default:
-                    System.out.println("번호를 잘못 입력하셨습니다 다시 입력해주세요");
-            }
 
+        System.out.println("신고하기");
+        System.out.println("1. 신고하기 / 2. 신고이력보기 / 3. 뒤로가기");
+        System.out.print("입력> ");
+        choiceNum = Integer.parseInt(sc.nextLine());
+        switch (choiceNum) {
+            case 1:
+                // 신고하기
+                doReportDisplay(whoIs);
+                break;
+            case 2:
+                // 신고이력 보기
+                displayReportList(whoIs);
+                break;
+            case 3:
+                // 뒤로가기
+                return;
+            default:
+                System.out.println("번호를 잘못 입력하셨습니다 다시 입력해주세요");
         }
+
+
     }
 
     // 형재 로그인한 유저 정보 및 내 예약 확인 란의 예약 번호 까지 필요함
     public void doReportDisplay(boolean whoIs) {
         ReportVo reportVo = new ReportVo();
 
-        while (true) {
-            reportVo.setReportNum(3); // 신고번호  // 임시
 
-            reportVo.setResNum("1234"); // 예약번호  // 임시
-            System.out.println("신고 사유를 입력해주세요");
-            System.out.print("입력> ");
-            reportVo.setReason(sc.nextLine()); // 신고사유
-            if (reportService.checkReport(reportVo, whoIs) <= 0) {
-                if (reportService.doReport(reportVo, whoIs) >= 1) {
-                    System.out.println("신고가 완료되었습니다.");
-                    return;
-                }
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("신고할 예약 번호를 입력해 주세요");
+        System.out.print("입력> ");
+        reportVo.setResNum(sc.nextLine()); // 신고할 번호
+        System.out.println("신고 사유를 입력해주세요");
+        System.out.print("입력> ");
+        reportVo.setReason(sc.nextLine()); // 신고사유
+        if (reportService.checkReport(reportVo, whoIs) <= 0) {
+            if (reportService.doReport(reportVo, whoIs) >= 1) {
+                System.out.println("신고가 완료되었습니다.");
             }
+        } else {
             System.out.println("신고가 실패했습니다 다시 시도해주세요.");
-            return;
-
         }
+
+
     }
 
     // 로그인한 사용자의 신고리스트 보기
     public void displayReportList(boolean whoIs) {
         List<ReportVo> reportVoList;
         Map searchKey = new HashMap();
-        searchKey.put("customerId", "김씨");
-        searchKey.put("reservationNum", "1234");
+        searchKey.put("customerId", CustomerService.getInstance().getVo().getCustomerId());
         reportVoList = reportService.ReportInquire(whoIs, searchKey);
         System.out.println("==================================================");
         for (int i = 0; i < reportVoList.size(); i++) {
@@ -108,7 +108,7 @@ public class ReportController {
                     ReportVo reportVo = reportVoList.get(choiceNum - 1);
                     System.out.println(reportVo);
                     // 결과가 있으면 출력 없으면 신고가 처리 중 입니다 라는 메시지 출력
-                    System.out.println("test: "+reportService.checkingReportResult(whoIs, reportVo));
+                    System.out.println("test: " + reportService.checkingReportResult(whoIs, reportVo));
                     if (reportService.checkingReportResult(whoIs, reportVo) > 0) {
                         // 신고 결과 출력
                         System.out.println("========================신고 결과====================");

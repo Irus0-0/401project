@@ -10,6 +10,11 @@ import kr.or.ddit.teampro.accommodations.accomService.AccommodationsService;
 import kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO;
 import kr.or.ddit.teampro.company.coService.CompanyService;
 import kr.or.ddit.teampro.company.coVo.CompanyVO;
+import kr.or.ddit.teampro.customer.service.CustomerService;
+import kr.or.ddit.teampro.customer.vo.CustomerVO;
+import kr.or.ddit.teampro.reservation.controller.ReservationController;
+import kr.or.ddit.teampro.reservation.service.ReservationService;
+import kr.or.ddit.teampro.reservation.service.ReservationServiceImpl;
 import kr.or.ddit.teampro.reservation.vo.ReservationVo;
 import kr.or.ddit.teampro.room.rmService.RoomService;
 import kr.or.ddit.teampro.room.rmVo.RoomVO;
@@ -18,6 +23,10 @@ public class AccommodationsController {
     private CompanyService coService;
     private AccommodationsService accomService;
     private RoomService rmService;
+    private ReservationService resService;
+    private ReservationController resController;
+
+    public static CompanyVO companyVO;
 
     private Scanner scan = new Scanner(System.in);
 
@@ -25,6 +34,9 @@ public class AccommodationsController {
         coService = CompanyService.getInstance();
         accomService = AccommodationsService.getInstance();
         rmService = RoomService.getInstance();
+        resService = ReservationServiceImpl.getInstance();
+        companyVO = new CompanyVO();
+        resController = new ReservationController();
     }
 
     public void displayMenu() {
@@ -371,7 +383,7 @@ public class AccommodationsController {
 
     }
 
-    public AccommodationsVO displayAllAccommodations() {
+    public void displayAllAccommodations() {
         System.out.println();
 
 
@@ -390,48 +402,64 @@ public class AccommodationsController {
             }
             detailAccom(accomList);
         }
-        return accomList.get(0);
     }
 
     private void detailAccom(List<AccommodationsVO> accomList) {
-        System.out.println("==========================================================================================");
-        System.out.println("1. 시설 자세히 보기 /  2. 검색하기  / 3. 뒤로가기");
-        System.out.print("입력> ");
-        boolean isOk;
-        int choiceNum = Integer.parseInt(scan.nextLine());
-        switch (choiceNum) {
-            case 1:
-                System.out.println("자세히 볼 시설을 선택해 주세요");
-                choiceNum = Integer.parseInt(scan.nextLine());
-                isOk = accomList.size() + 1 > choiceNum && choiceNum > 0;
-                if (isOk) {
-                    AccommodationsVO accommodationsVO = accomList.get(choiceNum - 1);
-
-                    System.out.println(accommodationsVO.toString());
-                    // 방 정보 보기랑 엮어야함
-                    System.out.println("객실을 확인하시겠습니까?");
-                    System.out.println("1. 예 / 2. 아니오");
-                    System.out.print("입력> ");
+        while (true) {
+            System.out.println("==========================================================================================");
+            System.out.println("1. 시설 자세히 보기 /  2. 검색하기  / 3. 뒤로가기");
+            System.out.print("입력> ");
+            boolean isOk;
+            int choiceNum = Integer.parseInt(scan.nextLine());
+            switch (choiceNum) {
+                case 1:
+                    System.out.println("자세히 볼 시설을 선택해 주세요");
                     choiceNum = Integer.parseInt(scan.nextLine());
+                    isOk = accomList.size() + 1 > choiceNum && choiceNum > 0;
+                    if (isOk) {
+                        AccommodationsVO accommodationsVO = accomList.get(choiceNum - 1);
+                        companyVO.setCompanyId(accommodationsVO.getCompanyId());
+                        companyVO.setName(accommodationsVO.getAccomName());
 
-                    if (choiceNum == 1) {
+//                        System.out.println(accommodationsVO.toString());
+                        // 방 정보 보기랑 엮어야함
+                        System.out.println("객실을 확인하시겠습니까?");
+                        System.out.println("1. 예 / 2. 아니오");
+                        System.out.print("입력> ");
+                        choiceNum = Integer.parseInt(scan.nextLine());
 
-                        List<RoomVO> rmList = rmService.searchRoomJoin(accomList.get(choiceNum).getAccomName());
-                        if (rmList.size() == 0) {
-                            System.out.println(accomList.get(choiceNum).getAccomName() + "에 객실이 존재하지 않습니다.");
-                        } else {
-                            System.out.println(accomList.get(choiceNum).getAccomName() + "의 객실 정보는 다음과 같습니다.");
-                            System.out.println(rmList);
+                        if (choiceNum == 1) {
+
+                            List<RoomVO> rmList = rmService.searchRoomJoin(accommodationsVO.getAccomName());
+                            if (rmList.size() == 0) {
+                                System.out.println(accommodationsVO.getAccomName() + "에 객실이 존재하지 않습니다.");
+                            } else {
+                                System.out.println(accommodationsVO.getAccomName() + "의 객실 정보는 다음과 같습니다.");
+                                System.out.println(rmList);
+                                // 예약하기 기능
+                                System.out.println("예약을 진행하시겠습니까?");
+                                System.out.println("1. 예약하기 / 2. 돌아가기");
+                                System.out.print("입력> ");
+                                choiceNum = Integer.parseInt(scan.nextLine());
+                                if (choiceNum == 1) {
+                                    // 숙소 예약
+                                    resController.makeReservation();
+                                    return;
+                                } else if (choiceNum == 2) {
+                                    break;
+                                }
+                            }
+
                         }
-
                     }
-                }
-                break;
-            case 2:
-                searchAccom();
-                break;
-            case 3:
-                break;
+                    break;
+                case 2:
+                    searchAccom();
+                    break;
+                case 3:
+                    return;
+            }
+
         }
 
     }
@@ -546,12 +574,25 @@ public class AccommodationsController {
                     System.out.print("입력> ");
                     input = Integer.parseInt(scan.nextLine());
 
-                    List<RoomVO> rmList = rmService.searchRoomJoin(accomList.get(input).getAccomName());
+                    List<RoomVO> rmList = rmService.searchRoomJoin(accomList.get(input-1).getAccomName());
                     if (rmList.size() == 0) {
-                        System.out.println(accomList.get(input).getAccomName() + "에 객실이 존재하지 않습니다.");
+                        System.out.println(accomList.get(input-1).getAccomName() + "에 객실이 존재하지 않습니다.");
                     } else {
-                        System.out.println(accomList.get(input).getAccomName() + "의 객실 정보는 다음과 같습니다.");
+                        System.out.println(accomList.get(input-1).getAccomName() + "의 객실 정보는 다음과 같습니다.");
                         System.out.println(rmList);
+
+                        // 예약하기 기능
+                        System.out.println("예약을 진행하시겠습니까?");
+                        System.out.println("1. 예약하기 / 2. 돌아가기");
+                        System.out.print("입력> ");
+                        input = Integer.parseInt(scan.nextLine());
+                        if (input == 1) {
+                            // 숙소 예약
+                            resController.makeReservation();
+                        } else if (input == 2) {
+                            break;
+                        }
+
                     }
                 } else {
                     System.out.println("이전으로 돌아갑니다");

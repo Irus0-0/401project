@@ -8,6 +8,7 @@ import kr.or.ddit.teampro.customer.service.ICustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.event.EventMain;
 import kr.or.ddit.teampro.notice.NoticeMain;
+import kr.or.ddit.teampro.report.controller.ReportController;
 import kr.or.ddit.teampro.reservation.controller.ReservationController;
 import kr.or.ddit.teampro.room.rmController.RoomController;
 import kr.or.ddit.teampro.room.rmVo.RoomVO;
@@ -23,6 +24,7 @@ public class UserDisplay {
     private Customer customer;
     private ReservationController resController;
     private AccommodationsController accomController;
+    private ReportController reportController;
     private RoomController roomController;
     private RoomVO roomVO;
     private EventMain eventMain;
@@ -38,12 +40,13 @@ public class UserDisplay {
         this.noticeMain = new NoticeMain();
         this.accomController = new AccommodationsController();
         this.roomController = new RoomController();
+        this.reportController = new ReportController();
     }
 
     public void userMain() throws ParseException {
+
         System.out.println(customerVO.getCustomerId() + "님 환영합니다.");
         while (true) {
-
             System.out.println("==============메뉴==============");
             System.out.println("1. 숙소 예약하기");
             System.out.println("2. 예약 정보 확인하기");
@@ -58,10 +61,8 @@ public class UserDisplay {
             switch (choseNum) {
                 case 1:
                     // 예약 가능한 목록 출력
-                   accomController.displayAllAccommodations();
-                    // 숙소 예약
-                    resController.makeReservation();
-                    break;
+                    accomController.displayAllAccommodations();
+                    //                    break;
                 case 2:
                     // 예약 정보 확인 및 수정 삭제 등등의 기능
                     resController.checkAllUseMyReservation();
@@ -77,8 +78,34 @@ public class UserDisplay {
                 case 5:
                     // 내 정보 출력 및 여태까지의 예약 이력 확인하기
                     customer.displayCustomerInfo();
-//                    resController.
-                    break;
+                    System.out.println("==================================");
+                    System.out.println("1.종료된 예약 전체 보기 / 2. 신고이력 보기 / 3.뒤로가기");
+                    System.out.print("입력> ");
+                    choseNum = Integer.parseInt(sc.nextLine());
+                    if (choseNum == 1) {
+                        resController.checkAllCloseMyReservation();
+                        System.out.println("==================================");
+                        System.out.println("신고하시겠습니까?");
+                        System.out.println("1. 신고하기 / 2. 돌아가기");
+                        System.out.print("입력> ");
+                        choseNum = Integer.parseInt(sc.nextLine());
+                        switch (choseNum) {
+                            case 1:
+                                reportController.doReportDisplay(MainController.whoIs);
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                System.out.println("잘못입력하셨습니다");
+                        }
+                    } else if (choseNum == 2) {
+                        reportController.displayReportList(MainController.whoIs);
+                    } else if (choseNum == 3) {
+                        break;
+                    } else {
+                        System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
+                    }
+
                 case 6:
                     // 로그아웃
                     customerService.logout(customerVO);
@@ -86,9 +113,9 @@ public class UserDisplay {
                 default:
                     System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
 
+
             }
         }
-
 
     }
 }

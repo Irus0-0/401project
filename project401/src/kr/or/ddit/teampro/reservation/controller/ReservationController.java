@@ -1,7 +1,10 @@
 package kr.or.ddit.teampro.reservation.controller;
 
+import controller.MainController;
+import kr.or.ddit.teampro.accommodations.accomController.AccommodationsController;
 import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
+import kr.or.ddit.teampro.report.controller.ReportController;
 import kr.or.ddit.teampro.reservation.service.ReservationService;
 import kr.or.ddit.teampro.reservation.service.ReservationServiceImpl;
 import kr.or.ddit.teampro.reservation.vo.ReservationVo;
@@ -20,10 +23,10 @@ public class ReservationController {
 
     private CustomerVO customerVO;
 
-    public ReservationController() throws ParseException {
+    public ReservationController(){
         resService = ReservationServiceImpl.getInstance();
         sc = new Scanner(System.in);
-        this.customerVO =  CustomerService.getInstance().getVo();
+        this.customerVO = CustomerService.getInstance().getVo();
     }
 
 
@@ -62,6 +65,10 @@ public class ReservationController {
     public void makeReservation() {
         // 로그인한 유저의 정보와 선택한 기업과 방 정보를 받아와서 객체에 저장 후 나머지 날짜를 입력받아 실행
         ReservationVo res = new ReservationVo();
+        res.setCompanyId(AccommodationsController.companyVO.getCompanyId());
+        res.setAccomName(AccommodationsController.companyVO.getName());
+
+        System.out.println("test " + customerVO.getCustomerId());
         res.setCustomerId(customerVO.getCustomerId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("예약할 방 번호를 선택해주세요");
@@ -90,9 +97,10 @@ public class ReservationController {
         System.out.println("몇명의 고객이 이용하시나요?(숫자만 적어주세요)");
         System.out.print("입력> ");
         int count = Integer.parseInt(sc.nextLine());
+        res.setPeopleNum(count);
 
         //todo 수정필요
-        if (resService.registReservation(resVo) > 1) {
+        if (resService.registReservation(res) > 0) {
             System.out.println("예약이 완료되었습니다");
         } else {
             System.out.println("예약이 실패하였습니다, 다시 시도해 주세요.");
@@ -156,16 +164,17 @@ public class ReservationController {
             System.out.println("종료된 예약이 없습니다.");
         } else {
             for (int i = 0; i < reservationVoList.size(); i++) {
-                System.out.println(i + 1 + "번---------------------------------------------------------");
+//                System.out.println(i + 1 + "번---------------------------------------------------------");
+                System.out.println("-----------------------------------------------------------");
                 System.out.println("예약번호: " + reservationVoList.get(i).getReservationNum());
                 System.out.println("숙박시설명: " + reservationVoList.get(i).getAccomName() +
                         "\t/\t방번호: " + reservationVoList.get(i).getRoomNumber() + "호");
                 System.out.println("예약일: " + sdf.format(reservationVoList.get(i).getStartDate())
                         + " ~ " + sdf.format(reservationVoList.get(i).getEndDate()));
                 System.out.println("예약인원: " + reservationVoList.get(i).getPeopleNum() + "명");
-//                System.out.println("-----------------------------------------------------------");
             }
-            detailReservation(reservationVoList);
+                // 신고 기능 처리 필요
+//                new ReportController().doReportDisplay(MainController.whoIs);
         }
     }
 

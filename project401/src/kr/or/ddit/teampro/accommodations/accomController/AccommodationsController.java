@@ -413,6 +413,7 @@ public class AccommodationsController {
             int choiceNum = Integer.parseInt(scan.nextLine());
             switch (choiceNum) {
                 case 1:
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     System.out.println("자세히 볼 시설을 선택해 주세요");
                     choiceNum = Integer.parseInt(scan.nextLine());
                     isOk = accomList.size() + 1 > choiceNum && choiceNum > 0;
@@ -420,6 +421,10 @@ public class AccommodationsController {
                         AccommodationsVO accommodationsVO = accomList.get(choiceNum - 1);
                         companyVO.setCompanyId(accommodationsVO.getCompanyId());
                         companyVO.setName(accommodationsVO.getAccomName());
+                        System.out.println(accommodationsVO.getAccomName() + "의 상세정보 입니다." + "\n시설 설립일자: " + formatter.format(accommodationsVO.getSetUpDate())
+                                + "\n별점: " + accommodationsVO.getStarPoint() + "\n누적 이용횟수: " + accommodationsVO.getUseCount() + "\n상세설명\n" + accommodationsVO.getDescription());
+                        System.out.println("------------------------------------");
+
 
 //                        System.out.println(accommodationsVO.toString());
                         // 방 정보 보기랑 엮어야함
@@ -599,6 +604,13 @@ public class AccommodationsController {
                     return;
                 }
             }
+        }
+    }
+
+    public void showRoom(String accomName) {
+        List<RoomVO> roomS = rmService.searchRoomJoin(accomName);
+        for (RoomVO room : roomS) {
+            System.out.println(room);
         }
     }
 

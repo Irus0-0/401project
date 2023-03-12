@@ -38,17 +38,18 @@ public class MainController {
             System.out.println("==============================");
             System.out.print("입력> ");
             int choseNum = 0;
-                choseNum = Integer.parseInt(sc.nextLine());
-                System.out.println("==============================");
+            choseNum = Integer.parseInt(sc.nextLine());
+            System.out.println("==============================");
             switch (choseNum) {
                 case 1:
-                    while (true) {
+                    boolean check = true;
+                    while (check) {
                         // 사용자 / 기업
                         System.out.println("로그인할 회원을 선택해 주세요");
                         System.out.println("1. 일반회원 / 2. 기업회원 / 3. 돌아가기");
                         System.out.print("입력> ");
-                            choseNum = Integer.parseInt(sc.nextLine());
-                            System.out.println("==============================");
+                        choseNum = Integer.parseInt(sc.nextLine());
+                        System.out.println("==============================");
                         //로그인
                         if (choseNum == 1) {
                             // 일반회원 로그인
@@ -59,15 +60,17 @@ public class MainController {
                                 userDisplay();
                             }
 
+
                         } else if (choseNum == 2) {
                             // 기업회원 로그인
                             company.login();
                             whoIs = false;
                             // 기업 화면 출력
                             companyDisplay();
+
                         } else if (choseNum == 3) {
                             // 돌아가기
-                            break;
+                            check = false;
                         } else if (choseNum == 1212) {
                             // 관리자 로그인
                             master.login();
@@ -75,14 +78,16 @@ public class MainController {
                                 // 관리자 화면 출력
                                 adminDisplay();
                             }
+
                         } else {
                             // 잘못된 숫자 입력
                             System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
                         }
-                        break;
                     }
+                    break;
                 case 2:
-                    while (true) {
+                    boolean check2 = true;
+                    while (check2) {
                         // 회원가입
                         System.out.println("1. 일반회원 가입 / 2. 기업회원 가입 / 3. 돌아가기");
                         System.out.print("입력> ");
@@ -93,11 +98,12 @@ public class MainController {
                         } else if (choseNum == 2) { // 기업 회원 가입
                             company.insertCompany();
                         } else if (choseNum == 3) { // 돌아가기
-                            return;
+                            check2 = false;
                         } else {  // 잘못된 숫자 입력
                             System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
                         }
                     }
+                    break;
                 case 3:
                     // 종료
                     System.out.println("프로그램을 종료합니다.");

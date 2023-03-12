@@ -84,7 +84,8 @@ public class ReportController {
 
         while (true) {
             // 상세보기
-            detailReport(reportVoList, whoIs);
+            displayReportList(whoIs);
+//            detailReport(reportVoList, whoIs);
             return;
         }
 

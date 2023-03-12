@@ -62,7 +62,7 @@ public class UserDisplay {
                 case 1:
                     // 예약 가능한 목록 출력
                     accomController.displayAllAccommodations();
-                    //                    break;
+                    break;
                 case 2:
                     // 예약 정보 확인 및 수정 삭제 등등의 기능
                     resController.checkAllUseMyReservation();
@@ -100,6 +100,7 @@ public class UserDisplay {
                         }
                     } else if (choseNum == 2) {
                         reportController.displayReportList(MainController.whoIs);
+                        break;
                     } else if (choseNum == 3) {
                         break;
                     } else {

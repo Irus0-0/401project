@@ -37,6 +37,7 @@
 	<select id="selectAllRoom" resultMap="roomMap"> 
 		select *
 		from room
+		ORDER BY 2, 1
 	</select>
 	
 	

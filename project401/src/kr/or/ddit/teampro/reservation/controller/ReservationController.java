@@ -23,7 +23,7 @@ public class ReservationController {
 
     private CustomerVO customerVO;
 
-    public ReservationController(){
+    public ReservationController() {
         resService = ReservationServiceImpl.getInstance();
         sc = new Scanner(System.in);
         this.customerVO = CustomerService.getInstance().getVo();
@@ -173,13 +173,13 @@ public class ReservationController {
                         + " ~ " + sdf.format(reservationVoList.get(i).getEndDate()));
                 System.out.println("예약인원: " + reservationVoList.get(i).getPeopleNum() + "명");
             }
-                // 신고 기능 처리 필요
+            // 신고 기능 처리 필요
 //                new ReportController().doReportDisplay(MainController.whoIs);
         }
     }
 
 
-    private void detailReservation(List<ReservationVo> reservationVoList) throws ParseException {
+    private void detailReservation(List<ReservationVo> reservationVoList) {
         boolean isOk;
         System.out.println("==================================================");
         System.out.println("1. 예약수정하기 /  2. 예약취소하기  / 3. 뒤로가기");
@@ -195,7 +195,7 @@ public class ReservationController {
                 if (isOk) {
                     ReservationVo reservationVo = reservationVoList.get(choiceNum - 1);
 
-                    System.out.println(reservationVo.toString());
+//                    System.out.println(reservationVo.toString());
                     // 수정 과정 진행하기
 
                     // 수정하기 , 삭제하기 기능이 표출
@@ -262,17 +262,44 @@ public class ReservationController {
      */
     private void modifyMyReservation(ReservationVo reservationVo) {
         // 해당 숙소의 교체 가능한 방 리스트를 보여줘야함
+        AccommodationsController accomController = new AccommodationsController();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        accomController.showRoom(reservationVo.getAccomName());
         //TODO 교체 가능한 숙소 정보 필요
+        System.out.println("---------------------------------");
         System.out.println("교체하실 방 번호를 선택해주세요"); // 그 숙박시설의 변경이 가능한 방을 보여준 뒤 선택
-//        reservationVo.setRoomNumber();
-        System.out.println("변경하실 예약날짜를 선택해주세요"); // 예약날짜 또한 마찬가지
-//        reservationVo.setStartDate();
-//        reservationVo.setEndDate();
-        System.out.println("인원 수 변경");
-//        reservationVo.setPeopleNum();
+        reservationVo.setRoomNumber(Integer.parseInt(sc.nextLine()));
+        System.out.println("변경하실 예약날짜를 선택해주세요(ex:2023-03-04)"); // 예약날짜 또한 마찬가지
+        System.out.print("입력> ");
+        while (true) {
+            try {
+                reservationVo.setStartDate(sdf.parse(sc.nextLine()));
+                break;
+            } catch (ParseException e) {
+                System.out.println("날짜 형식에 맞지 않습니다, 다시 입력해주세요.");
+            }
+        }
+        System.out.println("예약 종료 날짜를 정해주세요(ex:2023-03-04)");
+        while (true) {
+            try {
+                System.out.print("입력> ");
+                reservationVo.setEndDate(sdf.parse(sc.nextLine()));
+                break;
+            } catch (ParseException e) {
+                System.out.println("날짜 형식에 맞지 않습니다, 다시 입력해주세요.");
+            }
+        }
+        System.out.println("변경할 인원 수를 적어주세요");
+        System.out.print("입력> ");
+        int count = Integer.parseInt(sc.nextLine());
+        reservationVo.setPeopleNum(count);
 
         // List 인덱스 넣고 나온 값으로 변경 시도
-        resService.modifyReservation(reservationVo);
+        if (resService.modifyReservation(reservationVo) > 0) {
+            System.out.println("예약 수정 성공!");
+        } else {
+            System.out.println("예약 수정에 실패했습니다 다시 시도해주세요");
+        }
     }
 
     //-------------------------------------------------------------

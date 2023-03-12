@@ -134,6 +134,7 @@ public class MainController {
 
     // 관리자 로그인 후 화면
     public void adminDisplay() {
+        new AdminDisplay().adminDisplay();
     }
 
     public static void main(String[] args) throws ParseException {

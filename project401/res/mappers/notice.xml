@@ -81,13 +81,9 @@
 	 
 	 select * 
 	   from notice 
-	    where master_id = #{masterId} 
-	   
-		 
-		
-
-		 <if test="noticeNum != null and noticeNum != ''">
-			 and title like '%' || #{noticeNum}||'%'  </if>
+	    where 1=1
+		 <if test="noticeNum != 0 and noticeNum != ''">
+			 and NOTICE_NUM like '%' || #{noticeNum}||'%'  </if>
 		 <if test="notTitle != null and notTitle != ''">
 			 and title like '%' || #{notTitle}||'%'  </if>
 		 <if test="notContent != null and notContent != ''">

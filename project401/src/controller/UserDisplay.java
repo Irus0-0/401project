@@ -1,7 +1,6 @@
 package controller;
 
 import kr.or.ddit.teampro.accommodations.accomController.AccommodationsController;
-import kr.or.ddit.teampro.accommodations.accomVo.AccommodationsVO;
 import kr.or.ddit.teampro.customer.Customer;
 import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.service.ICustomerService;
@@ -14,7 +13,6 @@ import kr.or.ddit.teampro.room.rmController.RoomController;
 import kr.or.ddit.teampro.room.rmVo.RoomVO;
 
 import java.text.ParseException;
-import java.util.List;
 import java.util.Scanner;
 
 public class UserDisplay {

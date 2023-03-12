@@ -6,6 +6,7 @@ import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.service.ICustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.master.Master;
+import kr.or.ddit.teampro.master.service.MasterService;
 
 import java.text.ParseException;
 import java.util.Scanner;
@@ -37,7 +38,7 @@ public class MainController {
             System.out.println("3. 종료");
             System.out.println("==============================");
             System.out.print("입력> ");
-            int choseNum = 0;
+            int choseNum;
             choseNum = Integer.parseInt(sc.nextLine());
             System.out.println("==============================");
             switch (choseNum) {
@@ -60,13 +61,15 @@ public class MainController {
                                 userDisplay();
                             }
 
-
                         } else if (choseNum == 2) {
+
                             // 기업회원 로그인
                             company.login();
-                            whoIs = false;
-                            // 기업 화면 출력
-                            companyDisplay();
+                            if (CustomerService.getInstance().getVo() != null) {
+                                whoIs = false;
+                                // 기업 화면 출력
+                                companyDisplay();
+                            }
 
                         } else if (choseNum == 3) {
                             // 돌아가기
@@ -74,7 +77,7 @@ public class MainController {
                         } else if (choseNum == 1212) {
                             // 관리자 로그인
                             master.login();
-                            if (Master.getInstance() != null) {
+                            if (MasterService.getInstance().getVo() != null) {
                                 // 관리자 화면 출력
                                 adminDisplay();
                             }

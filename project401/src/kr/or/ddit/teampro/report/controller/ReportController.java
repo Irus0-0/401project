@@ -1,5 +1,7 @@
 package kr.or.ddit.teampro.report.controller;
 
+import controller.MainController;
+import kr.or.ddit.teampro.company.coService.CompanyService;
 import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.report.service.ReportService;
 import kr.or.ddit.teampro.report.service.ReportServiceImpl;
@@ -23,9 +25,8 @@ public class ReportController {
 
     public void displayReport() {
         int choiceNum;
-        boolean whoIs = true;
-
-        System.out.println("신고하기");
+        boolean whoIs = MainController.whoIs;
+        System.out.println("=========================================");
         System.out.println("1. 신고하기 / 2. 신고이력보기 / 3. 뒤로가기");
         System.out.print("입력> ");
         choiceNum = Integer.parseInt(sc.nextLine());
@@ -75,17 +76,24 @@ public class ReportController {
     public void displayReportList(boolean whoIs) {
         List<ReportVo> reportVoList;
         Map searchKey = new HashMap();
-        searchKey.put("customerId", CustomerService.getInstance().getVo().getCustomerId());
+        if (whoIs) {
+            searchKey.put("customerId", CustomerService.getInstance().getVo().getCustomerId());
+        } else {
+            searchKey.put("companyId", CompanyService.getInstance().getVo().getCompanyId());
+        }
         reportVoList = reportService.ReportInquire(whoIs, searchKey);
         System.out.println("==================================================");
         for (int i = 0; i < reportVoList.size(); i++) {
-            System.out.println(i + 1 + "번 " + reportVoList.get(i).toString());
+            System.out.println(i + 1 + "번-----------------------------------");
+            System.out.println("신고번호: " +reportVoList.get(i).getReportNum());
+            System.out.println("예약번호: " +reportVoList.get(i).getResNum());
+            System.out.println("신고 사유: " +reportVoList.get(i).getReason());
         }
 
         while (true) {
             // 상세보기
-            displayReportList(whoIs);
-//            detailReport(reportVoList, whoIs);
+//            displayReportList(whoIs);
+            detailReport(reportVoList, whoIs);
             return;
         }
 
@@ -146,7 +154,6 @@ public class ReportController {
                     System.out.print("사유> ");
                     String reason = sc.nextLine();
                     reportVo.setReason(reason);
-                    System.out.println("test: " + reportVo);
                     if (reportService.modifyReport(reportVo, whoIs) > 0) {
                         System.out.println("수정이 완료되었습니다");
                     } else {

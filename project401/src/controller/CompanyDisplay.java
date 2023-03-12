@@ -8,6 +8,8 @@ import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.event.EventMain;
 import kr.or.ddit.teampro.notice.NoticeMain;
+import kr.or.ddit.teampro.report.controller.ReportController;
+import kr.or.ddit.teampro.reservation.controller.ReservationController;
 import kr.or.ddit.teampro.room.rmController.RoomController;
 
 import java.util.Scanner;
@@ -20,6 +22,8 @@ public class CompanyDisplay {
     private AccommodationsController accomController;
     private RoomController roomController;
     private CompanyController coController;
+    private ReportController reportController;
+    private ReservationController resController;
 
     public CompanyDisplay() {
         this.companyVO = CompanyService.getInstance().getVo();
@@ -29,6 +33,8 @@ public class CompanyDisplay {
         this.accomController = new AccommodationsController();
         this.roomController = new RoomController();
         this.coController = new CompanyController();
+        this.reportController = new ReportController();
+        this.resController = new ReservationController();
     }
 
     public void comMain() {
@@ -83,7 +89,7 @@ public class CompanyDisplay {
         System.out.println("2. 등록된 숙박시설 보기");
         System.out.println("3. 숙박시설정보 수정");
         System.out.println("4. 숙박시설정보 삭제");
-        System.out.println("5. 숙박시설 방 관리");
+        System.out.println("5. 숙박시설 객실 관리");
         System.out.println("6. 뒤로가기");
         System.out.println("===============================");
         System.out.print("입력> ");
@@ -119,49 +125,67 @@ public class CompanyDisplay {
     }
 
     public void roomController() {
-        // 내 소유 숙박시설 표시
-        System.out.println("1. 객실 등록");
-        System.out.println("2. 객실정보 수정");
-        System.out.println("3. 객실정보 삭제");
-        System.out.println("4. 뒤로가기");
-        System.out.println("===============================");
-        System.out.print("입력> ");
-        int choseNum;
-        choseNum = Integer.parseInt(sc.nextLine());
-        switch (choseNum) {
-            case 1:
-                // 객실 등록
-                roomController.insertRoom();
-                break;
-            case 2:
-                // 객실 수정
-                roomController.updateRoom();
-                break;
-            case 3:
-                // 객실 삭제
-                roomController.deleteRoom();
-                break;
-            case 4:
-                // 뒤로가기
-                break;
-            default:
-                break;
+        while (true) {
+            // 내 소유 숙박시설 표시
+            System.out.println("1. 객실 등록");
+            System.out.println("2. 객실 정보 확인하기");
+            System.out.println("2. 객실정보 수정");
+            System.out.println("3. 객실정보 삭제");
+            System.out.println("4. 뒤로가기");
+            System.out.println("===============================");
+            System.out.print("입력> ");
+            int choseNum;
+            choseNum = Integer.parseInt(sc.nextLine());
+            switch (choseNum) {
+                case 1:
+                    // 객실 등록
+                    roomController.insertRoom();
+                    break;
+                case 2:
+                    // 객실 정보 확인하기 (숙박시설 명을 입력받아 방들의 정보를 불러와서 확인이 가능하게 해줌)
+                    roomController.displayChooseRoom();
+                    break;
+                case 3:
+                    // 객실 수정
+                    roomController.updateRoom();
+                    break;
+                case 4:
+                    // 객실 삭제
+                    roomController.deleteRoom();
+                    break;
+                case 5:
+                    // 뒤로가기
+                    return;
+                default:
+                    break;
+            }
         }
     }
 
     public void showCoProfile() {
-        // 내 정보 표출
-        System.out.println("1. 소유한 전체 숙박시설 출력");
-        System.out.println("2. 고객 이용 내역 확인하기");
-        // 이용내역 확인안에 신고하기 기능 넣어야 함
-        System.out.println("3. ");
+            // 내 정보 표출
+            coController.displayCompanyInfo();
 
-        System.out.println("===============================");
-        System.out.print("입력> ");
-        int choseNum;
-        choseNum = Integer.parseInt(sc.nextLine());
-        switch (choseNum) {
+        while (true) {
+            System.out.println("1. 고객 이용 내역 및 신고 확인하기 / 2. 뒤로가기");
+            // 이용내역 확인안에 신고하기 기능 넣어야 함
 
+            System.out.println("===============================");
+            System.out.print("입력> ");
+            int choseNum;
+            choseNum = Integer.parseInt(sc.nextLine());
+            switch (choseNum) {
+                case 1:
+                    //전체 예약 이용 내역
+                    resController.searchCoAllReservation();
+                    reportController.displayReport(); // 신고기능
+                    break;
+                case 2:
+                    // 뒤로가기
+                    return;
+                default:
+                    System.out.println("잘못 입력하셨습니다 다시 시도해주세요");
+            }
         }
     }
 }

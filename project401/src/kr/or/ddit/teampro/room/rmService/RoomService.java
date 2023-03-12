@@ -75,9 +75,14 @@ public class RoomService {
     public List<RoomVO> selectAllRoom() {
 		return rmDao.selectAllRoom();
 	}
-    
-    
-    /**검색된 객실정보 조회하기 위한 메서드
+
+	public List<RoomVO> selectChooseRoom(RoomVO rmVo) {
+		return rmDao.selectChooseRoom(rmVo);
+	}
+
+
+
+	/**검색된 객실정보 조회하기 위한 메서드
 	 * @param rmVo 검색할 조건정보를 담은 VO객체
 	 * @return 검색된 객실정보를 담은 VO객체
 	 */

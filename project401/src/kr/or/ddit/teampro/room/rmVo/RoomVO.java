@@ -56,8 +56,8 @@ public class RoomVO {
 	
 	@Override
 	public String toString() {
-		return "\n객실번호:" + roomNumber + "\n숙박시설명" + accomName + "\n객실 등급:"+ grade 
-				+ "\n숙박 비용(1박 기준)" + price + "\n적정인원" + appropriateNum 
+		return "\n객실번호:" + roomNumber + "\n숙박시설명: " + accomName + "\n객실 등급: "+ grade
+				+ "\n숙박 비용(1박 기준): " + price + "\n적정인원: " + appropriateNum
 				+ "\n상세설명:\n" + description+"\n---------------------";
 	}
 	

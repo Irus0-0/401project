@@ -10,9 +10,7 @@
 <!-- 정보 수정 쿼리: enter값을 입력하면 원래값이 그대로 남아있게 동적쿼리로 구현 -->
 	<update id="updateRoom" parameterType="kr.or.ddit.teampro.room.rmVo.RoomVO">
 	 	update room 
-		set room_number=#{roomNumber}
-			,accom_name=#{accomName}
-			,company_id=#{companyId}
+		set company_id=#{companyId}
 			<if test="grade != null and grade != ''">
 			,grade=#{grade}
 			</if>
@@ -39,6 +37,13 @@
 		from room
 		ORDER BY 2, 1
 	</select>
+
+	<select id="selectChooseRoom" parameterType="kr.or.ddit.teampro.room.rmVo.RoomVO" resultMap="roomMap">
+        select *
+        from room
+        WHERE ACCOM_NAME = #{accomName} AND COMPANY_ID = #{companyId}
+        ORDER BY 2, 1
+    </select>
 	
 	
 	<select id="getRoom" resultMap="roomMap">

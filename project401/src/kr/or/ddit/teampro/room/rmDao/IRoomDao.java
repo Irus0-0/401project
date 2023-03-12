@@ -43,6 +43,8 @@ public interface IRoomDao {
 	 * @return 리스트객체
 	 */
 	public List<RoomVO> selectAllRoom();
+
+	public List<RoomVO> selectChooseRoom(RoomVO rmVo);
 	
 	
 	/**검색된 객실정보 조회하기 위한 메서드

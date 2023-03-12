@@ -427,6 +427,7 @@ public class AccommodationsController {
                 case 1:
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     System.out.println("자세히 볼 시설을 선택해 주세요");
+                    System.out.print("입력> ");
                     choiceNum = Integer.parseInt(scan.nextLine());
                     isOk = accomList.size() + 1 > choiceNum && choiceNum > 0;
                     if (isOk) {

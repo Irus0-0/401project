@@ -2,6 +2,7 @@ package kr.or.ddit.teampro.reservation.controller;
 
 import controller.MainController;
 import kr.or.ddit.teampro.accommodations.accomController.AccommodationsController;
+import kr.or.ddit.teampro.company.coService.CompanyService;
 import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.vo.CustomerVO;
 import kr.or.ddit.teampro.report.controller.ReportController;
@@ -161,7 +162,7 @@ public class ReservationController {
     /**
      * 종료된 모든 예약정보 출력
      */
-    public void checkAllCloseMyReservation() throws ParseException { // 내 정보에서 사용해야 할듯
+    public void checkAllCloseMyReservation() { // 내 정보에서 사용해야 할듯
         reservationVoList = resService.searchCloseReservation(customerVO.getCustomerId());
         if (reservationVoList.size() == 0) {
             System.out.println("종료된 예약이 없습니다.");
@@ -333,6 +334,27 @@ public class ReservationController {
             System.out.println("뒤로 돌아갑니다.");
         }
 
+    }
+
+    // 기업의 모든 예약 정보 확인
+    public void searchCoAllReservation() {
+        List<ReservationVo> resList =
+                resService.searchCoAllReservation(CompanyService.getInstance().getVo().getCompanyId());
+        System.out.println("모든 예약 정보들을 확인합니다");
+        if (resList.size() == 0) {
+            System.out.println("예약된 적이 없습니다 ㅠㅠ");
+        } else {
+
+            for (ReservationVo reservationVo : resList) {
+                System.out.println("예약번호: " + reservationVo.getReservationNum());
+                System.out.println("고객ID: " + reservationVo.getCustomerId());
+                System.out.println("숙박시설명: " + reservationVo.getAccomName() + "객실번호: " + reservationVo.getRoomNumber());
+                System.out.println("사용인원 수: " + reservationVo.getPeopleNum());
+                System.out.println("이용날짜: " + reservationVo.getStartDate() + " ~ " + reservationVo.getEndDate());
+                System.out.println("-----------------------------------------");
+
+            }
+        }
     }
 
     public static void main(String[] args) throws ParseException {

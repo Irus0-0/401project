@@ -363,6 +363,21 @@ public class CompanyController {
 		}
 	}
 
+	public void displayCompanyInfo() {
+		CompanyVO user = CompanyService.getInstance().getVo();
+		if (user == null) System.out.println("회원정보 조회가 불가능합니다");
+
+		System.out.println("==============내 정보==============");
+		System.out.println("아이디>> " + user.getCompanyId());
+		System.out.println("기업주명>> " + user.getOwnerName());
+		System.out.println("기업이름>> " + user.getName());
+		System.out.println("사업자번호>> " + user.getBizNo());
+		System.out.println("전화번호>> " + user.getPhoneNum());
+		System.out.println("사업장주소>> " + user.getAddr());
+		System.out.println("규모>> " + user.getScale());
+		System.out.println("제제횟수>> " + user.getSanctionsCount());
+	}
+
 	
 	public static void main(String[] args) {
 		CompanyController coCntr = new CompanyController();

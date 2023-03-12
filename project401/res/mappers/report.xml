@@ -107,7 +107,7 @@
     <select id="selectAllReportByChoseCo" resultMap="reportMap" parameterType="String">
         SELECT A.REPORT_NUM, A.RESERVATION_NUM, A.REASON
         FROM REPORT_USER A,
-             (SELECT RESERVATION_NUM AS resNum FROM RESERVATION WHERE #{companyId} = company_id) B
+             (SELECT RESERVATION_NUM AS resNum FROM RESERVATION WHERE company_id = #{companyId}) B
         WHERE A.RESERVATION_NUM IN B.resNum
     </select>
 

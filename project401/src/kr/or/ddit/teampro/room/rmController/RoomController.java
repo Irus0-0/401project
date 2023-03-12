@@ -114,9 +114,6 @@ public class RoomController {
         System.out.print("적정 인원>> ");
         int appropriateNum = Integer.parseInt(scan.nextLine());
 
-        scan.nextLine();// 버퍼비우기
-
-
         System.out.println("상세설명(흡연 가능여부 / 기타사항)");
         System.out.print("흡연 가능여부(Y,N)>> ");
         String smoking = "";
@@ -287,6 +284,31 @@ public class RoomController {
         }
         System.out.println("출력 작업 끝");
     }
+
+    public void displayChooseRoom() {
+        RoomVO roomVO = new RoomVO();
+        System.out.println();
+        System.out.println("-----------------------------------");
+        System.out.println("객실을 확인할 숙박시설명을 입력해주세요");
+        System.out.print("입력> ");
+        roomVO.setAccomName(scan.nextLine());
+        roomVO.setCompanyId(CompanyService.getInstance().getVo().getCompanyId());
+        List<RoomVO> rmList = rmService.selectChooseRoom(roomVO);
+
+        if (rmList.size() == 0) {
+            System.out.println("조회된 데이터가 없습니다.");
+        } else {
+            for (RoomVO rmVo : rmList) {
+                System.out.println("------------------------------------");
+                System.out.println("객실번호: " + rmVo.getRoomNumber() + "\n숙박시설명: " + rmVo.getAccomName()
+                        + "\n객실 등급: " + rmVo.getGrade() + "\n1박 기준 가격(단위:만 원): " + rmVo.getPrice()
+                        + "\n적정인원(최대인원기준): " + rmVo.getAppropriateNum() + "\n상세 설명(흡연가능여부 및 기타사항)\n" + rmVo.getDescription());
+                System.out.println("------------------------------------");
+            }
+        }
+        System.out.println("출력 작업 끝");
+    }
+
 
     /**
      * 객실정보 검색 메서드

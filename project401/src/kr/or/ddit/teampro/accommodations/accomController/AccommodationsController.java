@@ -86,7 +86,7 @@ public class AccommodationsController {
     /**
      * 숙박시설 등록 메서드
      */
-    private void insertAccommodations() {
+    public void insertAccommodations() {
         boolean isExist;
         String accomName = "";
         String companyId = "";
@@ -106,14 +106,15 @@ public class AccommodationsController {
             }
         } while (isExist);
 
-        System.out.println("시설주소>> ");
+        System.out.print("시설주소>> ");
         String accomAddr = scan.nextLine();
-        System.out.println("시설 전화번호>> ");
+        System.out.print("시설 전화번호>> ");
         String phoneNum = scan.nextLine();
 
         //시설타입은 번호로 입력받음, 1-4값이 아닌 경우 재입력하게 구현
         System.out.println("시설타입은 번호로 입력해 주세요");
         System.out.println("시설타입>>1.호텔 2.모텔 3.펜션 4.리조트");
+        System.out.print("입력> ");
         int choice;
         String type = "";
         do {
@@ -138,7 +139,7 @@ public class AccommodationsController {
 
         //설립날짜 수정은 임시로 값을 받고 그 값이 빈값이 아니면 넣어주는 방식으로 구현
         System.out.println("양식은 <yyyy-MM-dd> 입니다");
-        System.out.println("설립날짜>>");
+        System.out.print("설립날짜>>");
         String strSetUpDate = scan.nextLine();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date setUpDate = new Date();
@@ -150,11 +151,11 @@ public class AccommodationsController {
 
 
         System.out.println("상세설명(서비스가능언어 / 아동,반려견출입 가능여부 / 기타사항)");
-        System.out.println("서비스 가능 언어>> ");
+        System.out.print("서비스 가능 언어>> ");
         String lang = "서비스가능 언어:" + scan.nextLine();
 
 
-        System.out.println("아동출입 가능여부(Y,N)>> ");
+        System.out.print("아동출입 가능여부(Y,N)>> ");
         String kids = "";
         while (true) {
             String input = scan.nextLine();
@@ -165,7 +166,7 @@ public class AccommodationsController {
                 System.out.println("Y,N 형태로만 다시 입력해주세요 ");
             }
         }
-        System.out.println("반려견출입 가능여부(Y,N)>> ");
+        System.out.print("반려견출입 가능여부(Y,N)>> ");
         String pet = "";
         while (true) {
             String input = scan.nextLine();
@@ -176,7 +177,7 @@ public class AccommodationsController {
                 System.out.println("Y,N 형태로만 다시 입력해주세요 ");
             }
         }
-        System.out.println("기타사항>> ");
+        System.out.print("기타사항>> ");
         String etc = "기타사항:" + scan.nextLine();
 
 //		위에서 받은 4가지 값을 합쳐서 description에 넣어준다
@@ -193,16 +194,16 @@ public class AccommodationsController {
 
         int cnt = accomService.registAccom(accomVo);
         if (cnt > 0) {
-            System.out.println(accomName + "숙박시설 추가 작업 성공!");
+            System.out.println(accomName + " 숙박시설 추가 작업 성공!");
         } else {
-            System.out.println(accomName + "숙박시설 추가 작업 실패...");
+            System.out.println(accomName + " 숙박시설 추가 작업 실패...");
         }
     }
 
     /**
      * 숙박시설 정보를 삭제하기 위한 메서드-pw 재확인 작업
      */
-    private void deleteAccommodations() {
+    public void deleteAccommodations() {
         System.out.println();
         System.out.println("삭제할 숙박시설명을 입력하세요");
         System.out.print("숙박시설명>>");
@@ -224,7 +225,7 @@ public class AccommodationsController {
 
         while (true) {
             System.out.println("삭제를 위해 password를 재확인합니다.");
-            System.out.println("Password>> ");
+            System.out.print("Password>> ");
             String inputPw = scan.next();
             if (compPw.equals(inputPw)) {
                 compPw = inputPw;
@@ -247,7 +248,7 @@ public class AccommodationsController {
     /**
      * 숙박시설정보를 수정하기 위한 메서드
      */
-    private void updateAccommodations() {
+    public void updateAccommodations() {
         boolean isExist = false;
         String accomName = "";
         String companyId = "";
@@ -255,9 +256,9 @@ public class AccommodationsController {
             System.out.println();
             System.out.println("수정할 숙박시설명을 입력하세요");
             System.out.print("숙박시설명>>");
-            accomName = scan.next();
+            accomName = scan.nextLine();
             System.out.print("기업ID를 확인해주세요>>");
-            companyId = scan.next();
+            companyId = scan.nextLine();
 
             isExist = accomService.checkAccom(accomName, companyId);
 
@@ -275,13 +276,20 @@ public class AccommodationsController {
         accomVo.setAccomName(accomName);
         accomVo.setCompanyId(companyId);
 
+        List<AccommodationsVO> acList = accomService.searchAccomJoin(CompanyService.getInstance().getVo().getCompanyId());
+        for (AccommodationsVO accommodationsVO : acList) {
+            System.out.println("=============변경 전 정보==============");
+            System.out.println("숙박시설명: " + accommodationsVO.getAccomName() + "/ 시설주소: " + accommodationsVO.getAccomAddr()
+                    + "/ 시설 전화번호: " + accommodationsVO.getPhoneNum() + "/ 시설 타입: " + accommodationsVO.getType());
+            System.out.println("=======================================");
+        }
 
         System.out.println("수정을 원하지 않는 경우, 데이터 입력 없이 enter키를 누르세요");
-        System.out.println("시설 주소>> ");
+        System.out.print("시설 주소>> ");
         String accomAddr = scan.nextLine();
         accomVo.setAccomAddr(accomAddr);
 
-        System.out.println("시설 전화번호>> ");
+        System.out.print("시설 전화번호>> ");
         String phoneNum = scan.nextLine();
         accomVo.setPhoneNum(phoneNum);
 
@@ -291,6 +299,7 @@ public class AccommodationsController {
         do {
             System.out.println("시설타입은 번호로 입력해 주세요");
             System.out.println("시설타입>>1.호텔 2.모텔 3.펜션 4.리조트");
+            System.out.print("입력> ");
             tempType = scan.nextLine();
             if (!tempType.isEmpty()) {
                 intType = Integer.parseInt(tempType);
@@ -316,7 +325,7 @@ public class AccommodationsController {
 
         //설립날짜 수정은 임시로 값을 받고 그 값이 빈값이 아니면 넣어주는 방식으로 구현
         System.out.println("양식은 <yyyy-MM-dd> 입니다");
-        System.out.println("설립날짜>> ");
+        System.out.print("설립날짜>> ");
         String tempSetUpDate = scan.nextLine();
         if (!tempSetUpDate.isEmpty()) {
             try {
@@ -331,7 +340,7 @@ public class AccommodationsController {
 
         //상세설명은 변경은 Y를 누른 경우 각 속성을 다 입력받아야함 -Y,N형태가 아닌경우 다시 입력받게 함
         System.out.println("상세설명도 변경하시겠습니까?(서비스가능언어 / 아동,반려견출입 가능여부 / 기타사항)");
-        System.out.println("Y,N 형태로 입력해주세요>> ");
+        System.out.print("Y,N 형태로 입력해주세요>> ");
         String input = scan.nextLine();
         if (input.equals("Y")) {
             System.out.println("서비스 가능 언어>> ");
@@ -579,11 +588,11 @@ public class AccommodationsController {
                     System.out.print("입력> ");
                     input = Integer.parseInt(scan.nextLine());
 
-                    List<RoomVO> rmList = rmService.searchRoomJoin(accomList.get(input-1).getAccomName());
+                    List<RoomVO> rmList = rmService.searchRoomJoin(accomList.get(input - 1).getAccomName());
                     if (rmList.size() == 0) {
-                        System.out.println(accomList.get(input-1).getAccomName() + "에 객실이 존재하지 않습니다.");
+                        System.out.println(accomList.get(input - 1).getAccomName() + "에 객실이 존재하지 않습니다.");
                     } else {
-                        System.out.println(accomList.get(input-1).getAccomName() + "의 객실 정보는 다음과 같습니다.");
+                        System.out.println(accomList.get(input - 1).getAccomName() + "의 객실 정보는 다음과 같습니다.");
                         System.out.println(rmList);
 
                         // 예약하기 기능
@@ -618,5 +627,15 @@ public class AccommodationsController {
     public static void main(String[] args) {
         AccommodationsController accomCntr = new AccommodationsController();
         accomCntr.start();
+    }
+
+    public void showMyAccom() {
+        List<AccommodationsVO> acList = accomService.searchAccomJoin(CompanyService.getInstance().getVo().getCompanyId());
+        System.out.println("===============================");
+        System.out.println(CompanyService.getInstance().getVo().getCompanyId() + " 님이 소유하신 시설");
+        for (AccommodationsVO accommodationsVO : acList) {
+            System.out.println("시설명 : " + accommodationsVO.getAccomName());
+            System.out.println("===============================");
+        }
     }
 }

@@ -44,7 +44,8 @@ public class UserDisplay {
     public void userMain() throws ParseException {
 
         System.out.println(customerVO.getCustomerId() + "님 환영합니다.");
-        while (true) {
+        boolean check = true;
+        while (check) {
             System.out.println("==============메뉴==============");
             System.out.println("1. 숙소 예약하기");
             System.out.println("2. 예약 정보 확인하기");
@@ -108,11 +109,9 @@ public class UserDisplay {
                 case 6:
                     // 로그아웃
                     customerService.logout(customerVO);
-                    return;
+                    check = false;
                 default:
                     System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
-
-
             }
         }
 

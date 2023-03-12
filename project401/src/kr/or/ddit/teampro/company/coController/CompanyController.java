@@ -335,7 +335,7 @@ public class CompanyController {
 	}
 
 
-	private void logout() {
+	public void logout() {
 		CompanyVO cv = CompanyService.getInstance().getVo();
 
 		if (cv == null) {

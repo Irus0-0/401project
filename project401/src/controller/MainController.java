@@ -1,6 +1,7 @@
 package controller;
 
 import kr.or.ddit.teampro.company.coController.CompanyController;
+import kr.or.ddit.teampro.company.coService.CompanyService;
 import kr.or.ddit.teampro.customer.Customer;
 import kr.or.ddit.teampro.customer.service.CustomerService;
 import kr.or.ddit.teampro.customer.service.ICustomerService;
@@ -52,39 +53,41 @@ public class MainController {
                         choseNum = Integer.parseInt(sc.nextLine());
                         System.out.println("==============================");
                         //로그인
-                        if (choseNum == 1) {
-                            // 일반회원 로그인
-                            customer.login();
-                            if (CustomerService.getInstance().getVo() != null) {
-                                whoIs = true;
-                                // 회원 화면 출력
-                                userDisplay();
-                            }
-
-                        } else if (choseNum == 2) {
-
-                            // 기업회원 로그인
-                            company.login();
-                            if (CustomerService.getInstance().getVo() != null) {
-                                whoIs = false;
-                                // 기업 화면 출력
-                                companyDisplay();
-                            }
-
-                        } else if (choseNum == 3) {
-                            // 돌아가기
-                            check = false;
-                        } else if (choseNum == 1212) {
-                            // 관리자 로그인
-                            master.login();
-                            if (MasterService.getInstance().getVo() != null) {
-                                // 관리자 화면 출력
-                                adminDisplay();
-                            }
-
-                        } else {
-                            // 잘못된 숫자 입력
-                            System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
+                        switch (choseNum) {
+                            case 1:
+                                // 일반회원 로그인
+                                customer.login();
+                                if (CustomerService.getInstance().getVo() != null) {
+                                    whoIs = true;
+                                    // 회원 화면 출력
+                                    userDisplay();
+                                }
+                                break;
+                            case 2:
+                                // 기업회원 로그인
+                                company.login();
+                                if (CompanyService.getInstance().getVo() != null) {
+                                    whoIs = false;
+                                    // 기업 화면 출력
+                                    companyDisplay();
+                                }
+                                break;
+                            case 3:
+                                // 돌아가기
+                                check = false;
+                                break;
+                            case 1212:
+                                // 관리자 로그인
+                                master.login();
+                                if (MasterService.getInstance().getVo() != null) {
+                                    // 관리자 화면 출력
+                                    adminDisplay();
+                                }
+                                break;
+                            default:
+                                // 잘못된 숫자 입력
+                                System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
+                                break;
                         }
                     }
                     break;
@@ -102,6 +105,7 @@ public class MainController {
                             company.insertCompany();
                         } else if (choseNum == 3) { // 돌아가기
                             check2 = false;
+                            return;
                         } else {  // 잘못된 숫자 입력
                             System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
                         }
@@ -125,6 +129,7 @@ public class MainController {
 
     // 기업 로그인 후 화면
     public void companyDisplay() {
+        new CompanyDisplay().comMain();
     }
 
     // 관리자 로그인 후 화면

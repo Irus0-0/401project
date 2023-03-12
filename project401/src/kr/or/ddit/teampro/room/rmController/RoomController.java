@@ -49,7 +49,7 @@ public class RoomController {
 	/**
 	 * 객실정보 등록 메서드
 	 */
-	private void insertRoom() {
+	public void insertRoom() {
 		boolean isExist;
 		int roomNumber;
 		String accomName = "";
@@ -136,7 +136,7 @@ public class RoomController {
 	/**
 	 * 객실정보 삭제 메서드
 	 */
-	private void deleteRoom() {
+	public void deleteRoom() {
 		System.out.println();
 		System.out.println("삭제할 객실 정보를 입력하세요");
 		System.out.print("객실번호>>");
@@ -158,7 +158,7 @@ public class RoomController {
 	/**
 	 * 객실정보 수정 메서드
 	 */
-	private void updateRoom() {
+	public void updateRoom() {
 		boolean isExist = false;
 		int roomNumber = 0;
 		String accomName="";

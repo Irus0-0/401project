@@ -89,7 +89,7 @@
     </select>
 
 <!--    모든 기업이 신고한 정보 확인-->
-    <select id="selectAllReportByUsCO" resultMap="reportMap">
+    <select id="selectAllReportByCO" resultMap="reportMap">
         SELECT REPORT_NUM, RESERVATION_NUM, REASON
         FROM REPORT_USER
     </select>
@@ -155,18 +155,27 @@
 
     <!--    처리되지 않은 신고한 결과 조회(유저가 신고)-->
     <select id="selectAllReportResultByUserF" resultMap="reportMap">
-        SELECT B.REPORT_NUM, B.reservation_num, B.reason
-        FROM report_co_process A,
-             (SELECT * FROM report_co) B
-        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
+        --         SELECT B.REPORT_NUM, B.reservation_num, B.reason
+--         FROM report_co_process A,
+--              (SELECT * FROM report_co) B
+--         WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
+        select *
+        from report_co A
+        where a.REPORT_NUM not IN (select REPORT_NUM from report_co_process)
+
     </select>
 
     <!--    처리되지 않은 신고한 결과 조회(기업이 신고)-->
     <select id="selectAllReportResultByCoF" resultMap="reportMap">
-        SELECT B.REPORT_NUM, B.reservation_num, B.reason
-        FROM report_user_process A,
-             (SELECT * FROM report_user) B
-        WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
+        --         SELECT B.REPORT_NUM, B.reservation_num, B.reason
+--         FROM report_user_process A,
+--              (SELECT * FROM report_user) B
+--         WHERE NOT (A.REPORT_NUM = B.REPORT_NUM)
+
+        select *
+        from report_user A
+        where a.REPORT_NUM not IN (select REPORT_NUM from report_user_process)
+
     </select>
 
     <!--    사용자가 신고한 내용에 신고 처리 결과 등록-->

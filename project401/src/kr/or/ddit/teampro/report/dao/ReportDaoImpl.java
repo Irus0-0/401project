@@ -185,10 +185,10 @@ public class ReportDaoImpl extends MyBatisDao implements ReportDao {
         int cnt;
         if (whoReport) {
             // 유저가 신고
-            cnt = insert("report.updateReportResultByCo", reportResultVo);
+            cnt = insert("report.reportResultByCo", reportResultVo);
         } else {
             // 기업이 신고
-            cnt = insert("report.updateReportResultByUser", reportResultVo);
+            cnt = insert("report.reportResultByUser", reportResultVo);
         }
         return cnt;
     }

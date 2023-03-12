@@ -217,8 +217,8 @@ public class Master {
             String masterId = "";
 
             System.out.println();
-            System.out.println("새롭게 등록할 회원 정보를 입력하세요.");
-            System.out.print("회원ID >> ");
+            System.out.println("새롭게 등록할 관리자 정보를 입력하세요.");
+            System.out.print("관리자ID >> ");
             masterId = scan.nextLine();
 
             MasterVO mv = new MasterVO();
@@ -226,11 +226,11 @@ public class Master {
 
             //회원아이디 중복검사
             if (masterService.isExist(mv) == true) {
-                System.out.println(masterId + " 회원 ID 중복입니다.");
+                System.out.println(masterId + " ID 중복입니다.");
                 return;
             }
 
-            System.out.print("회원 비밀번호>> ");
+            System.out.print("관리자 계정 비밀번호>> ");
             String masterPw = scan.nextLine();
             System.out.print("관리자이름>> ");
             String name = scan.nextLine();
@@ -246,9 +246,9 @@ public class Master {
             mv1.setGrade(grade);
 
             if (masterService.insertMaster(mv1) > 0) {
-                System.out.println(masterId + " 회원 추가 작업 성공!");
+                System.out.println(masterId + " 관리자 추가 작업 성공!");
             } else {
-                System.out.println(masterId + " 회원 추가 작업 실패!");
+                System.out.println(masterId + " 관리자 추가 작업 실패!");
             }
         }
     }

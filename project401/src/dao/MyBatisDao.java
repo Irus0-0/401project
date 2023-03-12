@@ -58,7 +58,7 @@ public class MyBatisDao {
 			list = sqlSession.selectList(statement);
 			
 		}catch(PersistenceException ex) {
-			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
+//			throw new RuntimeException("마이바티스에서 목록 조회 중 예외발생!!!", ex);
 		}finally {
 			sqlSession.close();
 		}

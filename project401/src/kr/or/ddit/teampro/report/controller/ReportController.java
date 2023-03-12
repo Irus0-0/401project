@@ -85,9 +85,9 @@ public class ReportController {
         System.out.println("==================================================");
         for (int i = 0; i < reportVoList.size(); i++) {
             System.out.println(i + 1 + "번-----------------------------------");
-            System.out.println("신고번호: " +reportVoList.get(i).getReportNum());
-            System.out.println("예약번호: " +reportVoList.get(i).getResNum());
-            System.out.println("신고 사유: " +reportVoList.get(i).getReason());
+            System.out.println("신고번호: " + reportVoList.get(i).getReportNum());
+            System.out.println("예약번호: " + reportVoList.get(i).getResNum());
+            System.out.println("신고 사유: " + reportVoList.get(i).getReason());
         }
 
         while (true) {
@@ -120,9 +120,12 @@ public class ReportController {
                     System.out.println("test: " + reportService.checkingReportResult(whoIs, reportVo));
                     if (reportService.checkingReportResult(whoIs, reportVo) > 0) {
                         // 신고 결과 출력
-                        System.out.println("========================신고 결과====================");
+                        System.out.println("========================신고 처리 결과====================");
                         ReportResultVo reportResultVo = reportService.InquireReportResult(whoIs, reportVo);
-                        System.out.println(reportResultVo.toString());
+                        System.out.println("신고번호:  " + reportResultVo.getReportNum() + "번");
+                        System.out.println("처리자:  " + reportResultVo.getMasterId());
+                        System.out.println("신고결과:  " + reportResultVo.getResult());
+                        System.out.println("제재기간:  " + reportResultVo.getStartDate() + " ~ " + reportResultVo.getEndDate());
                     } else {
                         System.out.println("접수하신 신고는 처리 중 입니다");
                         // 수정하기 , 삭제하기 기능이 표출

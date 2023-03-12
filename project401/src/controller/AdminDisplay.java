@@ -1,16 +1,22 @@
 package controller;
 
+import kr.or.ddit.teampro.master.Master;
 import kr.or.ddit.teampro.notice.NoticeMain;
+import kr.or.ddit.teampro.report.controller.ReportControllerMaster;
 
 import java.util.Scanner;
 
 public class AdminDisplay {
     Scanner sc;
     NoticeMain noticeMain;
+    ReportControllerMaster reportControllerMaster;
+    Master master;
 
     public AdminDisplay() {
         sc = new Scanner(System.in);
         noticeMain = new NoticeMain();
+        reportControllerMaster = new ReportControllerMaster();
+        master = new Master();
     }
 
     public void adminDisplay() {
@@ -30,18 +36,25 @@ public class AdminDisplay {
                     break;
                 case 2:
                     // 신고처리
+                    reportDisplay();
                     break;
                 case 3:
                     // 관라지 생성
+                    master.insertMaster();
                     break;
                 case 4:
                     // 로그아웃
-
-                    break;
+                    master.logout();
+                    return;
                 default:
             }
 
         }
+
+    }
+
+    private void reportDisplay() {
+        reportControllerMaster.displayReport4Master();
 
     }
 

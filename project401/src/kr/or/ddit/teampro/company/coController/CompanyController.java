@@ -75,36 +75,36 @@ public class CompanyController {
 //		pw를 입력받을때 재확인 절차를 거쳐 같을때만 pw정보를 넣어줌
 		String companyPw = "";
 		while (true) {
-			System.out.println("기업Password>> ");
+			System.out.print("기업Password>> ");
 			String pw1 = scan.nextLine();
-			System.out.println("기업Password 재확인>> ");
+			System.out.print("기업Password 재확인>> ");
 			String pw2 = scan.nextLine();
 
 			if (pw1.equals(pw2)) {
 				companyPw = pw2;
 				break;
-			} System.out.println("비밀번호가 같지 않습니다. 다시 입력해주세요");
+			} System.out.print("비밀번호가 같지 않습니다. 다시 입력해주세요");
 		}
 
 //		사용자에게 각 속성값을 입력받는다
-		System.out.println("기업명>> ");
+		System.out.print("기업명>> ");
 		String name = scan.nextLine();
 
 		System.out.println("양식은 000-00-00000 입니다");
-		System.out.println("사업자 등록번호>> ");
+		System.out.print("사업자 등록번호>> ");
 		String bizNo = scan.nextLine();
 
-		System.out.println("사업자명>> ");
+		System.out.print("사업자명>> ");
 		String ownerName = scan.nextLine();
 
 		System.out.println("양식은 000-000-0000 입니다");
-		System.out.println("기업전화번호>> ");
+		System.out.print("기업전화번호>> ");
 		String phoneNum = scan.nextLine();
 
-		System.out.println("기업주소>> ");
+		System.out.print("기업주소>> ");
 		String addr = scan.nextLine();
 
-		System.out.println("기업규모>> ");
+		System.out.print("기업규모>> ");
 		String scale = scan.nextLine();
 
 //		사용자에게 입력받은 기업정보를 CompanyVO객체에 넣어준다
@@ -158,7 +158,7 @@ public class CompanyController {
 		do {
 			System.out.println();
 			System.out.println("수정하고 싶은 기업의 ID를 입력하세요");
-			System.out.print("기업ID>>");
+			System.out.print("기업ID>> ");
 			companyId = scan.nextLine();
 
 			isExist = coService.checkCompany(companyId);
@@ -170,20 +170,20 @@ public class CompanyController {
 
 
 		System.out.println("수정을 원하시지 않으면 데이터 입력 없이 enter키를 누르세요");
-		System.out.println("기업명>> ");
+		System.out.print("기업명>> ");
 		String name = scan.nextLine();
 		
 		System.out.println("사업자명>> ");
 		String ownerName = scan.nextLine();
 		
 		System.out.println("양식은 000-000-0000 입니다");
-		System.out.println("기업전화번호>> ");
+		System.out.print("기업전화번호>> ");
 		String phoneNum = scan.nextLine();
 
-		System.out.println("기업주소>> ");
+		System.out.print("기업주소>> ");
 		String addr = scan.nextLine();
 
-		System.out.println("기업규모>> ");
+		System.out.print("기업규모>> ");
 		String scale = scan.nextLine();
 
 //		VO객체를 생성후 사용자에게 입력받은 기업정보를 넣어준다

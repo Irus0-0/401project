@@ -105,7 +105,6 @@ public class MainController {
                             company.insertCompany();
                         } else if (choseNum == 3) { // 돌아가기
                             check2 = false;
-                            return;
                         } else {  // 잘못된 숫자 입력
                             System.out.println("잘못입력하셨습니다, 다시 입력해주세요");
                         }

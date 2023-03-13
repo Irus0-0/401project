@@ -84,7 +84,6 @@ public class UserDisplay {
                     if (choseNum == 1) {
                         resController.checkAllCloseMyReservation();
                         System.out.println("==================================");
-                        System.out.println("신고하시겠습니까?");
                         System.out.println("1. 신고하기 / 2. 돌아가기");
                         System.out.print("입력> ");
                         choseNum = Integer.parseInt(sc.nextLine());
@@ -105,7 +104,7 @@ public class UserDisplay {
                     } else {
                         System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
                     }
-
+                    break;
                 case 6:
                     // 로그아웃
                     customerService.logout(customerVO);

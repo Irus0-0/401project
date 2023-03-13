@@ -599,8 +599,8 @@ public class AccommodationsController {
                     isOk = accomList.size() + 1 > input && input > 0;
 
                     if (isOk) {
-                        System.out.println(accomList.get(input).getAccomName() + "의 상세정보 입니다." + "\n시설 설립일자: " + formatter.format(accomList.get(input).getSetUpDate())
-                                + "\n별점: " + accomList.get(input).getStarPoint() + "\n누적 이용횟수: " + accomList.get(input).getUseCount() + "\n상세설명\n" + accomList.get(input).getDescription());
+                        System.out.println(accomList.get(input-1).getAccomName() + "의 상세정보 입니다." + "\n시설 설립일자: " + formatter.format(accomList.get(input-1).getSetUpDate())
+                                + "\n별점: " + accomList.get(input-1).getStarPoint() + "\n누적 이용횟수: " + accomList.get(input-1).getUseCount() + "\n상세설명\n" + accomList.get(input-1).getDescription());
                         System.out.println("------------------------------------");
                     } else {
                         System.out.println("잘못된 번호입니다 다시 입력해 주세요");

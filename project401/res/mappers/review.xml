@@ -12,8 +12,8 @@
 
 <!--리뷰작성-->
     <insert id="add">
-        INSERT INTO review (reservation_num, content, star_point, review_num)
-        VALUES (#{reservationNum}, #{content}, #{starPoint}, review_seq.nextval)
+        INSERT INTO review (reservation_num, content, star_point)
+        VALUES (#{reservationNum}, #{content}, #{starPoint})
     </insert>
 <!--    후기삭제-->
     <delete id="delete">

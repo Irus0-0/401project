@@ -9,6 +9,7 @@ import kr.or.ddit.teampro.event.EventMain;
 import kr.or.ddit.teampro.notice.NoticeMain;
 import kr.or.ddit.teampro.report.controller.ReportController;
 import kr.or.ddit.teampro.reservation.controller.ReservationController;
+import kr.or.ddit.teampro.review.Review;
 import kr.or.ddit.teampro.room.rmController.RoomController;
 import kr.or.ddit.teampro.room.rmVo.RoomVO;
 
@@ -27,6 +28,7 @@ public class UserDisplay {
     private RoomVO roomVO;
     private EventMain eventMain;
     private NoticeMain noticeMain;
+    private Review review;
 
     public UserDisplay() throws ParseException {
         this.customerVO = CustomerService.getInstance().getVo();
@@ -39,6 +41,7 @@ public class UserDisplay {
         this.accomController = new AccommodationsController();
         this.roomController = new RoomController();
         this.reportController = new ReportController();
+        this.review = new Review();
     }
 
     public void userMain() throws ParseException {
@@ -75,34 +78,40 @@ public class UserDisplay {
                     eventMain.displayAllEvent();
                     break;
                 case 5:
-                    // 내 정보 출력 및 여태까지의 예약 이력 확인하기
-                    customer.displayCustomerInfo();
-                    System.out.println("==================================");
-                    System.out.println("1.종료된 예약 전체 보기 / 2. 신고이력 보기 / 3.뒤로가기");
-                    System.out.print("입력> ");
-                    choseNum = Integer.parseInt(sc.nextLine());
-                    if (choseNum == 1) {
-                        resController.checkAllCloseMyReservation();
+                    while (true) {
+                        // 내 정보 출력 및 여태까지의 예약 이력 확인하기
+                        customer.displayCustomerInfo();
                         System.out.println("==================================");
-                        System.out.println("1. 신고하기 / 2. 돌아가기");
+                        System.out.println("1.종료된 예약 전체 보기 / 2. 신고이력 보기 / 3.뒤로가기");
                         System.out.print("입력> ");
                         choseNum = Integer.parseInt(sc.nextLine());
-                        switch (choseNum) {
-                            case 1:
-                                reportController.doReportDisplay(MainController.whoIs);
-                                break;
-                            case 2:
-                                break;
-                            default:
-                                System.out.println("잘못입력하셨습니다");
+                        if (choseNum == 1) {
+                            resController.checkAllCloseMyReservation();
+                            System.out.println("==================================");
+                            System.out.println("1. 신고하기 / 2.후기 작성하기 / 3. 돌아가기");
+                            System.out.print("입력> ");
+                            choseNum = Integer.parseInt(sc.nextLine());
+                            switch (choseNum) {
+                                case 1:
+                                    reportController.doReportDisplay(MainController.whoIs);
+                                    break;
+                                case 2:
+                                    // 리뷰 작성하기
+                                    review.addReview();
+                                    break;
+                                case 3:
+                                    break;
+                                default:
+                                    System.out.println("잘못입력하셨습니다");
+                            }
+                        } else if (choseNum == 2) {
+                            reportController.displayReportList(MainController.whoIs);
+                            break;
+                        } else if (choseNum == 3) {
+                            break;
+                        } else {
+                            System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
                         }
-                    } else if (choseNum == 2) {
-                        reportController.displayReportList(MainController.whoIs);
-                        break;
-                    } else if (choseNum == 3) {
-                        break;
-                    } else {
-                        System.out.println("잘못 입력하셨습니다 다시 입력해주세요");
                     }
                     break;
                 case 6:

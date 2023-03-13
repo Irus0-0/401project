@@ -26,6 +26,7 @@ public class Review {
     //서비스 인스턴스
     public Review() {
         reviewService = ReviewService.getInstance();
+        scanner = new Scanner(System.in);
     }
 
     public void start() {
@@ -39,7 +40,7 @@ public class Review {
             System.out.println("5. 종료");
             System.out.println("-------------------------");
             System.out.print("번호>> ");
-            int choice = scanner.nextInt();
+            int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
                     //후기 작성할 때 로그인한 고객 객체 저장한 연결고리
@@ -111,38 +112,31 @@ public class Review {
     private void showAllReviews() {
         System.out.println("모든 후기 보기");
 
-        for (ReviewVO rv :reviewService.getReviewList()){
+        for (ReviewVO rv : reviewService.getReviewList()) {
             System.out.printf("%8s\t%4d\t%s\n%s\n",
-                    rv.getReservationNum(),rv.getReviewNum()
-                    ,rv.getStarPoint(),rv.getContent());
+                    rv.getReservationNum(), rv.getReviewNum()
+                    , rv.getStarPoint(), rv.getContent());
         }
 
 
     }
 
     //후기 작성
-    private void addReview() {
+    public void addReview() {
         int starPoint = 0;
-
-        while(true){
-            System.out.println("리뷰를 작성하시겠습니까?");
-            System.out.print("별점(1~5)>> ");
-            starPoint = Integer.parseInt(scanner.next());
-            if (starPoint > 5 && starPoint < 0) continue;
-            break;
-        }
-        System.out.print("리뷰 내용(50자 이내)>> ");
-        String content = scanner.next();
-
         ReviewVO rv = new ReviewVO();
-        rv.setStarPoint(starPoint);
-        rv.setContent(content);
-        //임의의 값을 넣는 형태로 진행했으니 수정바람
-        //이부분은 메인에서 구현해줘야 된다고 생각해서 더 안했음
-        //메인에서 고객 정보 저장한 필드에서 받아서 넣어줘야되는 부분이라고 봄
-        rv.setReservationNum("1");
+        System.out.println("리뷰를 작성할 예약을 선택해주세요(예약번호 입력)");
+        System.out.print("입력> ");
+        rv.setReservationNum(scanner.nextLine());
 
-        //
+        System.out.print("별점(1~5)>> ");
+        starPoint = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("리뷰 내용(50자 이내)>> ");
+        String content = scanner.nextLine();
+        rv.setContent(content);
+        rv.setStarPoint(starPoint);
+
         int result = reviewService.addReview(rv);
         if (result > 0) {
             System.out.println("후기작성이 완료되었습니다");
@@ -150,6 +144,7 @@ public class Review {
             System.out.println("후기작성이 완료되지 않았습니다");
         }
     }
+
 
     public static void main(String[] args) {
         new Review().start();
